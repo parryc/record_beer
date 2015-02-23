@@ -1,0 +1,25 @@
+{% extends '/base.html' %}
+{% block page_js %}
+    <script type="text/javascript" src="/static/js/lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/search.js"></script>
+
+{% endblock %}
+{% block content  %}
+<form class="search" method="POST" action="search" accept-charset="UTF-8" role="form">
+  {{ form.csrf_token }}  
+  {{ render_field(form.brewery, show_label="T") }}<br/>
+  {{ render_field(form.name, show_label="T") }}<br/>
+  {{ render_field(form.abv, show_label="T") }}<br/>
+  {{ render_field(form.style, show_label="T") }}<br/>
+  {{ render_field(form.drink_country, show_label="T") }}<br/>
+  {{ render_field(form.drink_city, show_label="T") }}<br/>
+  {{ render_field(form.drink_datetime, show_label="T") }}<br/>
+  {{ render_field(form.notes, show_label="T") }}<br/>
+  <button id="submit" type="submit" name="submit">
+    <i class="fa fa-save"></i> Save
+  </button>
+</form>
+
+<div id="search-results"></div>
+{% endblock %}

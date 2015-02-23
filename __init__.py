@@ -10,9 +10,9 @@ app.config.from_object('config.DevelopmentConfig')
 db = SQLAlchemy(app)
 assets = Environment(app)
 ma = Marshmallow(app)
-csrf = CsrfProtect()
+# csrf = CsrfProtect()
 #add csrf protection across the board
-csrf.init_app(app)
+# csrf.init_app(app)
 
 
 @app.route('/')
@@ -24,7 +24,7 @@ def not_found(error):
   return render_template('404.html'), 404
 
 # Define static asset bundles to be minimized and deployed
-# bundles = {
+bundles = {
 #   'css' : Bundle('css/lib/fonts/css/font-awesome.css'
 #                 ,'css/lib/bootstrap.css'
 #                 ,'css/lib/bootstrap-reset.css'
@@ -41,18 +41,13 @@ def not_found(error):
 #   'css_multiselect' : Bundle('js/lib/jquery-multi-select/css/multi-select.css'
 #                ,filters='cssmin',output='gen/packed_multiselect.css'),
   
-#   # jQuery migrate is used to support older jQuery libraries that have been upgraded to 1.10
-#   'js' : Bundle('js/lib/jquery-1.10.2.min.js'
-#                ,'js/lib/jquery-ui-1.9.2.custom.min.js'
-#                ,'js/lib/bootstrap.min.js'
-#                ,'js/lib/jquery-migrate-1.2.1.min.js'
-#                ,'js/lib/modernizr.min.js'
-#                ,'js/lib/jquery.nicescroll.js'
-#                ,'js/lib/scripts.js'
-#                ,'js/lib/handlebars-runtime.js'
-#                ,'js/allset.js'
-#                ,filters='jsmin',output='gen/packed.js'
-#           ),
+  # jQuery migrate is used to support older jQuery libraries that have been upgraded to 1.10
+  'js_lib' : Bundle('js/lib/jquery-1.10.2.min.js'
+               ,'js/lib/jquery-migrate-1.2.1.min.js'
+               ,filters='jsmin',output='gen/packed.js'
+          ),
+  'mod_beers' : Bundle('js/search.js'
+               ,filters='jsmin',output='gen/search.js')
 #   'js_datatable' : Bundle('js/lib/advanced-datatable/js/jquery.dataTables.js'
 #                ,'js/lib/data-tables/DT_bootstrap.js'
 #                ,'js/lib/dynamic_table_init.js'
@@ -74,8 +69,8 @@ def not_found(error):
 #   'mod_analysis' : Bundle('js/mod_analysis.run.js'
 #                ,'js/mod_analysis.run.templates.js'
 #                ,filters='jsmin',output='gen/mod_analysis.js')
-#   }
-# assets.register(bundles)  
+  }
+assets.register(bundles)  
 
 
 # Import a module / component using its blueprint handler variable

@@ -3,7 +3,7 @@
 # Import flask dependencies
 from flask import Blueprint, render_template
 from app import db
-from app.mod_users.models import *
+from mod_users.models import *
 
 mod_users = Blueprint('users', __name__, url_prefix='/users')
 

@@ -43,3 +43,7 @@ class Beers(db.Model):
 
     def __repr__(self):
         return '<%s %s  - %s>' % (self.brewery, self.name, self.user.name)
+
+
+def get_beer(_id):
+    return Beers.query.get(_id)

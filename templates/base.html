@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{t}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  {% assets "css_lib" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %}
+  {% block page_css %}{% endblock %}
+</head>
+<body class="sticky-header">
+
+{% macro rating(beer) %}
+  {% if beer.rating >= 4.0 %}
+    Great!
+  {% elif beer.rating >= 3.0 %}
+    Good!
+  {% elif beer.rating >= 2.0 %}
+    Ok.
+  {% elif beer.rating >= 1.0 %}
+    Meh...
+  {% else %}
+    ...Bad...
+  {% endif %}
+{% endmacro %}
+
+{% macro render_field(field, placeholder=None, show_label=None, size="col-md-3", form_css="form-control") %}
+  {% if field.errors %}
+    <div class="has-error inline-form {{size}}">
+  {% elif field.flags.error %}
+    <div class="has-error inline-form {{size}}">
+  {% else %}
+    <div class="inline-form {{size}}">
+  {% endif %}
+  {% if show_label %}
+    <label>{{field.label}}</label>:
+  {% endif %}
+    {% set css_class = form_css + ' ' + kwargs.pop('class', '') %}
+    {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
+  </div>
+{% endmacro %}
+
+<section>
+    <!-- header section end-->
+    <div class="page-heading">
+      <!-- Module name -->
+      <h3>{{m}}</h3>
+    </div>
+    <div class="wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <section class="panel">
+            {% block page_tabs %}{% endblock %}
+            <!-- tab look, but loading pages so we can keep using Flask's built in RESTful architecture -->
+            <div class="panel-body"><div class="tab-content"><div class="tab-pane active">
+              {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                {% if errors %}
+                  <div>
+                    {% for error in errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endwith %}
+
+              {% if form is defined and form.errors %}
+                <div>
+                  {% for field, error in form.errors.items() %}
+                    {% for e in error %}
+                      {{ e }}<br>
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  <ul class=flashes>
+                  {% for message in messages %}
+                    <li>{{ message }}</li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endwith %}
+              {% block content %}{% endblock %}
+            </div></div></div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <footer class="sticky-footer">
+      2014 &copy; Parry Cadwallader
+    </footer>
+  </div>  
+</section>
+  {% assets "js_lib" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+  {% block page_js %}{% endblock %}
+  {% assets "js_all_pages" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+</body>
+</html>

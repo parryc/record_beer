@@ -79,7 +79,7 @@ def not_found(error):
 
 
 # Import a module / component using its blueprint handler variable
-from app.mod_beers.controllers import mod_beers
+from mod_beers.controllers import mod_beers
 app.register_blueprint(mod_beers)
-from app.mod_users.controllers import mod_users
+from mod_users.controllers import mod_users
 app.register_blueprint(mod_users)
