@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 # coding: utf-8
-from flask import Blueprint, render_template, request, jsonify, redirect
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for
 from app import db, csrf
 from mod_beers.models import *
 from mod_beers.forms import *
@@ -37,17 +37,17 @@ def add():
     form = BeerForm()
     if form.validate_on_submit():
         me = Users.query.get(1)
-        beer_entry = Beer(
+        beer_entry = Beers(
             brewery=form.brewery.data
-           ,name=form.brewer.name
-           ,abv=form.brewery.abv
-           ,style=form.brewery.style
-           ,country=form.brewery.country
-           ,rating=form.brewery.rating
-           ,drink_country=form.brewrey.drink_country
-           ,drink_city=form.brewery.drink_city
-           ,drink_datetime=form.brewery.drink_datetime
-           ,notes=form.brewery.notes)
+           ,name=form.name.data
+           ,abv=form.abv.data
+           ,style=form.style.data
+           ,country=form.country.data
+           ,rating=form.rating.data
+           ,drink_country=form.drink_country.data
+           ,drink_city=form.drink_city.data
+           ,drink_datetime=form.drink_datetime.data
+           ,notes=form.notes.data)
         me.beers.append(beer_entry)
         db.session.add(beer_entry)
         db.session.commit()

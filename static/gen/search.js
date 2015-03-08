@@ -2,9 +2,8 @@ $(document).ready(function(){ var csrftoken=$('meta[name=csrf-token]').attr('con
 $('form #style').val(style);$('form #abv').val(abv);$('form #country').val(country);$('form #drink_country').val('USA');$('form #drink_city').val('Berkeley');$('form #drink_datetime').val('2015-01-01');}
 var query=function(evt){console.log('here');var query=$('.search #brewery').val()+' '+$('.search #name').val(),location='search',method=$(this).attr('method'),data={'query':query},paused=false;$('#search-results').text('Searching...');$.ajax({type:'POST',url:'search',data:JSON.stringify(data),contentType:'application/json;charset=UTF-8',success:function(results){if(results.no_hits){$('#search-results').text('Nothing to see here.');}
 console.log(results)
-$('#search-results').html(searchResults(results));$('.result').on("click",updateForm);}});$.ajax({type:'POST',url:'duplicate',data:JSON.stringify(data),contentType:'application/json;charset=UTF-8',success:function(results){if(results.no_hits){$('#search-results').text('Nothing to see here.');}
-console.log(results)
-$('#search-results').append('<h3>Duplicates</h3>');$('#search-results').append(searchResults(results));$('.result').on("click",updateForm);}});console.log(data);}
+$('#search-results').html(searchResults(results));$('.result').on("click",updateForm);}});
+console.log(data);}
 $('#brewery, #name').on("input",$.debounce(query,500));});(function(){var template=Handlebars.template,templates=Handlebars.templates=Handlebars.templates||{};templates['search-results']=template({"1":function(depth0,helpers,partials,data){var helper,functionType="function",helperMissing=helpers.helperMissing,escapeExpression=this.escapeExpression;return"    <li class=\"result\">\n      <span class=\"brewery\">"
 +escapeExpression(((helper=(helper=helpers.brewery||(depth0!=null?depth0.brewery:depth0))!=null?helper:helperMissing),(typeof helper===functionType?helper.call(depth0,{"name":"brewery","hash":{},"data":data}):helper)))
 +"</span> <span class=\"name\">"
