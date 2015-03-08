@@ -1,8 +1,10 @@
-from app import db
+from app import db, app
 from datetime import datetime
+import flask.ext.whooshalchemy as whooshalchemy
 
 class Beers(db.Model):
     __tablename__ = 'beers'
+    __searchable__ = ['brewery', 'name']
 
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -42,8 +44,11 @@ class Beers(db.Model):
         self.last_updated = last_updated
 
     def __repr__(self):
-        return '<%s %s  - %s>' % (self.brewery, self.name, self.user.name)
+        return '<%r %r  - %r>' % (self.brewery, self.name, self.users.name)
 
+
+# setup whoosh full-text search
+whooshalchemy.whoosh_index(app, Beers)
 
 def get_beer(_id):
     return Beers.query.get(_id)

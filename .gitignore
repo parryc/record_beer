@@ -1,5 +1,6 @@
 node/node_modules/
 beer-*.json
+search.db/
 
 # Webassets cache
 .webassets-cache/

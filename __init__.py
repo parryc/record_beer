@@ -3,10 +3,15 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.marshmallow import Marshmallow
 from flask_wtf.csrf import CsrfProtect
+
+import flask.ext.whooshalchemy as whooshalchemy
 import os
 
 app = Flask(__name__)
+app.config = {}
 app.config.from_object('config.DevelopmentConfig')
+_dir = os.path.dirname(__file__)
+app.config['WHOOSH_BASE'] = os.path.join(_dir, 'search.db')
 db = SQLAlchemy(app)
 assets = Environment(app)
 ma = Marshmallow(app)
@@ -44,6 +49,7 @@ bundles = {
   # jQuery migrate is used to support older jQuery libraries that have been upgraded to 1.10
   'js_lib' : Bundle('js/lib/jquery-1.10.2.min.js'
                ,'js/lib/jquery-migrate-1.2.1.min.js'
+               ,'js/lib/jquery-debouce-1.0.5.js'
                ,filters='jsmin',output='gen/packed.js'
           ),
   'mod_beers' : Bundle('js/search.js'
