@@ -19,3 +19,10 @@ Handlebars.registerHelper('date', function(date){
   var months = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_");
   return months[parseInt(date.substring(5,7),10)-1]+", "+date.substring(0,4);
 });
+
+Handlebars.registerHelper('style', function(style){
+  if(style === 'Fruit Beer/Radler')
+    return 'Fruit Beer';
+  else
+    return style;
+});

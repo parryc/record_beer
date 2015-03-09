@@ -29,7 +29,7 @@ $(document).ready(function(){
     $('form #drink_datetime').val('2015-01-01');
   }
 
-  var query = function(evt) {
+  var search = function(evt) {
     console.log('here');
     var query = $('.search #brewery').val() + ' ' + $('.search #name').val()
         ,location = 'search'
@@ -39,10 +39,12 @@ $(document).ready(function(){
         ;
 
     $('#search-results').text('Searching...');
+
+    $('#query-results').text('Checking for duplicates...');
     // strip the brewery name from the "name", also strip "brewery" "brewing" etc.
     $.ajax({
       type: 'POST',
-      url: 'search',
+      url: '/beers/search',
       data: JSON.stringify(data),
       contentType: 'application/json;charset=UTF-8',
       success: function(results) {
@@ -55,25 +57,24 @@ $(document).ready(function(){
       }
     });
 
-    // $.ajax({
-    //   type: 'POST',
-    //   url: 'duplicate',
-    //   data: JSON.stringify(data),
-    //   contentType: 'application/json;charset=UTF-8',
-    //   success: function(results) {
-    //     if(results.no_hits) { 
-    //       $('#search-results').text('Nothing to see here.'); 
-    //     }
-    //     console.log(results)
-    //     $('#search-results').append('<h3>Duplicates</h3>');
-    //     $('#search-results').append(searchResults(results));
-    //     $('.result').on("click",updateForm);
-    //   }
-    // });
+    $.ajax({
+      type: 'POST',
+      url: '/beers/query',
+      data: JSON.stringify(data),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(results) {
+        if(results.no_hits) { 
+          $('#query-results').text('Nothing to see here.'); 
+        }
+        console.log(results)
+        $('#query-results').html('<h4>Record.Beer</h4>');
+        $('#query-results').append(searchResults(results));
+      }
+    });
     console.log(data);
   }
 
 
-  $('#brewery, #name').on("input",$.debounce(query, 500));
+  $('#brewery, #name').on("input",$.debounce(search, 500));
 
 });

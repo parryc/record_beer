@@ -12,6 +12,10 @@
   display: inline;
 }
 
+.inline-form {
+  display: inline-block;
+}
+
 .query-container {
   width: 300px;
   margin: 0 auto;

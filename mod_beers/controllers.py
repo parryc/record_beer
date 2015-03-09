@@ -20,7 +20,7 @@ rb = RateBeer()
 
 class BeerSchema(ma.Schema):
   class Meta:
-    fields = ('brewery', 'name','rating','style','country','drink_datetime')
+    fields = ('brewery', 'name','rating','style','country','drink_datetime', 'abv')
 
 
 

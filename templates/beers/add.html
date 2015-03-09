@@ -5,22 +5,31 @@
   {% endassets %}
 {% endblock %}
 {% block content  %}
-<form class="search" method="POST" action="add" accept-charset="UTF-8" role="form">
-  {{ form.csrf_token }}  
-  {{ render_field(form.brewery, show_label="T") }}<br/>
-  {{ render_field(form.name, show_label="T") }}<br/>
-  {{ render_field(form.rating, show_label="T") }}<br/>
-  {{ render_field(form.abv, show_label="T") }}<br/>
-  {{ render_field(form.style, show_label="T") }}<br/>
-  {{ render_field(form.country, show_label="T") }}<br/>
-  {{ render_field(form.drink_country, show_label="T") }}<br/>
-  {{ render_field(form.drink_city, show_label="T") }}<br/>
-  {{ render_field(form.drink_datetime, show_label="T") }}<br/>
-  {{ render_field(form.notes, show_label="T") }}<br/>
-  <button id="submit" type="submit" name="submit">
-    <i class="fa fa-save"></i> Save
-  </button>
-</form>
-
-<div id="search-results"></div>
+<div class="row">
+  <div class="four columns">
+    <h4>RateBeer search results</h4>
+    <div id="search-results" style="margin-bottom: 15px;">
+      Start entering a beer to search.
+    </div>
+    <div id="query-results"></div>
+  </div>
+  <div class="eight columns">
+    <form class="search" method="POST" action="add" accept-charset="UTF-8" role="form">
+      {{ form.csrf_token }}  
+      {{ render_field(form.brewery, show_label="T") }}
+      {{ render_field(form.name, show_label="T") }}<br/>
+      {{ render_field(form.rating, show_label="T") }}
+      {{ render_field(form.abv, show_label="T") }}<br/>
+      {{ render_field(form.style, show_label="T") }}
+      {{ render_field(form.country, show_label="T") }}<br/>
+      {{ render_field(form.drink_country, show_label="T") }}
+      {{ render_field(form.drink_city, show_label="T") }}<br/>
+      {{ render_field(form.drink_datetime, show_label="T") }}<br/>
+      {{ render_field(form.notes, show_label="T") }}<br/>
+      <button id="submit" type="submit" name="submit">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </form>
+  </div>
+</div>
 {% endblock %}

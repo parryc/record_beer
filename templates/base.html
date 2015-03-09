@@ -35,7 +35,7 @@
     <div class="inline-form {{size}}">
   {% endif %}
   {% if show_label %}
-    <label>{{field.label}}</label>:
+    <label>{{field.label}}</label>
   {% endif %}
     {% set css_class = form_css + ' ' + kwargs.pop('class', '') %}
     {{ field(class=css_class, placeholder=placeholder, **kwargs) }}

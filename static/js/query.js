@@ -14,14 +14,19 @@ $(document).ready(function(){
   var query = function(evt) {
     console.log('here');
     var query = $('#query').val()
-        ,data = {'query':query}
+        ,data = {}
         ;
+    if(query === '') {
+      query = $('.search #brewery').val() + ' ' + $('.search #name').val()
+    }
+
+    data = {'query':query}
 
     $('#query-results').text('Searching...');
     // strip the brewery name from the "name", also strip "brewery" "brewing" etc.
     $.ajax({
       type: 'POST',
-      url: 'beers/query',
+      url: '/beers/query',
       data: JSON.stringify(data),
       contentType: 'application/json;charset=UTF-8',
       success: function(results) {
@@ -30,7 +35,6 @@ $(document).ready(function(){
         }
         console.log(results)
         $('#query-results').html(queryResults(results));
-        $('.result').on("click",updateForm);
       }
     });
 
@@ -39,5 +43,6 @@ $(document).ready(function(){
 
 
   $('#query').on("input",$.debounce(query, 500));
+
 
 });
