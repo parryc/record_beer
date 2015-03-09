@@ -1,0 +1,17 @@
+<div class="row">
+  <table style="margin: 0 auto;">
+    <thead></thead>
+    <tbody>
+      {{#each results}}
+        <tr>
+          <td>
+            <div class="badge {{badge rating}}"></div>
+          </td>
+          <td class="centered" style="width: 250px;">
+            <span class="beer-name">{{brewery}} {{name}}</span>  
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

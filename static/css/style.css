@@ -1,0 +1,78 @@
+.centered {
+  text-align: center;
+}
+
+.record-button {
+  margin-top: -25px;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.inline {
+  display: inline;
+}
+
+.query-container {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.query-info {
+  float: left;
+  margin-left: 15px;
+}
+
+/* Badge Ratings */
+
+.badge {
+  border-radius: 8px;
+  border: 1px solid black;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  display: inline-block;
+  width: 45px;
+  font-size: .75em;
+  margin-top: .75em;
+  text-align: center;
+}
+
+.great:before {
+  content: 'great';
+}
+
+.great {
+  background-color: rgba(255, 110, 110, 1);
+  font-style: 'bold';
+}
+
+.good:before {
+  content: 'good';
+}
+
+.good {
+  background-color: rgba(255, 110, 110, .7);
+}
+
+.ok:before {
+  content: 'ok';
+}
+
+.ok {
+  background-color: rgba(255, 110, 110, .5);
+}
+
+.meh:before {
+  content: 'meh';
+}
+
+.meh {
+  background-color: rgba(255, 110, 110, .3);
+}
+
+.bad:before {
+  content: '☠ bad';
+}
+
+.bad {
+  background-color: white;
+}

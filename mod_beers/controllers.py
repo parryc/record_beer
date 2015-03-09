@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 # coding: utf-8
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for
-from app import db, csrf
+from app import db, ma, csrf
 from mod_beers.models import *
 from mod_beers.forms import *
 from mod_users.models import *
@@ -13,9 +13,21 @@ from flask_wtf.csrf import CsrfProtect
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
 rb = RateBeer()
-#
-# Routes
-#
+
+##################
+# Object schemas #
+##################
+
+class BeerSchema(ma.Schema):
+  class Meta:
+    fields = ('brewery', 'name','rating','style','country','drink_datetime')
+
+
+
+
+##########
+# Routes #
+##########
 
 
 @mod_beers.route('/', methods=['GET'])
@@ -54,11 +66,12 @@ def add():
         return redirect(url_for('add'))
     return render_template('beers/add.html',form=form)
 
-@mod_beers.route('/duplicate', methods=['POST'])
-def duplicate():
+@mod_beers.route('/query', methods=['POST'])
+def query():
     query = request.json['query']
-    results = Beers.query.whoosh_search(query).all()
-    return jsonify({'results':results})
+    query_results = Beers.query.whoosh_search(query).all()
+    results = BeerSchema(many=True).dump(query_results)
+    return jsonify({'results':results.data})
 
 @mod_beers.route('/search', methods=['POST'])
 def search():

@@ -27,16 +27,25 @@ def not_found(error):
 
 # Define static asset bundles to be minimized and deployed
 bundles = {
+  'css_lib': Bundle('css/lib/normalize.css'
+               ,'css/lib/skeleton.css'
+               ,'css/style.css'
+               ,filters='cssmin',output='gen/packed.css'),
+
   # jQuery migrate is used to support older jQuery libraries that have been upgraded to 1.10
   'js_lib' : Bundle('js/lib/jquery-1.10.2.min.js'
                ,'js/lib/jquery-migrate-1.2.1.min.js'
                ,'js/lib/jquery-debounce-1.0.5.js'
                ,'js/lib/handlebars-runtime.js'
+               ,'js/init.js'
                ,filters='jsmin',output='gen/packed.js'
           ),
-  'mod_beers' : Bundle('js/search.js'
+  'search' : Bundle('js/search.js'
                ,'js/search-results.js' 
-               ,filters='jsmin',output='gen/search.js')
+               ,filters='jsmin',output='gen/search.js'),
+  'query' : Bundle('js/query.js'
+               ,'js/query-results.js' 
+               ,filters='jsmin',output='gen/query.js')
   }
 assets.register(bundles)  
 
