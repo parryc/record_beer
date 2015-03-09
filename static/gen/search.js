@@ -4,7 +4,7 @@ var search=function(evt){console.log('here');var query=$('.search #brewery').val
 console.log(results)
 $('#search-results').html(searchResults(results));$('.result').on("click",updateForm);}});$.ajax({type:'POST',url:'/beers/query',data:JSON.stringify(data),contentType:'application/json;charset=UTF-8',success:function(results){if(results.no_hits){$('#query-results').text('Nothing to see here.');}
 console.log(results)
-$('#query-results').html('<h3>Record.Beer</h3>');$('#query-results').append(searchResults(results));}});console.log(data);}
+$('#query-results').html('<h4>Record.Beer</h4>');$('#query-results').append(searchResults(results));}});console.log(data);}
 $('#brewery, #name').on("input",$.debounce(search,500));});(function(){var template=Handlebars.template,templates=Handlebars.templates=Handlebars.templates||{};templates['search-results']=template({"1":function(depth0,helpers,partials,data){var helper,functionType="function",helperMissing=helpers.helperMissing,escapeExpression=this.escapeExpression;return"    <li class=\"result\">\n      <span class=\"name\">"
 +escapeExpression(((helper=(helper=helpers.name||(depth0!=null?depth0.name:depth0))!=null?helper:helperMissing),(typeof helper===functionType?helper.call(depth0,{"name":"name","hash":{},"data":data}):helper)))
 +"</span><br/>\n      <span class=\"abv\">"

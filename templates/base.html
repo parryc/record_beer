@@ -43,10 +43,17 @@
 {% endmacro %}
 
 <section>
-    <div class="page-heading">
-      <h3>{{m}}</h3>
-    </div>
     <div class="container">
+      <div class="row centered" style="margin-top: 10px;">
+        <a href="/" class="return">
+          <h1 class="inline">REC</h1>
+          <span class="fa-stack fa-2x record-button">
+            <i class="fa fa-circle fa-stack-2x" style="color: rgb(255,110,110)"></i>
+            <i class="fa fa-beer fa-stack-1x"></i>
+          </span>
+          <h1 class="inline">RD</h1>
+        </a>
+      </div>
       <div class="row">
         {% with errors = get_flashed_messages(category_filter=["error"]) %}
           {% if errors %}
@@ -81,6 +88,11 @@
       </div>
     </div>
   </div>  
+  <div class="add">
+    <a href="/beers/add" style="color: rgb(255,110,110) !important;">
+      <i class="fa fa-plus fa-3x"></i>
+    </a>
+  </div>
 </section>
   {% assets "js_lib" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>

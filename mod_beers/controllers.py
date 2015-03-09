@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 # coding: utf-8
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
 from app import db, ma, csrf
 from mod_beers.models import *
 from mod_beers.forms import *
@@ -65,6 +65,27 @@ def add():
         db.session.commit()
         return redirect(url_for('add'))
     return render_template('beers/add.html',form=form)
+
+@mod_beers.route('/edit/<int:_id>', methods=['GET','POST'])
+def edit(_id):
+    beer = get_beer(_id)
+    form = BeerForm(request.form,beer)
+    if form.validate_on_submit():
+        beer.brewery = form.brewery.data
+        beer.name = form.name.data
+        beer.abv = form.abv.data
+        beer.style = form.style.data
+        beer.country = form.country.data
+        beer.rating = form.rating.data
+        beer.drink_country = form.drink_country.data
+        beer.drink_city = form.drink_city.data
+        beer.drink_datetime = form.drink_datetime.data
+        beer.notes = form.notes.data
+        db.session.commit()
+        flash(u'Save successful!')
+        return redirect(url_for('.edit',_id=str(_id)))
+    return render_template('beers/edit.html',form=form)
+
 
 @mod_beers.route('/query', methods=['POST'])
 def query():
