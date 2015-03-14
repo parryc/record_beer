@@ -49,6 +49,8 @@ Handlebars.registerHelper('style', function(style){
     return 'Hefeweizen';
   if(style === 'Belgian White (Witbier)')
     return 'Belgian White';
+  if(style === 'Golden Ale/Blond Ale')
+    return 'Golden Ale';
   else
     return style;
 });

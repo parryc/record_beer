@@ -74,5 +74,6 @@ return'Double IPA';if(style==='Strong Pale Lager/Imperial Pils')
 return'Imperial Pils';if(style==='Dunkel/Tmavý')
 return'Dunkel';if(style==='German Hefeweizen')
 return'Hefeweizen';if(style==='Belgian White (Witbier)')
-return'Belgian White';else
+return'Belgian White';if(style==='Golden Ale/Blond Ale')
+return'Golden Ale';else
 return style;});
