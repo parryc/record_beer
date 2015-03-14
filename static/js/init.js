@@ -23,6 +23,32 @@ Handlebars.registerHelper('date', function(date){
 Handlebars.registerHelper('style', function(style){
   if(style === 'Fruit Beer/Radler')
     return 'Fruit Beer';
+  if(style === 'Spice/Herb/Vegetable')
+    return 'Spice';
+  if(style === 'Abt/Quadrupel')
+    return 'Quadrupel';
+  if(style === 'Sour Red/Brown')
+    return 'Flanders Sour';
+  if(style === 'Session IPA')
+    return 'IPA';
+  if(style === 'Imperial/Strong Porter')
+    return 'Imperial Porter';
+  if(style === 'Grodziskie/Gose/Lichtenhainer')
+    return 'Gose';
+  if(style === 'India Pale Ale (IPA)')
+    return 'IPA';
+  if(style === 'Sour/Wild Ale')
+    return 'Sour';
+  if(style === 'Imperial/Double IPA')
+    return 'Double IPA';
+  if(style === 'Strong Pale Lager/Imperial Pils')
+    return 'Imperial Pils';
+  if(style === 'Dunkel/Tmavý')
+    return 'Dunkel';
+  if(style === 'German Hefeweizen')
+    return 'Hefeweizen';
+  if(style === 'Belgian White (Witbier)')
+    return 'Belgian White';
   else
     return style;
 });

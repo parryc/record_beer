@@ -63,7 +63,7 @@ def add():
         me.beers.append(beer_entry)
         db.session.add(beer_entry)
         db.session.commit()
-        return redirect(url_for('add'))
+        return redirect(url_for('.add'))
     return render_template('beers/add.html',form=form)
 
 @mod_beers.route('/edit/<int:_id>', methods=['GET','POST'])
@@ -125,7 +125,8 @@ def search():
                 hit = rb.beer(result['url'])
             except RateBeer.AliasedBeer:
                 limit += 1
-                pass
+                print 'AliasedBeer'
+                continue
             top.append(hit)
         return jsonify({'results':top})
     else:

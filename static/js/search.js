@@ -26,7 +26,7 @@ $(document).ready(function(){
     $('form #country').val(country);
     $('form #drink_country').val('USA');
     $('form #drink_city').val('Berkeley');
-    $('form #drink_datetime').val('2015-01-01');
+    $('form #drink_datetime').val('2015-02-01');
   }
 
   var search = function(evt) {
@@ -75,6 +75,6 @@ $(document).ready(function(){
   }
 
 
-  $('#brewery, #name').on("input",$.debounce(search, 500));
+  $('#brewery, #name').on("input",$.debounce(search, 750));
 
 });
