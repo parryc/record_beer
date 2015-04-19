@@ -14,7 +14,7 @@ templates['query-results'] = template({"1":function(depth0,helpers,partials,data
   if (stack1 != null) { buffer += stack1; }
   return buffer + "          </td>\n        </tr>\n";
 },"2":function(depth0,helpers,partials,data) {
-  return "              <i class=\"strong-beer fa fa-exclamation-circle\"></i> <span class=\"strong-beer-label\">Strong</span>\n";
+  return "              <i class=\"strong-beer fa fa-exclamation-circle\"></i> <span class=\"strong-beer-label\">High ABV</span>\n";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, buffer = "<div class=\"row\">\n  <table style=\"margin: 0 auto;\">\n    <thead></thead>\n    <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});

@@ -6,6 +6,7 @@ tr:nth-child(even) {
 
 td {
   padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 
 .centered {
@@ -100,7 +101,7 @@ td {
 }
 
 .bad:before {
-  content: '☠ bad';
+  content: 'bad';
 }
 
 .bad {
