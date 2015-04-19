@@ -1,9 +1,23 @@
+/* Skeleton Overrides
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+tr:nth-child(even) {
+  background-color: rgba(255, 110, 110, .1)
+}
+
+td {
+  padding-left: 20px !important;
+}
+
 .centered {
   text-align: center;
 }
 
+.title {
+  font-size: 8rem;
+}
+
 .record-button {
-  margin-top: -25px;
+  margin-top: -45px;
   margin-left: -5px;
   margin-right: -5px;
 }
@@ -40,15 +54,16 @@
 /* Badge Ratings */
 
 .badge {
-  border-radius: 8px;
-  border: 1px solid black;
+  border-radius: 10px;
+  border: 2px solid black;
   padding-top: 1px;
   padding-bottom: 1px;
   display: inline-block;
   width: 45px;
-  font-size: .75em;
-  margin-top: .75em;
+  font-size: .6em;
   text-align: center;
+  text-shadow: 1px 0px;
+  vertical-align: 2px;
 }
 
 .great:before {
@@ -90,4 +105,19 @@
 
 .bad {
   background-color: white;
+}
+
+.strong-beer {
+  vertical-align: -4px;
+  font-size: 1.33333333em !important;
+}
+
+.strong-beer-label {
+  font-size: .75em;
+  font-style: italic;
+}
+
+.flag-icon {
+  border-radius: 30px;
+  border: 2px solid black;
 }

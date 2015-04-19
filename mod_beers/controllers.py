@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # coding: utf-8
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
 from app import db, ma, csrf

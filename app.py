@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# coding: utf-8
 from flask import Flask, render_template, request
 from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -30,6 +32,8 @@ bundles = {
   'css_lib': Bundle('css/lib/normalize.css'
                ,'css/lib/skeleton.css'
                ,'css/style.css'
+               ,'css/fonts/ptsans/fonts.css'
+               ,'css/lib/flag-icon.min.css'
                ,filters='cssmin',output='gen/packed.css'),
 
   # jQuery migrate is used to support older jQuery libraries that have been upgraded to 1.10

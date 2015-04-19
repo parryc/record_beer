@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # coding: utf-8
 # Import flask dependencies
 from flask import Blueprint, render_template

@@ -11,21 +11,6 @@
   {% block page_css %}{% endblock %}
 </head>
 <body class="sticky-header">
-
-{% macro rating(beer) %}
-  {% if beer.rating >= 4.0 %}
-    Great!
-  {% elif beer.rating >= 3.0 %}
-    Good!
-  {% elif beer.rating >= 2.0 %}
-    Ok.
-  {% elif beer.rating >= 1.0 %}
-    Meh...
-  {% else %}
-    ...Bad...
-  {% endif %}
-{% endmacro %}
-
 {% macro render_field(field, placeholder=None, show_label=None, size="col-md-3", form_css="form-control") %}
   {% if field.errors %}
     <div class="has-error inline-form {{size}}">
@@ -46,12 +31,12 @@
     <div class="container">
       <div class="row centered" style="margin-top: 10px;">
         <a href="/" class="return">
-          <h1 class="inline">REC</h1>
-          <span class="fa-stack fa-2x record-button">
+          <h1 class="inline title">REC</h1>
+          <span class="fa-stack fa-3x record-button">
             <i class="fa fa-circle fa-stack-2x" style="color: rgb(255,110,110)"></i>
             <i class="fa fa-beer fa-stack-1x"></i>
           </span>
-          <h1 class="inline">RD</h1>
+          <h1 class="inline title">RD</h1>
         </a>
       </div>
       <div class="row">
