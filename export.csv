@@ -1,3 +1,4 @@
+id,user,brewery,name,abv,rating,style,country,drink_country,drink_city,drink_datetime,notes,creation_datetime,last_updated
 2502,1,Texels,Wit,5,4.3,Belgian White,Netherlands,Netherlands,Amsterdam,2010-07-01 00:00:00,I think I had this again when I was in London with Bjorn - I guess I'll just go with this for right now,2015-03-01 00:45:41.073808,2015-03-01 00:45:41.073812
 2503,1,Vedett,Extra Blond,5,3.4,Pale Lager,Netherlands,Netherlands,Amsterdam,2010-07-01 00:00:00,Rating change 3/2013 from 8.8,2015-03-01 00:45:41.073949,2015-03-01 00:45:41.073951
 2504,1,Kronenbourg,Sélection des Brasseurs,5,3.7,Pale Lager,France,France,Strasbourg,2010-08-01 00:00:00,"",2015-03-01 00:45:41.074059,2015-03-01 00:45:41.07406

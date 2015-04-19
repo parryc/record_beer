@@ -32,7 +32,7 @@
         <hr style="width:50%; margin-left: 15px auto;"/>
         <ul id="full-beer-list" class="list">
          {% for beer in beers %}
-         <li><a href="/beers/{{beer.id}}">{{beer.brewery}} {{beer.name}}</a> – {{rating(beer)}}</li>
+         <li><a href="/beers/{{beer.id}}">{{beer.brewery}} {{beer.name}}</a> – {{beer.rating}}</li>
          {% endfor %}
         </ul>
       </div>

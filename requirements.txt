@@ -20,10 +20,12 @@ flask-marshmallow==0.4.0
 itsdangerous==0.24
 jieba==0.35
 jsmin==2.0.11
-lxml==3.4.2
+lxml==3.4.3
 marshmallow==1.2.1
 psycopg2==2.5.4
-ratebeer
-requests==2.5.1
+pycountry==1.10
+ratebeer==2.0
+requests==2.6.0
+unicodecsv==0.12.0
 webassets==0.10.1
 wsgiref==0.1.2

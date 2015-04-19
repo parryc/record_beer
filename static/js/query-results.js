@@ -8,7 +8,7 @@ templates['query-results'] = template({"1":function(depth0,helpers,partials,data
     + "</span><br/>\n            <span class=\"badge "
     + escapeExpression(((helpers.badge || (depth0 && depth0.badge) || helperMissing).call(depth0, (depth0 != null ? depth0.rating : depth0), {"name":"badge","hash":{},"data":data})))
     + " rating\"></span>\n            <span class=\"flag-icon flag-icon-"
-    + escapeExpression(((helper = (helper = helpers.country || (depth0 != null ? depth0.country : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"country","hash":{},"data":data}) : helper)))
+    + escapeExpression(((helper = (helper = helpers.country_iso || (depth0 != null ? depth0.country_iso : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"country_iso","hash":{},"data":data}) : helper)))
     + " flag-icon-squared\"></span>\n";
   stack1 = ((helpers.isStrong || (depth0 && depth0.isStrong) || helperMissing).call(depth0, (depth0 != null ? depth0.abv : depth0), {"name":"isStrong","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data}));
   if (stack1 != null) { buffer += stack1; }

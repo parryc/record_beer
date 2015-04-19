@@ -4,7 +4,7 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 class Beers(db.Model):
     __tablename__ = 'beers'
-    __searchable__ = ['brewery', 'name']
+    __searchable__ = ['brewery', 'name', 'style']
 
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -15,8 +15,8 @@ class Beers(db.Model):
     # probably should be foreign key with a style table
     #db.Column(db.Integer, db.ForeignKey('styles.id'))
     style = db.Column(db.Text())
-    # probably should be foreign key with a country table
     country = db.Column(db.Text())
+    country_iso = db.Column(db.Text())
     drink_country = db.Column(db.Text())
     drink_city = db.Column(db.Text())
     # will have flag in user preference to store real time or just month/year
@@ -25,13 +25,14 @@ class Beers(db.Model):
     creation_datetime = db.Column(db.DateTime)
     last_updated = db.Column(db.DateTime)
 
-    def __init__(self, brewery, name, abv, rating, style, country, drink_country, drink_city, drink_datetime, notes='', creation_datetime=None, last_updated=None):
+    def __init__(self, brewery, name, abv, rating, style, country, country_iso, drink_country, drink_city, drink_datetime, notes='', creation_datetime=None, last_updated=None):
         self.brewery = brewery
         self.name = name
         self.abv = abv
         self.rating = rating
         self.style = style
         self.country = country
+        self.country_iso = country_iso
         self.drink_country = drink_country
         self.drink_city = drink_city
         self.drink_datetime = drink_datetime

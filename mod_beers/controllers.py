@@ -8,6 +8,8 @@ from mod_users.models import *
 import json
 import datetime
 import unicodedata
+import pycountry
+import unicodecsv
 from ratebeer import RateBeer
 from flask_wtf.csrf import CsrfProtect
 
@@ -20,7 +22,7 @@ rb = RateBeer()
 
 class BeerSchema(ma.Schema):
   class Meta:
-    fields = ('brewery', 'name','rating','style','country','drink_datetime', 'abv')
+    fields = ('brewery', 'name', 'rating', 'style', 'country', 'country_iso', 'drink_datetime', 'abv')
 
 
 
@@ -34,9 +36,9 @@ class BeerSchema(ma.Schema):
 def index():
     # there's only my beer at the moment. 
     beers = Beers.query.all()
-    print Beers.query.whoosh_search('IPA').all()
+    print Beers.query.whoosh_search(u'IPA').all()
     print '-----'
-    print Beers.query.whoosh_search('ipa').all()
+    print Beers.query.whoosh_search(u'ipa').all()
     return render_template('beers/index.html',beers=beers)
 
 @mod_beers.route('/<int:_id>', methods=['GET'])
@@ -49,12 +51,15 @@ def add():
     form = BeerForm()
     if form.validate_on_submit():
         me = Users.query.get(1)
+        country_name = form.country.data
+        country_iso = iso_code(country_name)
         beer_entry = Beers(
             brewery=form.brewery.data
            ,name=form.name.data
            ,abv=form.abv.data
            ,style=form.style.data
-           ,country=form.country.data
+           ,country=country_name
+           ,country_iso=country_iso
            ,rating=form.rating.data
            ,drink_country=form.drink_country.data
            ,drink_city=form.drink_city.data
@@ -75,7 +80,9 @@ def edit(_id):
         beer.name = form.name.data
         beer.abv = form.abv.data
         beer.style = form.style.data
-        beer.country = form.country.data
+        country_name = form.country.data
+        beer.country = country_name
+        beer.country_iso = iso_code(country_name)
         beer.rating = form.rating.data
         beer.drink_country = form.drink_country.data
         beer.drink_city = form.drink_city.data
@@ -136,24 +143,47 @@ def search():
 def init():
     # there's only my beer at the moment. 
     me = Users.query.get(1)
-    filename = 'beer.json'
-    f = open(filename,'r')
-    beers = json.load(f)
+    # filename = 'beer.json'
+    # f = open(filename,'r')
+    # beers = json.load(f)
+    beers = list(unicodecsv.DictReader(open('export.csv', 'r')))
     for beer in beers:
-      beer_entry = Beers(
-        brewery=beer['brewery'],
-        name=beer['name'],
-        abv=float(beer['abv']),
-        rating=float(beer['rating']),
-        style=beer['style'],
-        country=beer['country'],
-        drink_country=beer['drinkLocationCountry'],
-        drink_city=beer['drinkLocationCity'],
-        drink_datetime=datetime.datetime(beer['drinkYear'],beer['drinkMonth'],1),
-        notes=beer['notes']
+        country_alpha2 = iso_code(beer['country'])
+        beer_entry = Beers(
+            brewery=beer['brewery'],
+            name=beer['name'],
+            abv=float(beer['abv']),
+            rating=float(beer['rating']),
+            style=beer['style'],
+            country=beer['country'],
+            country_iso=country_alpha2,
+            drink_country=beer['drink_country'],
+            drink_city=beer['drink_city'],
+            drink_datetime=beer['drink_datetime'],
+            notes=beer['notes']
         )
-      db.session.add(beer_entry)
-      me.beers.append(beer_entry)
+        db.session.add(beer_entry)
+        me.beers.append(beer_entry)
     db.session.commit()
       # print beer.brewery + ' ' + beer.name
     return render_template('beers/index.html',beers=beers)
+
+
+def iso_code(country_name):
+    if country_name == 'USA':
+        return 'us'
+    elif country_name == 'Taiwan':
+        return 'tw'
+    elif country_name == 'Scotland'\
+      or country_name == 'England'\
+      or country_name == 'Wales'\
+      or country_name == 'Northern Ireland':
+        return 'gb'
+    elif country_name == 'Vietnam':
+        return 'vn'
+    elif country_name == 'Russia':
+        return 'ru'
+    elif country_name == 'South Korea':
+        return 'sk'
+    else:
+        return pycountry.countries.get(name=country_name).alpha2.lower()
