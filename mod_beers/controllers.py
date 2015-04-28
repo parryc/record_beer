@@ -10,8 +10,8 @@ import datetime
 import unicodedata
 import pycountry
 import unicodecsv
-from ratebeer import RateBeer
-from ratebeer import rb_exceptions
+from ratebeer_fork import RateBeer
+from ratebeer_fork import rb_exceptions
 from flask_wtf.csrf import CsrfProtect
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
