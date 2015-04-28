@@ -76,5 +76,7 @@ return'Imperial Pils';if(style==='Dunkel/Tmavý')
 return'Dunkel';if(style==='German Hefeweizen')
 return'Hefeweizen';if(style==='Belgian White (Witbier)')
 return'Belgian White';if(style==='Golden Ale/Blond Ale')
-return'Golden Ale';else
+return'Golden Ale';if(style=='Lambic Style - Gueuze')
+return'Gueuze';if(style=='Czech Pilsner (Světlý)')
+return'Pilsener';else
 return style;});

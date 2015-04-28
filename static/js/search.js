@@ -24,9 +24,9 @@ $(document).ready(function(){
     $('form #style').val(style);
     $('form #abv').val(abv);
     $('form #country').val(country);
-    $('form #drink_country').val('USA');
-    $('form #drink_city').val('Berkeley');
-    $('form #drink_datetime').val('2015-02-01');
+    $('form #drink_country').val('Croatia');
+    $('form #drink_city').val('Split');
+    $('form #drink_datetime').val('2015-04-01');
   }
 
   var search = function(evt) {

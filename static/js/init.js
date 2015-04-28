@@ -69,6 +69,10 @@ Handlebars.registerHelper('style', function(style){
     return 'Belgian White';
   if(style === 'Golden Ale/Blond Ale')
     return 'Golden Ale';
+  if(style == 'Lambic Style - Gueuze')
+    return 'Gueuze';
+  if(style == 'Czech Pilsner (Světlý)')
+    return 'Pilsener';
   else
     return style;
 });

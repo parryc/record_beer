@@ -4,7 +4,7 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 class Beers(db.Model):
     __tablename__ = 'beers'
-    __searchable__ = ['brewery', 'name', 'style']
+    __searchable__ = ['brewery', 'name', 'style', 'country']
 
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('users.id'))

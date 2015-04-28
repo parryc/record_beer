@@ -11,6 +11,7 @@ import unicodedata
 import pycountry
 import unicodecsv
 from ratebeer import RateBeer
+from ratebeer import rb_exceptions
 from flask_wtf.csrf import CsrfProtect
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
@@ -130,7 +131,7 @@ def search():
             result = results[idx]
             try:
                 hit = rb.beer(result['url'])
-            except RateBeer.AliasedBeer:
+            except rb_exceptions.AliasedBeer:
                 limit += 1
                 print 'AliasedBeer'
                 continue
@@ -185,5 +186,7 @@ def iso_code(country_name):
         return 'ru'
     elif country_name == 'South Korea':
         return 'sk'
+    elif country_name == 'Laos':
+        return 'la'
     else:
         return pycountry.countries.get(name=country_name).alpha2.lower()
