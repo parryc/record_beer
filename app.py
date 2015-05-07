@@ -5,7 +5,6 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.marshmallow import Marshmallow
 from flask_wtf.csrf import CsrfProtect
-
 import flask.ext.whooshalchemy as whooshalchemy
 import os
 
@@ -21,7 +20,14 @@ csrf.init_app(app)
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  from mod_beers.models import *
+  beer_count = Beers.query.count()
+  breweries_count = db.session.query(Beers.brewery).distinct()
+  styles_count = db.session.query(Beers.style).distinct()
+  countries_count = db.session.query(Beers.country).distinct()
+
+  return render_template('index.html',beer_count=beer_count,breweries_count=breweries_count
+                                     ,styles_count=styles_count,countries_count=countries_count)
 
 @app.errorhandler(404)
 def not_found(error):
@@ -51,11 +57,11 @@ bundles = {
                ,'js/query-results.js' 
                ,filters='jsmin',output='gen/query.js')
   }
-assets.register(bundles)  
+assets.register(bundles) 
 
 
 # Import a module / component using its blueprint handler variable
 from mod_beers.controllers import mod_beers
 app.register_blueprint(mod_beers)
 from mod_users.controllers import mod_users
-app.register_blueprint(mod_users)
+app.register_blueprint(mod_users) 

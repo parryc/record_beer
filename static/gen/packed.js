@@ -78,5 +78,7 @@ return'Hefeweizen';if(style==='Belgian White (Witbier)')
 return'Belgian White';if(style==='Golden Ale/Blond Ale')
 return'Golden Ale';if(style=='Lambic Style - Gueuze')
 return'Gueuze';if(style=='Czech Pilsner (Světlý)')
-return'Pilsener';else
+return'Pilsener';if(style=='Oktoberfest/Märzen')
+return'Oktoberfest';if(style=='Dortmunder/Helles')
+return'Dortmunder';else
 return style;});

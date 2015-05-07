@@ -119,7 +119,6 @@ def search():
         """
         return len(set(search) ^ set(result))
     query = _dirtystrip(request.json['query'])
-    print '***' + query + '***'
     results = rb.search(query)
     results = sorted(results['beers'],key=lambda beer: _closeness(query,beer['name']))
     top = []

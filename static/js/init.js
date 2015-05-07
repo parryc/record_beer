@@ -73,6 +73,10 @@ Handlebars.registerHelper('style', function(style){
     return 'Gueuze';
   if(style == 'Czech Pilsner (Světlý)')
     return 'Pilsener';
+  if(style == 'Oktoberfest/Märzen')
+    return 'Oktoberfest';
+  if(style == 'Dortmunder/Helles')
+    return 'Dortmunder';
   else
     return style;
 });

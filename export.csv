@@ -688,7 +688,6 @@ id,user,brewery,name,abv,rating,style,country,drink_country,drink_city,drink_dat
 15407,1,Full Sail,LTD #6,7,2.7,Dunkler Bock,USA,USA,Berkeley,2013-11-01 00:00:00,"",2015-04-19 23:15:54.573695,2015-04-19 23:15:54.573697,us
 15408,1,Grand Teton,Pursuit of Hoppiness,8.5,2,American Strong Ale,USA,USA,Berkeley,2013-11-01 00:00:00,"",2015-04-19 23:15:54.573788,2015-04-19 23:15:54.573789,us
 15409,1,Green Flash,Rayon Vert,7,2.3,Belgian Ale,USA,USA,San Francisco,2013-11-01 00:00:00,"",2015-04-19 23:15:54.573879,2015-04-19 23:15:54.57388,us
-15410,1,Schneiders,Weisen Edel-Weisse,6.2,0.9,Hefeweizen,Germany,USA,San Francisco,2013-11-01 00:00:00,"",2015-04-19 23:15:54.573973,2015-04-19 23:15:54.573974,de
 15411,1,Gordon Biersch,Weisen Eisbock,10,1.6,Weizen Bock,USA,USA,Berkeley,2013-11-01 00:00:00,"",2015-04-19 23:15:54.57407,2015-04-19 23:15:54.574071,us
 15412,1,Lagunitas,Maximus,8.2,2.7,Double IPA,USA,USA,Berkeley,2013-11-01 00:00:00,"",2015-04-19 23:15:54.574167,2015-04-19 23:15:54.574168,us
 15413,1,North Coast,Old No. 38 Stout,9,2.7,Dry Stout,USA,USA,Berkeley,2013-11-01 00:00:00,"",2015-04-19 23:15:54.57426,2015-04-19 23:15:54.574261,us
@@ -1433,10 +1432,58 @@ id,user,brewery,name,abv,rating,style,country,drink_country,drink_city,drink_dat
 16151,1,Vukovarsko,Domaće Svijetlo,4.5,2,Premium Lager,Croatia,Croatia,Zagreb,2015-03-01 00:00:00,"",2015-04-28 03:35:28.051192,2015-04-28 03:35:28.051197,hr
 16152,1,Zmajska,Porter,6.5,2.6,Porter,Croatia,Croatia,Zagreb,2015-03-01 00:00:00,"",2015-04-28 03:35:50.667869,2015-04-28 03:35:50.667875,hr
 16153,1,Tolkien's House,Pivo Kuce,5.5,2.5,Bock,Croatia,Croatia,Zagreb,2015-03-01 00:00:00,"ABV is a guess, since it was a house brew",2015-04-28 03:40:13.961865,2015-04-28 03:40:13.961871,hr
-16154,1,Schneider,Aventinus Weizen-Eisbock,12,3.6,Eisbock,Germany,Croatia,Zagreb,2015-03-01 00:00:00,"",2015-04-28 03:43:12.444239,2015-04-28 03:43:12.444245,de
 16155,1,Karlovačko,Svijetlo,5,2.1,Pale Lager,Croatia,Croatia,Zagreb,2015-03-01 00:00:00,"",2015-04-28 03:43:45.249968,2015-04-28 03:43:45.249974,hr
 16156,1,Zmajska,Pale Ale,5.3,3,American Pale Ale,Croatia,Croatia,Split,2015-03-01 00:00:00,"",2015-04-28 03:44:19.933685,2015-04-28 03:44:19.93369,hr
 16157,1,Visi Baba,Bob Barley,6.5,2.7,Porter,Croatia,Croatia,Split,2015-03-01 00:00:00,"",2015-04-28 03:44:38.523886,2015-04-28 03:44:38.523892,hr
 16158,1,Visi Baba,Janis Hoplin,6.5,2,IPA,Croatia,Croatia,Split,2015-03-01 00:00:00,"",2015-04-28 03:45:01.555236,2015-04-28 03:45:01.555242,hr
 16159,1,Visi Baba,John Lemon,5.6,1.7,Belgian White,Croatia,Croatia,Split,2015-03-01 00:00:00,"",2015-04-28 03:45:15.461054,2015-04-28 03:45:15.46106,hr
 16160,1,Medvedgrad,Zlatni Medvjed,4.4,2,Pilsener,Croatia,Croatia,Split,2015-03-01 00:00:00,"",2015-04-28 03:45:33.572157,2015-04-28 03:45:33.572164,hr
+16161,1,Staročeko,Desetka 10,4,1.5,Pale Lager,Croatia,Croatia,Split,2015-04-01 00:00:00,"",2015-05-07 02:40:57.971906,2015-05-07 02:40:57.971912,hr
+16162,1,Ožujsko,"",5,2,Pale Lager,Croatia,Croatia,Split,2015-04-01 00:00:00,"",2015-05-07 02:49:02.43465,2015-05-07 02:49:02.434657,hr
+16163,1,Ottakringer,Helles,5.2,2.4,Dortmunder/Helles,Austria,Austria,Vienna,2015-04-01 00:00:00,"",2015-05-07 02:53:06.478672,2015-05-07 02:53:06.478678,at
+16174,1,J. Wakefield,El Jefe,4.5,3,Hefeweizen,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:20:53.591563,2015-05-07 03:20:53.591569,us
+16175,1,Wynwood,Wynwood IPA,7.2,3.2,IPA,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:21:10.486475,2015-05-07 03:21:10.486481,us
+16154,1,Schneider Weisse,Aventinus Weizen-Eisbock,12,3.6,Eisbock,Germany,Croatia,Zagreb,2015-03-01 00:00:00,"",2015-04-28 03:43:12.444239,2015-04-28 03:43:12.444245,de
+15410,1,Schneider Weisse,Wiesen Edel-Weisse,6.2,0.9,Hefeweizen,Germany,USA,San Francisco,2013-11-01 00:00:00,"",2015-04-19 23:15:54.573973,2015-04-19 23:15:54.573974,de
+16164,1,Schneider Weisse,Original,5.4,2.7,Hefeweizen,Germany,Austria,Vienna,2015-04-01 00:00:00,"",2015-05-07 03:00:34.856632,2015-05-07 03:00:34.856638,de
+16165,1,Gösser,Märzen,5.2,1.8,Oktoberfest,Austria,Austria,Vienna,2015-04-01 00:00:00,"",2015-05-07 03:01:36.170972,2015-05-07 03:01:36.170978,at
+16166,1,Zámocký,Polotmavé 11º,6,3,Polotmavý,Slovakia,Slovakia,Bratislava,2015-04-01 00:00:00,"",2015-05-07 03:10:45.952172,2015-05-07 03:10:45.952178,sk
+16167,1,Zámocký,Tmavé 13º,5.2,3.2,Dunkel,Slovakia,Slovakia,Bratislava,2015-04-01 00:00:00,"",2015-05-07 03:11:08.846645,2015-05-07 03:11:08.84665,sk
+16168,1,Zámocký,Svetlé,4.6,3,Pilsener,Slovakia,Slovakia,Bratislava,2015-04-01 00:00:00,"",2015-05-07 03:11:29.693122,2015-05-07 03:11:29.693128,sk
+16169,1,Novopacké,Brouček,5,1.9,Pilsener,Czech Republic,Slovakia,Bratislava,2015-04-01 00:00:00,"",2015-05-07 03:13:31.146666,2015-05-07 03:13:31.146672,cz
+16170,1,Novopacké,Kryštof,5,1.7,Pilsener,Czech Republic,Slovakia,Bratislava,2015-04-01 00:00:00,"",2015-05-07 03:14:50.226474,2015-05-07 03:14:50.22648,cz
+16171,1,Novopacké,Tmavé Granát,5,1,Schwarzbier,Czech Republic,Slovakia,Bratislava,2015-04-01 00:00:00,"",2015-05-07 03:16:02.127721,2015-05-07 03:16:02.127729,cz
+16172,1,Eggenberg,Urbock,9.6,1.8,Doppelbock,Austria,Austria,Vienna,2015-04-01 00:00:00,"",2015-05-07 03:17:01.763553,2015-05-07 03:17:01.763562,at
+16173,1,Wieselburger,Stammbräu,5.4,1.8,Pilsener,Austria,Austria,Vienna,2015-04-01 00:00:00,"",2015-05-07 03:19:33.740713,2015-05-07 03:19:33.740719,at
+16176,1,Wynwood,Doubledock,7.4,3.3,Doppelbock,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:21:46.076443,2015-05-07 03:21:46.07645,us
+16177,1,Wynwood,Brickell BIPA,7.3,2.2,IPA,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:22:47.959541,2015-05-07 03:22:47.959547,us
+16178,1,Wynwood,Flagler Saison,7.4,2.7,Saison,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:23:02.168475,2015-05-07 03:23:02.168481,us
+16179,1,Wynwood,Magic City,5.6,2.5,American Pale Ale,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:23:12.335479,2015-05-07 03:23:12.335487,us
+16180,1,Wynwood,Pop's Porter,6.2,3.8,Porter,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:23:26.166093,2015-05-07 03:23:26.1661,us
+16181,1,Wynwood,Farmer's Paradise,6.3,2.6,Saison,USA,USA,Miami,2015-04-01 00:00:00,"",2015-05-07 03:26:53.905359,2015-05-07 03:26:53.905365,us
+16182,1,Wynwood,Nitro City,5.6,2.4,American Pale Ale,USA,USA,Miami,2015-04-01 00:00:00,Wynwood Magic City on Nitro,2015-05-07 03:28:49.061038,2015-05-07 03:28:49.061045,us
+16183,1,Wynwood,El Infante,10,3.7,Barley Wine,USA,USA,Miami,2015-04-01 00:00:00,Aged in petit sirah barrels,2015-05-07 03:29:16.691081,2015-05-07 03:29:16.691087,us
+16184,1,Gordon Biersch,Golden Export,4.7,2.5,Dortmunder,USA,USA,Atlanta,2015-04-01 00:00:00,"",2015-05-07 03:30:43.292539,2015-05-07 03:30:43.292546,us
+16185,1,Gordon Biersch,Hefeweizen,5.4,3.5,Hefeweizen,USA,USA,Atlanta,2015-04-01 00:00:00,"",2015-05-07 03:31:06.816784,2015-05-07 03:31:06.81679,us
+16186,1,Gordon Biersch,Czech Pilsner,5.6,3.2,Pilsener,USA,USA,Atlanta,2015-04-01 00:00:00,"",2015-05-07 03:31:23.72702,2015-05-07 03:31:23.727026,us
+16187,1,Gordon Biersch,Märzen,5.8,2.7,Oktoberfest,USA,USA,Atlanta,2015-04-01 00:00:00,"",2015-05-07 03:31:44.799183,2015-05-07 03:31:44.79919,us
+16188,1,Gordon Biersch,Blonde Bock,7,2.7,Heller Bock,USA,USA,Atlanta,2015-04-01 00:00:00,"",2015-05-07 03:32:05.961762,2015-05-07 03:32:05.961768,us
+16189,1,Gordon Biersch,Maibock,7.3,2.8,Heller Bock,USA,USA,Atlanta,2015-04-01 00:00:00,"",2015-05-07 03:32:25.534016,2015-05-07 03:32:25.534023,us
+16190,1,Knee Deep,Breaking Bud,6.5,2.6,IPA,USA,USA,Berkeley,2015-04-01 00:00:00,Only 4 days old!,2015-05-07 03:33:16.02049,2015-05-07 03:33:16.020497,us
+16191,1,Brasserie de Brunehaut,Abbaye De St Amand ,7,2.2,Belgian Ale,Belgium,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:38:11.125554,2015-05-07 03:38:11.12556,be
+16192,1,Hair of the Dog,Pannepooch Reserva 2013,13,3.6,Belgian Strong Ale,USA,USA,Oakland,2015-04-01 00:00:00,"",2015-05-07 03:38:45.447671,2015-05-07 03:38:45.447678,us
+16193,1,Sam Adams,Utopias,27,3.8,Barley Wine,USA,USA,Oakland,2015-04-01 00:00:00,"",2015-05-07 03:39:10.708498,2015-05-07 03:39:10.708504,us
+16194,1,Siren,Smoke Signals,4,2.7,Gose,England,USA,Berkeley,2015-04-01 00:00:00,w/ Stillwater,2015-05-07 03:40:29.065506,2015-05-07 03:40:29.065513,gb
+16195,1,To Øl,Sort Mælk,13.1,3.4,Imperial Stout,Denmark,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:40:50.524208,2015-05-07 03:40:50.524214,dk
+16196,1,Ommegang,Three-Eyed Raven,7.2,3.6,Saison,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:41:05.569417,2015-05-07 03:41:05.569424,us
+16197,1,Victory,Hop Ranch,9,2.5,Double IPA,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:41:41.58031,2015-05-07 03:41:41.580316,us
+16198,1,Anchor,Flying Cloud,7.4,2.7,Foreign Stout,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:42:02.531822,2015-05-07 03:42:02.531828,us
+16199,1,Perennial,Vermilion,10.5,2.8,Barley Wine,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:42:33.505607,2015-05-07 03:42:33.505614,us
+16200,1,Heretic,Shallow Grave,7,2.4,Porter,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:43:02.966048,2015-05-07 03:43:02.966054,us
+16201,1,Henhouse,Saison,5.5,2.4,Saison,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:43:22.578244,2015-05-07 03:43:22.578251,us
+16202,1,Altamont,Hella Lite,3.8,2.7,IPA,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:43:59.52654,2015-05-07 03:43:59.526547,us
+16203,1,Lagunitas,Waldo's Special Ale 2015,9.2,2.3,Double IPA,USA,USA,Pleasanton,2015-04-01 00:00:00,"",2015-05-07 03:45:54.703539,2015-05-07 03:45:54.703546,us
+16205,1,Almanac,Dogpatch Strawberry,7.5,3.1,Sour,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:48:32.797952,2015-05-07 03:48:32.797958,us
+16206,1,Fish Tale,Organic IPA,6.5,2.5,IPA,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:50:55.250576,2015-05-07 03:50:55.250584,us
+16204,1,Dogfish Head,American Beauty,9,1.9,American Strong Ale,USA,USA,Pleasanton,2015-04-01 00:00:00,"",2015-05-07 03:46:12.883858,2015-05-07 03:46:12.883865,us
+16207,1,Dogfish Head,Aprihop,7,1.7,Fruit Beer,USA,USA,Berkeley,2015-04-01 00:00:00,"",2015-05-07 03:52:00.58199,2015-05-07 03:52:00.581996,us

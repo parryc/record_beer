@@ -9,5 +9,13 @@
   <input id="query" type="text" placeholder="Search..."/>
 </div>
 
-<div id="query-results" class="row centered"></div>
+<div id="query-results" class="row centered">
+  <h3>Stats</h3>
+  Beers: {{beer_count}}<br/>
+  Breweries: {{breweries_count.all()|length}}<br/>
+  Styles: {{styles_count.all()|length}}<br/>
+  Countries: {{countries_count.all()|length}}
+
+</div>
+
 {% endblock %}
