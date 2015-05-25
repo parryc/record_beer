@@ -14,9 +14,9 @@ Test
 }
 
 .search {
-  margin-bottom: 15px;
-  padding-top: 15px;
-  padding-left: 15px;
+  margin-bottom: -25px;
+/*  padding-top: 15px;
+  padding-left: 15px;*/
   text-align: left;
 }
 
@@ -31,7 +31,8 @@ Test
 .header {
   background: white;
   padding-top: 15px;
-  margin-bottom: 60px;
+  margin-bottom: 45px;
+  padding-left: 15px;
   border-bottom: 5px solid black;
 }
 
@@ -41,31 +42,57 @@ Test
   border-top: 3px solid black;
 }
 
-.style, .rating {
-  display: inline-block;
-  width: 2em;
-  height: 2em;
-  vertical-align: text-bottom;
-}
-
 .rating {
   line-height: 2em;
   text-align: center;
   font-weight: bold;
 }
 
-/* Beer style colors
+.results {
+  overflow-x: scroll;
+  height: 45vh;
+}
+
+.result {
+  text-align: left;
+  border-left: 5px solid white;
+  border-right: 5px solid white;
+  padding: 10px 10px 10px 15px;
+}
+
+.result:nth-child(odd) {
+  background-color: rgba(255,110,110,.3);
+}
+
+.result:hover {
+  border-left: 5px solid rgb(255,110,110);
+  cursor: pointer;
+}
+
+/* Detail specific
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.brown-ale {
-  background-color: rgb(132, 57, 65);
+.detail.beer-year {
+  font-size: .75em;
+}
+.detail.beer-year:before {
+  content: '(';
+}
+
+.detail.beer-year:after {
+  content: ')';
+}
+
+.detail.with {
+  font-style: italic;
+  margin-top: -22px;
 }
 
 /* Skeleton Overrides
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 body {
-  background: rgb(255, 110, 110);
+  /*background: rgb(255, 110, 110);*/
 }
 
 tr:nth-child(even) {
@@ -75,6 +102,13 @@ tr:nth-child(even) {
 td {
   padding-left: 20px !important;
   padding-right: 20px !important;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+  width: 120px;
 }
 
 .centered {
@@ -135,21 +169,37 @@ td {
   vertical-align: 2px;
 }
 
+.tag {
+  font-style: italic;
+  margin-right: 10px;
+}
+
+.tag:before {
+  content: '#';
+  color: rgb(255,110,110);
+}
+
+.tag:hover {
+  border-bottom: 2px solid rgb(255,110,110);
+  cursor: pointer
+}
+
 .great:before {
   content: 'great';
 }
 
 .great {
-  background-color: rgba(255, 110, 110, 1);
+  color: rgba(255, 110, 110, 1);
   font-style: 'bold';
 }
 
-/*.good:before {
+.good:before {
   content: 'good';
-}*/
+}
 
 .good {
-  background-color: rgba(255, 110, 110, .7);
+  color: rgb(204,88,88);
+  /*color: rgba(255, 110, 110, .7);*/
 }
 
 .ok:before {
@@ -157,7 +207,8 @@ td {
 }
 
 .ok {
-  background-color: rgba(255, 110, 110, .5);
+  color: rgb(153,66,66);
+  /*color: rgba(255, 110, 110, .5);*/
 }
 
 .meh:before {
@@ -165,7 +216,8 @@ td {
 }
 
 .meh {
-  background-color: rgba(255, 110, 110, .3);
+  color: rgb(102,44,44);  
+  /*color: rgba(255, 110, 110, .3);*/
 }
 
 .bad:before {
@@ -173,7 +225,12 @@ td {
 }
 
 .bad {
-  background-color: white;
+  color: rgb(51,22,22);
+  /*color: white;*/
+}
+
+.abv:after{
+  content: '%';
 }
 
 .strong-beer {
