@@ -5,8 +5,71 @@
   {% endassets %}
 {% endblock %}
 {% block content %}
-<div class="row centered">
+<!-- <div class="row centered">
   <input id="query" type="text" placeholder="Search..."/>
+</div> -->
+
+<div class="row centered">
+  <!-- <div class="two columns navigation box">
+    <div class="nav-header">
+      Things to do
+    </div>
+    <div class="menu-item">
+      Search
+    </div>
+    <div class="menu-item">
+      Add
+    </div>
+    <div class="menu-item">
+      Edit
+    </div>
+    <div class="menu-item">
+      Analyze
+    </div>
+    <div class="menu-item">
+      Logout
+    </div>
+  </div>
+  <div class="one columns">&nbsp;</div> -->
+  <div class="twelve columns">
+    <div class="twelve columns search box">
+      <span class="fa-stack fa-2x">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-search fa-stack-1x" style="color: white;"></i>
+      </span>
+      <input id="query" type="text" placeholder="Search..."/>
+      <span class="fa-stack fa-2x">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-bar-chart fa-stack-1x" style="color: white;"></i>
+      </span>
+      <span class="fa-stack fa-2x">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x" style="color: white;"></i>
+      </span>
+      <span class="fa-stack fa-2x">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-pencil fa-stack-1x" style="color: white;"></i>
+      </span>
+    </div>
+
+    <div class="row">
+      <div class="four columns info box">
+        <span class="brewery">Sierra Nevada</span>
+        <span class="name">Pale Ale</span><br/>
+        <span class="rating good">2.4</span>
+        <span class="style brown-ale"></span>
+        <span class="flag-icon flag-icon-us flag-icon-squared"></span>
+      </div>
+      <div class="four columns info box">
+        <span class="brewery">Sierra Nevada</span><br/>
+        <span class="name">Devestation</span>
+      </div>
+      <div class="four columns info box">
+        <span class="brewery">Sierra Nevada</span><br/>
+        <span class="name">Narwhal</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="query-results" class="row centered">

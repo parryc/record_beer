@@ -28,17 +28,17 @@
 {% endmacro %}
 
 <section>
+    <div class="centered header">
+      <a href="/" class="return">
+        <h1 class="inline title">REC</h1>
+        <span class="fa-stack fa-3x record-button">
+          <i class="fa fa-circle fa-stack-2x" style="color: rgb(255,110,110)"></i>
+          <i class="fa fa-beer fa-stack-1x"></i>
+        </span>
+        <h1 class="inline title">RD</h1>
+      </a>
+    </div>
     <div class="container">
-      <div class="row centered" style="margin-top: 10px;">
-        <a href="/" class="return">
-          <h1 class="inline title">REC</h1>
-          <span class="fa-stack fa-3x record-button">
-            <i class="fa fa-circle fa-stack-2x" style="color: rgb(255,110,110)"></i>
-            <i class="fa fa-beer fa-stack-1x"></i>
-          </span>
-          <h1 class="inline title">RD</h1>
-        </a>
-      </div>
       <div class="row">
         {% with errors = get_flashed_messages(category_filter=["error"]) %}
           {% if errors %}

@@ -1,5 +1,73 @@
+/*
+Test
+*/
+
+.box {
+  background: white;
+  box-shadow: 2px 2px 2px 1px black;
+  min-height: 5vh;
+}
+
+.info {
+  padding: 15px;
+  text-align: left;
+}
+
+.search {
+  margin-bottom: 15px;
+  padding-top: 15px;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.navigation {
+  /*min-height: 50vh;*/
+}
+
+.brewery, .name {
+  font-size: 1.5em;
+}
+
+.header {
+  background: white;
+  padding-top: 15px;
+  margin-bottom: 60px;
+  border-bottom: 5px solid black;
+}
+
+.menu-item {
+  min-height: 5vh;
+  font-size: 1.3em;
+  border-top: 3px solid black;
+}
+
+.style, .rating {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  vertical-align: text-bottom;
+}
+
+.rating {
+  line-height: 2em;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Beer style colors
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.brown-ale {
+  background-color: rgb(132, 57, 65);
+}
+
 /* Skeleton Overrides
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+body {
+  background: rgb(255, 110, 110);
+}
+
 tr:nth-child(even) {
   background-color: rgba(255, 110, 110, .1)
 }
@@ -76,9 +144,9 @@ td {
   font-style: 'bold';
 }
 
-.good:before {
+/*.good:before {
   content: 'good';
-}
+}*/
 
 .good {
   background-color: rgba(255, 110, 110, .7);
@@ -119,6 +187,6 @@ td {
 }
 
 .flag-icon {
-  border-radius: 30px;
-  border: 2px solid black;
+  vertical-align: text-bottom;
+  font-size: 2em;
 }
