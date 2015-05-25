@@ -1,31 +1,13 @@
-/*
-Test
-*/
-
-.box {
-  background: white;
-  box-shadow: 2px 2px 2px 1px black;
-  min-height: 5vh;
-}
-
-.info {
-  padding: 15px;
-  text-align: left;
-}
+/* Query result
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .search {
   margin-bottom: -25px;
-/*  padding-top: 15px;
-  padding-left: 15px;*/
   text-align: left;
 }
 
-.navigation {
-  /*min-height: 50vh;*/
-}
-
 .brewery, .name {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .header {
@@ -34,12 +16,6 @@ Test
   margin-bottom: 45px;
   padding-left: 15px;
   border-bottom: 5px solid black;
-}
-
-.menu-item {
-  min-height: 5vh;
-  font-size: 1.3em;
-  border-top: 3px solid black;
 }
 
 .rating {
@@ -88,12 +64,12 @@ Test
   margin-top: -22px;
 }
 
+.detail.rating {
+  font-weight: normal;
+}
+
 /* Skeleton Overrides
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-body {
-  /*background: rgb(255, 110, 110);*/
-}
 
 tr:nth-child(even) {
   background-color: rgba(255, 110, 110, .1)

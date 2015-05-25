@@ -11,19 +11,41 @@ $(document).ready(function(){
     }
   });
 
+  var detailify = function(evt) {
+    var detail    = $('#beer-detail')
+       ,name      = $(this).find('.name').text()
+       ,brewery   = $(this).find('.brewery').text()
+       ,country   = $(this).find('.country').text()
+       ,style     = $(this).find('.style').text()
+       ,abv       = $(this).attr('data-abv')
+       ,d_city    = $(this).attr('data-city')
+       ,d_country = $(this).attr('data-country')
+       ,d_month   = $(this).attr('data-month')
+       ,d_year    = $(this).attr('data-year')
+       ,brew_with = $(this).attr('data-with')
+       ,brew_year = $(this).attr('data-brewyear')
+
+    detail.find('.name').text(name);
+    detail.find('.brewery').text(brewery);
+    detail.find('.country').text(country);
+    detail.find('.style').text(style);
+    detail.find('.name').text(name);
+    detail.find('.abv').text(abv);
+    detail.find('.drink-city').text(d_city);
+    detail.find('.drink-country').text(d_country);
+    detail.find('.drink-month').text(d_month);
+    detail.find('.drink-year').text(d_year);
+  }
+
   var query = function(evt) {
-    console.log('here');
     var query = $('#query').val()
         ,data = {}
         ;
-    if(query === '') {
-      query = $('.search #brewery').val() + ' ' + $('.search #name').val()
-    }
 
     data = {'query':query}
 
     $('#query-results').text('Searching...');
-    // strip the brewery name from the "name", also strip "brewery" "brewing" etc.
+
     $.ajax({
       type: 'POST',
       url: '/beers/query',
@@ -35,14 +57,11 @@ $(document).ready(function(){
         }
         console.log(results)
         $('#query-results').html(queryResults(results));
+        $('.result').click(detailify);
       }
     });
-
-    console.log(data);
   }
 
-
   $('#query').on("input",$.debounce(query, 500));
-
 
 });

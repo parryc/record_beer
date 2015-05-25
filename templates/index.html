@@ -5,53 +5,10 @@
   {% endassets %}
 {% endblock %}
 {% block content %}
-<!-- <div class="row centered">
-  <input id="query" type="text" placeholder="Search..."/>
-</div> -->
+
 
 <div class="row">
-  <!-- <div class="two columns navigation box">
-    <div class="nav-header">
-      Things to do
-    </div>
-    <div class="menu-item">
-      Search
-    </div>
-    <div class="menu-item">
-      Add
-    </div>
-    <div class="menu-item">
-      Edit
-    </div>
-    <div class="menu-item">
-      Analyze
-    </div>
-    <div class="menu-item">
-      Logout
-    </div>
-  </div>
-  <div class="one columns">&nbsp;</div> -->
   <div class="twelve columns">
-<!--     <div class="twelve columns search box">
-      <span class="fa-stack fa-2x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-search fa-stack-1x" style="color: white;"></i>
-      </span>
-      <input id="query" type="text" placeholder="Search..."/>
-      <span class="fa-stack fa-2x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-bar-chart fa-stack-1x" style="color: white;"></i>
-      </span>
-      <span class="fa-stack fa-2x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plus fa-stack-1x" style="color: white;"></i>
-      </span>
-      <span class="fa-stack fa-2x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-pencil fa-stack-1x" style="color: white;"></i>
-      </span>
-    </div> -->
-
     <div class="row">
       <div class="six columns">
         <div class="search">
@@ -59,81 +16,10 @@
         </div>
         <hr/>
         <h3>Search Results</h3>
-        <div class="results">
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating great"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating good"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating ok"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating meh"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating bad"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating great"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating good"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating ok"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating meh"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-          <div class="result">
-            <span class="brewery">Sierra Nevada</span>
-            <span class="name">Pale Ale</span><br/>
-            <span class="beer-info">
-              <span class="rating bad"></span> / <span class="style">American Pale Ale</span> / <span class="country">USA</span>
-            </span>
-          </div>
-        </div>
+        <div id="query-results" class="results"></div>
       </div>
       <div class="six columns">
-        <div class="detail">
+        <div id="beer-detail">
           <h3>
             <span class="detail brewery">Sierra Nevada</span><br/>
             <span class="detail name">Pale Ale</span>
