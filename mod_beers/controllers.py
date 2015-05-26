@@ -13,6 +13,7 @@ import unicodecsv
 from ratebeer_fork import RateBeer
 from ratebeer_fork import rb_exceptions
 from flask_wtf.csrf import CsrfProtect
+from sqlalchemy import or_, and_
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
 rb = RateBeer()
@@ -95,8 +96,30 @@ def edit(_id):
 
 @mod_beers.route('/query', methods=['POST'])
 def query():
-    query = request.json['query']
-    query_results = Beers.query.whoosh_search(query).all()
+    raw_query = request.json['query']
+
+    # print '***** query: %s *****' % raw_query
+
+    if ":" in raw_query:
+        parts = raw_query.split(':')
+        prefix = parts[0]
+        query = u'%{}%'.format(parts[1])
+    else:
+        query = u'%{}%'.format(raw_query)
+
+    user  = request.json['user']
+
+    if ":" in raw_query:
+        query_results = Beers.query.filter(Beers.user==user)\
+                                   .filter(getattr(Beers,prefix).ilike(query))
+    else:
+        query_results = Beers.query.filter(and_(Beers.user==user, 
+                                            or_(
+                                               Beers.brewery.ilike(query),
+                                               Beers.name.ilike(query),
+                                               Beers.style.ilike(query),
+                                               Beers.country.ilike(query)
+                                            # )))
     results = BeerSchema(many=True).dump(query_results)
     return jsonify({'results':results.data})
 

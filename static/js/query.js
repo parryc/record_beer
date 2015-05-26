@@ -42,7 +42,10 @@ $(document).ready(function(){
         ,data = {}
         ;
 
-    data = {'query':query}
+    data = {
+      'query':query,
+      'user':1
+    }
 
     $('#query-results').text('Searching...');
 
