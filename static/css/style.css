@@ -45,6 +45,11 @@
   cursor: pointer;
 }
 
+#results-count {
+  margin-top: -15px;
+  margin-bottom: 15px;
+}
+
 /* Detail specific
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -59,7 +64,7 @@
   content: ')';
 }
 
-.detail.with {
+.detail.beer-with {
   font-style: italic;
   margin-top: -22px;
 }
@@ -68,82 +73,9 @@
   font-weight: normal;
 }
 
-/* Skeleton Overrides
+
+/* Detail colors
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-tr:nth-child(even) {
-  background-color: rgba(255, 110, 110, .1)
-}
-
-td {
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
-label {
-  display: inline-block;
-  margin-bottom: .5rem;
-  font-weight: 600;
-  width: 120px;
-}
-
-.centered {
-  text-align: center;
-}
-
-.title {
-  font-size: 8rem;
-}
-
-.record-button {
-  margin-top: -45px;
-  margin-left: -5px;
-  margin-right: -5px;
-}
-
-.return {
-  text-decoration: none;
-  color: inherit !important;
-}
-
-.add {
-  position: fixed;
-  bottom: 15px;
-  left: 15px;
-}
-
-.inline {
-  display: inline;
-}
-
-.inline-form {
-  display: inline-block;
-}
-
-.query-container {
-  width: 300px;
-  margin: 0 auto;
-}
-
-.query-info {
-  float: left;
-  margin-left: 15px;
-}
-
-/* Badge Ratings */
-
-.badge {
-  border-radius: 10px;
-  border: 2px solid black;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  display: inline-block;
-  width: 45px;
-  font-size: .6em;
-  text-align: center;
-  text-shadow: 1px 0px;
-  vertical-align: 2px;
-}
 
 .tag {
   font-style: italic;
@@ -175,7 +107,6 @@ label {
 
 .good {
   color: rgb(204,88,88);
-  /*color: rgba(255, 110, 110, .7);*/
 }
 
 .ok:before {
@@ -184,7 +115,6 @@ label {
 
 .ok {
   color: rgb(153,66,66);
-  /*color: rgba(255, 110, 110, .5);*/
 }
 
 .meh:before {
@@ -193,7 +123,6 @@ label {
 
 .meh {
   color: rgb(102,44,44);  
-  /*color: rgba(255, 110, 110, .3);*/
 }
 
 .bad:before {
@@ -202,24 +131,66 @@ label {
 
 .bad {
   color: rgb(51,22,22);
-  /*color: white;*/
 }
 
 .abv:after{
   content: '%';
 }
 
-.strong-beer {
-  vertical-align: -4px;
-  font-size: 1.33333333em !important;
+/* Skeleton Overrides
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+tr:nth-child(even) {
+  background-color: rgba(255, 110, 110, .1)
 }
 
-.strong-beer-label {
-  font-size: .75em;
-  font-style: italic;
+td {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 
-.flag-icon {
-  vertical-align: text-bottom;
-  font-size: 2em;
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+  width: 120px;
 }
+
+.centered {
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.title {
+  font-size: 8rem;
+}
+
+.record-button {
+  margin-top: -45px;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.return {
+  text-decoration: none;
+  color: inherit !important;
+}
+
+.add {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-form {
+  display: inline-block;
+}
+
+

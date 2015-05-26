@@ -119,7 +119,7 @@ def query():
                                                Beers.name.ilike(query),
                                                Beers.style.ilike(query),
                                                Beers.country.ilike(query)
-                                            # )))
+                                            )))
     results = BeerSchema(many=True).dump(query_results)
     return jsonify({'results':results.data})
 

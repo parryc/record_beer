@@ -8,14 +8,14 @@
 @font-face {font-family: 'PT Sans'; 
 	font-style: italic;
 	src: url('pts56f_w.eot'); 
-	src: local('PT Sans Italic'), url('PTS56F_W.eot?#iefix') format('embedded-opentype'), url('PTS56F_W.woff') format('woff'),url('PTS56F_W.ttf') format('truetype'), url('PTS56F_W.svg#PTSans-Italic') format('svg');}
-
+	src: local('PT Sans Italic'), url('PTS56F_W.eot?#iefix') format('embedded-opentype'), url('PTS56F_W.svg#PTSans-Italic') format('svg');}
+/* url('PTS56F_W.woff') format('woff'),url('PTS56F_W.ttf') format('truetype'),*/
 @font-face {font-family: 'PT Sans';
 	src: url('pts75f_w.eot');
 	font-style: normal;
 	font-weight: bold; 
-	src: local('PT Sans Bold'), url('PTS75F_W.eot?#iefix') format('embedded-opentype'), url('PTS75F_W.woff') format('woff'),url('PTS75F_W.ttf') format('truetype'), url('PTS75F_W.svg#PTSans-Bold') format('svg');}
-
+	src: local('PT Sans Bold'), url('PTS75F_W.eot?#iefix') format('embedded-opentype'), url('PTS75F_W.svg#PTSans-Bold') format('svg');}
+/* url('PTS75F_W.woff') format('woff'),url('PTS75F_W.ttf') format('truetype'),*/
 @font-face {font-family: 'PT Sans';
 	font-style: italic;
 	font-weight: bold; 
@@ -29,4 +29,4 @@
 @font-face {font-family: 'PT Sans Caption';
 	font-weight: bold; 
 	src: url('ptc75f_w.eot');
-	src: local('PT Sans Caption Bold'), url('PTC75F_W.eot?#iefix') format('embedded-opentype'), url('PTC75F_W.woff') format('woff'),url('PTC75F_W.ttf') format('truetype'), url('PTC75F_W.svg#PTSans-CaptionBold') format('svg');}
+	src: local('PT Sans Caption Bold'), url('PTC75F_W.eot?#iefix') format('embedded-opentype'), url('PTC75F_W.svg#PTSans-CaptionBold') format('svg');}

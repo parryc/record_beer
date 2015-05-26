@@ -16,26 +16,30 @@
         </div>
         <hr/>
         <h3>Search Results</h3>
+        <div id="results-count"></div>
         <div id="query-results" class="results"></div>
       </div>
       <div class="six columns">
+        <div id="start">
+          <h4><span class="username">parry</span>'s latest beer</h4>
+        </div>
         <div id="beer-detail">
           <h3>
-            <span class="detail brewery">Sierra Nevada</span><br/>
-            <span class="detail name">Pale Ale</span>
-            <span class="detail beer-year">2012</span>
+            <span class="detail brewery">{{latest.brewery}}</span><br/>
+            <span class="detail name">{{latest.name}}</span>
+            <span class="detail beer-year {% if not latest.beer_year %}hidden{% endif %}">{{latest.beer_year}}</span>
           </h3>
-          <div class="detail with">with Another Brewery, and This one</div>
+          <div class="detail beer-with {% if not latest.beer_with %}hidden{% endif %}">with {{latest.beer_with}}</div>
           <hr/>
           <div class="details">
-            <label>Rating</label><span class="detail rating">2.6</span><br/>
-            <label>Style</label><span class="detail style">American Pale Ale</span><br/>
-            <label>ABV</label><span class="detail abv">5.6</span><br/>
-            <label>Country</label><span class="detail country">USA</span><br/>
-            <label>Drink Location</label><span class="detail drink-city">Ithaca</span>, <span class="detail drink-country">USA</span><br/>
-            <label>Drink Date</label><span class="detail drink-month">September</span>, <span class="detail drink-year">2012</span><br/>
-            <label>Tags</label>
-            <span class="detail tags">
+            <label>Rating</label><span class="rating-text {{rating_text(latest.rating)}}"></span> (<span class="detail rating">{{latest.rating}}</span>)<br/>
+            <label>Style</label><span class="detail style">{{latest.style}}</span><br/>
+            <label>ABV</label><span class="detail abv">{{latest.abv}}</span><br/>
+            <label>Country</label><span class="detail country">{{latest.country}}</span><br/>
+            <label>Drink Location</label><span class="detail drink-city">{{latest.drink_city}}</span>, <span class="detail drink-country">{{latest.drink_country}}</span><br/>
+            <label>Drink Date</label><span class="detail drink-month">{{latest.drink_datetime.strftime('%B')}}</span>, <span class="detail drink-year">{{latest.drink_datetime.strftime('%Y')}}</span><br/>
+            <span class="detail tags {% if not latest.tags %}hidden{% endif %}">
+                <label>Tags</label>
                 <span class="tag">This is a tag!</span>
                 <span class="tag">This is another tag!</span>
             </span>

@@ -4,7 +4,9 @@ templates['query-results'] = template({"1":function(depth0,helpers,partials,data
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return "  <div class=\"result\" data-rating=\""
     + escapeExpression(((helper = (helper = helpers.rating || (depth0 != null ? depth0.rating : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rating","hash":{},"data":data}) : helper)))
-    + "\" \n                      data-country=\""
+    + "\" \n                      data-rating-text=\""
+    + escapeExpression(((helpers.calcRating || (depth0 && depth0.calcRating) || helperMissing).call(depth0, (depth0 != null ? depth0.rating : depth0), {"name":"calcRating","hash":{},"data":data})))
+    + "\"\n                      data-country=\""
     + escapeExpression(((helper = (helper = helpers.drink_country || (depth0 != null ? depth0.drink_country : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"drink_country","hash":{},"data":data}) : helper)))
     + "\" \n                      data-city=\""
     + escapeExpression(((helper = (helper = helpers.drink_city || (depth0 != null ? depth0.drink_city : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"drink_city","hash":{},"data":data}) : helper)))

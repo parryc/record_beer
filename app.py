@@ -25,9 +25,10 @@ def index():
   breweries_count = db.session.query(Beers.brewery).distinct()
   styles_count = db.session.query(Beers.style).distinct()
   countries_count = db.session.query(Beers.country).distinct()
-
+  latest = Beers.query.filter(Beers.user==1).order_by(Beers.creation_datetime.desc()).limit(1).first()
   return render_template('index.html',beer_count=beer_count,breweries_count=breweries_count
-                                     ,styles_count=styles_count,countries_count=countries_count)
+                                     ,styles_count=styles_count,countries_count=countries_count
+                                     ,latest=latest)
 
 @app.errorhandler(404)
 def not_found(error):

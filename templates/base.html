@@ -27,6 +27,20 @@
   </div>
 {% endmacro %}
 
+{% macro rating_text(rating) %}
+  {% if rating < 1 %}
+    bad
+  {% elif rating < 2 %}
+    meh
+  {% elif rating < 3 %}
+    ok
+  {% elif rating < 4 %}
+    good
+  {% else %}
+    great
+  {% endif %}
+{% endmacro %}
+
 <section>
     <div class="header">
       <a href="/" class="return">
