@@ -6,11 +6,11 @@
 {% endblock %}
 {% block content %}
 
-
+<div id="mobilizer"></div>
 <div class="row">
   <div class="twelve columns">
     <div class="row">
-      <div class="six columns">
+      <div id="results-column" class="six columns">
         <div class="search">
           <input id="query" type="text" placeholder="Search..."/>
         </div>
@@ -19,11 +19,12 @@
         <div id="results-count"></div>
         <div id="query-results" class="results"></div>
       </div>
-      <div class="six columns">
+      <div id="detail-column" class="six columns">
         <div id="start">
           <h4><span class="username">parry</span>'s latest beer</h4>
         </div>
         <div id="beer-detail">
+          <div id="detail-back"><i class="fa fa-times-circle"></i></div>
           <h3>
             <span class="detail brewery">{{latest.brewery}}</span><br/>
             <span class="detail name">{{latest.name}}</span>

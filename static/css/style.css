@@ -12,10 +12,18 @@
 
 .header {
   background: white;
-  padding-top: 15px;
   margin-bottom: 45px;
-  padding-left: 15px;
   border-bottom: 5px solid black;
+  text-align: center;
+}
+
+/* Larger than mobile */
+@media (min-width: 401px) {
+  .header {
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 15px;
+  }
 }
 
 .rating {
@@ -26,7 +34,19 @@
 
 .results {
   overflow-x: scroll;
-  height: 45vh;
+  height: 42vh;
+}
+
+@media (min-width: 401px) {
+  .results {
+    overflow-x: scroll;
+    height: 45vh;
+  }
+}
+
+.mobile-results {
+  height: 0px !important;
+  overflow: hidden !important;
 }
 
 .result {
@@ -53,6 +73,17 @@
 /* Detail specific
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+#detail-column {
+  display: none;
+}
+
+@media (min-width: 401px) {
+  #detail-column {
+    display: inherit;
+  }
+}
+
+
 .detail.beer-year {
   font-size: .75em;
 }
@@ -71,6 +102,29 @@
 
 .detail.rating {
   font-weight: normal;
+}
+
+.mobile-detail {
+  display: block;
+  position: absolute;
+  top: -45px;
+  background: white;
+  padding: 25px;
+}
+
+#detail-back {
+  position: absolute;
+  right: 25px;
+  top: 30px;
+  font-size: 2em;
+  color: rgb(255,110,110);
+  cursor: pointer;
+}
+
+@media (min-width: 401px) {
+  #detail-back {
+    display: none;
+  }
 }
 
 
@@ -192,5 +246,19 @@ label {
 .inline-form {
   display: inline-block;
 }
+
+/* Mobile Indicator
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#mobilizer {
+  display: block;
+}
+
+@media (min-width: 401px) {
+  #mobilizer {
+    display: none;
+  }
+}
+
 
 

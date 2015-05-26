@@ -28,6 +28,8 @@ $(document).ready(function(){
        ,beer_year = $(this).attr('data-beeryear')
        ,tags      = []
 
+    $('#start').hide();
+
     //reset rating-text
     detail.find('.rating-text').removeAttr("class").addClass("rating-text");
 
@@ -69,6 +71,16 @@ $(document).ready(function(){
     } else {
      beerwith_node.hide();
     }
+
+
+    //Check mobile version
+    if($('#mobilizer').css('display') === 'block') {
+      $('#detail-column').show().addClass('mobile-detail');
+      // $('#results-column').attr('data-scroll',$('body').scrollTop());
+      $('#results-column').addClass('mobile-results');
+      // $('#results-column').hide();
+      $('#detail-back').show();
+    }
   }
 
   var query = function(evt) {
@@ -101,5 +113,13 @@ $(document).ready(function(){
   }
 
   $('#query').on("input",$.debounce(query, 500));
+  $('#detail-back').click(function(){
+    // $('#results-column').show('medium', function() {
+    //   $('body').animate({'scrollTop':$(this).attr('data-scroll')},'500');
+    // });
+    $('#results-column').removeClass('mobile-results');
+    $('#detail-column').removeClass('mobile-detail').hide();
+
+  });
 
 });
