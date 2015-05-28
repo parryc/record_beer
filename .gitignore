@@ -1,6 +1,6 @@
-node/node_modules/
 beer-*.json
 search.db/
+static/gen/*
 
 # Webassets cache
 .webassets-cache/
@@ -18,6 +18,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.env/
 env/
 bin/
 build/
