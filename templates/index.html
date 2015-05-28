@@ -15,10 +15,28 @@
           <input id="query" type="text" placeholder="Search..."/>
         </div>
         <hr/>
-        <h3 id="search-results-header">Search Results</h3>
-        <div id="results-count"></div>
-        <div id="query-results" class="results"></div>
+        <h3 id="search-results-header">Recent Beers</h3>
+        <div id="results-count">Beers: {{latest_list.all()|length}}</div>
+        <div id="query-results" class="results">
+          {% for beer in latest_list %}
+            <div class="result" data-rating="{{beer.rating}}" 
+                      data-rating-text="{{rating_text(beer.rating)}}"
+                      data-country="{{beer.drink_country}}" 
+                      data-city="{{beer.drink_city}}" 
+                      data-abv="{{beer.abv}}" 
+                      data-year="{{beer.drink_datetime.strftime('%Y')}}"
+                      data-month="{{latest.drink_datetime.strftime('%B')}}"
+                              >
+            <span class="brewery">{{beer.brewery}}</span>
+            <span class="name">{{beer.name}}</span><br/>
+            <span class="beer-info">
+              <span class="rating {{rating_text(beer.rating)}}"></span> / <span class="style">{{beer.style}}</span> / <span class="country">{{beer.country}}</span>
+            </span>
+          </div>
+          {% endfor %}
+        </div>
       </div>
+      <div class="vrule"></div>
       <div id="detail-column" class="six columns">
         <div id="start">
           <h4><span class="username">parry</span>'s latest beer</h4>

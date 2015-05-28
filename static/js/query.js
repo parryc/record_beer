@@ -11,6 +11,13 @@ $(document).ready(function(){
     }
   });
 
+  var hideDetails = function() {
+    $('#results-column').removeClass('mobile-results');
+    $('#detail-column').removeClass('mobile-detail').hide();
+    $('.search').show();
+    history.pushState('', document.title, window.location.pathname);
+  }
+
   var detailify = function(evt) {
     var detail    = $('#beer-detail')
        ,name      = $(this).find('.name').text()
@@ -80,6 +87,14 @@ $(document).ready(function(){
       $('#results-column').addClass('mobile-results');
       // $('#results-column').hide();
       $('#detail-back').show();
+      $('.search').hide();
+
+      window.location.hash = new Date().getTime();
+      window.onhashchange = function() {
+        if (!location.hash){
+          hideDetails();
+        }
+      }
     }
   }
 
@@ -107,19 +122,13 @@ $(document).ready(function(){
         console.log(results)
         $('#query-results').html(queryResults(results));
         $('#results-count').text('Beers: ' + results.results.length);
+        $('#search-results-header').text('Search Results');
         $('.result').click(detailify);
       }
     });
   }
 
   $('#query').on("input",$.debounce(query, 500));
-  $('#detail-back').click(function(){
-    // $('#results-column').show('medium', function() {
-    //   $('body').animate({'scrollTop':$(this).attr('data-scroll')},'500');
-    // });
-    $('#results-column').removeClass('mobile-results');
-    $('#detail-column').removeClass('mobile-detail').hide();
-
-  });
+  $('#detail-back').click(hideDetails);
 
 });

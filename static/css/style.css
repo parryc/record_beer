@@ -2,8 +2,12 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .search {
-  margin-bottom: -25px;
+  margin-bottom: -35px;
   text-align: left;
+}
+
+.search input {
+  width: 100% !important;
 }
 
 .brewery, .name {
@@ -18,12 +22,14 @@
 
 .results {
   overflow-y: scroll;
-  height: 42vh;
+  -webkit-overflow-scroll: touch;
+  height: 48vh;
 }
 
 @media (min-width: 401px) {
   .results {
     overflow-y: scroll;
+    -webkit-overflow-scroll: touch;
     height: 45vh;
   }
 }
@@ -35,8 +41,8 @@
 
 .result {
   text-align: left;
-  border-left: 5px solid white;
-  border-right: 5px solid white;
+  border-left: 5px solid rgba(255,255,255,0);
+  border-right: 5px solid rgba(255,255,255,0);
   padding: 10px 10px 10px 15px;
 }
 
@@ -61,16 +67,12 @@
 
 
 #search-results-header {
-  display: none;
+  margin-top: -35px;
 }
 
 @media (min-width: 401px) {
   #results-column {
     padding: inherit;
-  }
- 
-  #search-results-header {
-    display: inherit;
   }
 }
 
@@ -113,7 +115,6 @@
   position: absolute;
   top: -45px;
   left: 0px;
-  background: white;
   padding: 25px;
 }
 
@@ -199,6 +200,11 @@
 /* Skeleton Overrides
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+/* subtlepatterns.com */
+body {
+  background: url('../fabric_of_squares_gray_@2X.png');
+}
+
 tr:nth-child(even) {
   background-color: rgba(255, 110, 110, .1)
 }
@@ -228,7 +234,7 @@ label {
 }
 
 .header {
-  background: white;
+  /*background: white;*/
   margin-bottom: 45px;
   border-bottom: 5px solid black;
   text-align: center;
@@ -239,6 +245,11 @@ label {
   margin-left: -5px;
   margin-right: -5px;
   font-size: 1.3em !important;
+}
+
+.return {
+  text-decoration: none;
+  color: inherit !important;
 }
 
 /* Larger than mobile */
@@ -260,13 +271,14 @@ label {
     font-size: 4rem !important;
   }
 
+  .return {
+    text-decoration: none;
+    color: inherit !important;
+    margin-left: 10%;
+  }
+
 }
 
-
-.return {
-  text-decoration: none;
-  color: inherit !important;
-}
 
 .add {
   position: fixed;
@@ -281,6 +293,22 @@ label {
 .inline-form {
   display: inline-block;
 }
+
+.vrule {
+  position: absolute;
+  border-left: 1px solid rgb(225,225,225);
+  height: 50vh;
+  left: 50%;
+  top: 15%;
+  display: none;
+}
+
+@media (min-width: 551px) {
+  .vrule {
+    display: inherit;
+  }
+}
+
 
 /* Mobile Indicator
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
