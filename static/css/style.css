@@ -22,14 +22,14 @@
 
 .results {
   overflow-y: scroll;
-  -webkit-overflow-scroll: touch;
-  height: 48vh;
+  -webkit-overflow-scrolling: touch;
+  height: 46vh;
 }
 
 @media (min-width: 401px) {
   .results {
     overflow-y: scroll;
-    -webkit-overflow-scroll: touch;
+    -webkit-overflow-scrolling: touch;
     height: 45vh;
   }
 }
