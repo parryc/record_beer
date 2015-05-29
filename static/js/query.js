@@ -130,5 +130,6 @@ $(document).ready(function(){
 
   $('#query').on("input",$.debounce(query, 500));
   $('#detail-back').click(hideDetails);
+  $('.result').click(detailify);
 
 });

@@ -103,15 +103,20 @@ def query():
     if ":" in raw_query:
         parts = raw_query.split(':')
         prefix = parts[0]
-        query = u'%{}%'.format(parts[1])
+        search = parts[1]
+        query = u'%{}%'.format(search)
     else:
         query = u'%{}%'.format(raw_query)
 
     user  = request.json['user']
 
     if ":" in raw_query:
-        query_results = Beers.query.filter(Beers.user==user)\
-                                   .filter(getattr(Beers,prefix).ilike(query))
+        if prefix == 'rating' or prefix == 'abv':
+            query_results = Beers.query.filter(Beers.user==user)\
+                                       .filter(getattr(Beers,prefix) >= search)
+        else:            
+            query_results = Beers.query.filter(Beers.user==user)\
+                                       .filter(getattr(Beers,prefix).ilike(query))
     else:
         query_results = Beers.query.filter(and_(Beers.user==user, 
                                             or_(
