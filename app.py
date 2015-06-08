@@ -67,3 +67,5 @@ from mod_beers.controllers import mod_beers
 app.register_blueprint(mod_beers)
 from mod_users.controllers import mod_users
 app.register_blueprint(mod_users) 
+# from mod_tags.controllers import mod_tags
+# app.register_blueprint(mod_tags)

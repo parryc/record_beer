@@ -36,9 +36,6 @@ class BeerSchema(ma.Schema):
 def index():
     # there's only my beer at the moment. 
     beers = Beers.query.all()
-    print Beers.query.whoosh_search(u'IPA').all()
-    print '-----'
-    print Beers.query.whoosh_search(u'ipa').all()
     return render_template('beers/index.html',beers=beers)
 
 @mod_beers.route('/<int:_id>', methods=['GET'])
@@ -118,13 +115,7 @@ def query():
             query_results = Beers.query.filter(Beers.user==user)\
                                        .filter(getattr(Beers,prefix).ilike(query))
     else:
-        query_results = Beers.query.filter(and_(Beers.user==user, 
-                                            or_(
-                                               Beers.brewery.ilike(query),
-                                               Beers.name.ilike(query),
-                                               Beers.style.ilike(query),
-                                               Beers.country.ilike(query)
-                                            )))
+        query_results = Beers.query.filter(and_(Beers.user==user,Beers.search_string.ilike(query)))
     results = BeerSchema(many=True).dump(query_results)
     return jsonify({'results':results.data})
 
@@ -169,49 +160,54 @@ def search():
 def init():
     # there's only my beer at the moment. 
     me = Users.query.get(1)
-    # filename = 'beer.json'
-    # f = open(filename,'r')
-    # beers = json.load(f)
-    beers = list(unicodecsv.DictReader(open('export.csv', 'r')))
+    beers = list(unicodecsv.DictReader(open('beer_utf8.csv', 'r')))
     for beer in beers:
-        country_alpha2 = iso_code(beer['country'])
-        beer_entry = Beers(
-            brewery=beer['brewery'],
-            name=beer['name'],
-            abv=float(beer['abv']),
-            rating=float(beer['rating']),
-            style=beer['style'],
-            country=beer['country'],
-            country_iso=country_alpha2,
-            drink_country=beer['drink_country'],
-            drink_city=beer['drink_city'],
-            drink_datetime=beer['drink_datetime'],
-            notes=beer['notes']
+        if not beer['brew_year']:
+            beer['brew_year'] = None
+
+        tags = beer['tags'].strip()
+        print (tags == '')
+        if tags == u'':
+            tags = []
+        else:
+            tags = tags.split(';')
+
+        save_result = add_beer(
+            beer['brewery'],
+            beer['name'],
+            float(beer['abv']),
+            beer['style'],
+            beer['country'],
+            float(beer['rating']),
+            beer['drink_country'],
+            beer['drink_city'],
+            beer['drink_datetime'],
+            beer['notes'].replace('"',''),
+            beer['brew_year'],
+            beer['brew_with'],
+            tags,
+            me
         )
-        db.session.add(beer_entry)
-        me.beers.append(beer_entry)
-    db.session.commit()
+        if not save_result['status']:
+            print save_result['message']
+    #     country_alpha2 = iso_code(beer['country'])
+    #     beer_entry = Beers(
+    #         brewery=beer['brewery'],
+    #         name=beer['name'],
+    #         abv=float(beer['abv']),
+    #         rating=float(beer['rating']),
+    #         style=beer['style'],
+    #         country=beer['country'],
+    #         country_iso=country_alpha2,
+    #         drink_country=beer['drink_country'],
+    #         drink_city=beer['drink_city'],
+    #         drink_datetime=beer['drink_datetime'],
+    #         notes=beer['notes'],
+    #         beer_year=beer['beer_year'],
+    #         beer_with=beer['beer_with']
+    #     )
+    #     db.session.add(beer_entry)
+    #     me.beers.append(beer_entry)
+    # db.session.commit()
       # print beer.brewery + ' ' + beer.name
     return render_template('beers/index.html',beers=beers)
-
-
-def iso_code(country_name):
-    if country_name == 'USA':
-        return 'us'
-    elif country_name == 'Taiwan':
-        return 'tw'
-    elif country_name == 'Scotland'\
-      or country_name == 'England'\
-      or country_name == 'Wales'\
-      or country_name == 'Northern Ireland':
-        return 'gb'
-    elif country_name == 'Vietnam':
-        return 'vn'
-    elif country_name == 'Russia':
-        return 'ru'
-    elif country_name == 'South Korea':
-        return 'sk'
-    elif country_name == 'Laos':
-        return 'la'
-    else:
-        return pycountry.countries.get(name=country_name).alpha2.lower()
