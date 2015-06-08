@@ -16,7 +16,7 @@ class Tags(db.Model):
     self.tag = tag
 
   def __repr__(self):
-    return '<%r %r  - %r>' % (self.brewery, self.name, self.users.name)
+    return '<%r %r  - %r>' % (self.user, self.beer, self.tag)
 
 
 ##########

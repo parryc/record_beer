@@ -79,6 +79,10 @@
 /* Detail specific
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+#start {
+  margin-bottom: -15px;
+}
+
 #detail-column {
   display: none;
 }
@@ -89,19 +93,18 @@
   }
 }
 
-
-.detail.beer-year {
+.detail.brew-year {
   font-size: .75em;
 }
-.detail.beer-year:before {
+.detail.brew-year:before {
   content: '(';
 }
 
-.detail.beer-year:after {
+.detail.brew-year:after {
   content: ')';
 }
 
-.detail.beer-with {
+.detail.brew-with {
   font-style: italic;
   margin-top: -22px;
 }
@@ -278,7 +281,6 @@ label {
   }
 
 }
-
 
 .add {
   position: fixed;

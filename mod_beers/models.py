@@ -28,7 +28,7 @@ class Beers(db.Model):
     creation_datetime = db.Column(db.DateTime)
     last_updated = db.Column(db.DateTime)
     search_string = db.Column(db.Text())
-    tags = db.relationship('Tags', backref='tags', cascade="all,delete", lazy='dynamic')
+    tags = db.relationship('Tags', backref='tags', cascade="all,delete", lazy='joined')
 
     def __init__(self, brewery, name, abv, rating, style, country, country_iso, drink_country, drink_city, drink_datetime, notes='', brew_year=None, brew_with='', tags=[], creation_datetime=None, last_updated=None):
         self.brewery = brewery

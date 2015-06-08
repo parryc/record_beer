@@ -25,7 +25,10 @@
                       data-city="{{beer.drink_city}}" 
                       data-abv="{{beer.abv}}" 
                       data-year="{{beer.drink_datetime.strftime('%Y')}}"
-                      data-month="{{latest.drink_datetime.strftime('%B')}}"
+                      data-month="{{beer.drink_datetime.strftime('%B')}}"
+                      data-brewwith="{{beer.brew_with}}"
+                      data-brewyear="{{beer.brew_year}}"
+                      data-tags="{% for tag in beer.tags %}{{tag.tag}}{% if not loop.last %},{% endif %}{% endfor %}"
                               >
             <span class="brewery">{{beer.brewery}}</span>
             <span class="name">{{beer.name}}</span><br/>
@@ -46,9 +49,9 @@
           <h3>
             <span class="detail brewery">{{latest.brewery}}</span><br/>
             <span class="detail name">{{latest.name}}</span>
-            <span class="detail beer-year {% if not latest.beer_year %}hidden{% endif %}">{{latest.beer_year}}</span>
+            <span class="detail brew-year {% if not latest.brew_year %}hidden{% endif %}">{{latest.brew_year}}</span>
           </h3>
-          <div class="detail beer-with {% if not latest.beer_with %}hidden{% endif %}">with {{latest.beer_with}}</div>
+          <div class="detail brew-with {% if not latest.brew_with %}hidden{% endif %}">with {{latest.brew_with}}</div>
           <hr/>
           <div class="details">
             <label>Rating</label><span class="rating-text {{rating_text(latest.rating)}}"></span> (<span class="detail rating">{{latest.rating}}</span>)<br/>
@@ -59,8 +62,11 @@
             <label>Drink Date</label><span class="detail drink-month">{{latest.drink_datetime.strftime('%B')}}</span>, <span class="detail drink-year">{{latest.drink_datetime.strftime('%Y')}}</span><br/>
             <span class="detail tags {% if not latest.tags %}hidden{% endif %}">
                 <label>Tags</label>
-                <span class="tag">This is a tag!</span>
-                <span class="tag">This is another tag!</span>
+                <span class="tags-list">
+                {% for tag in latest.tags %}
+                <span class="tag">{{tag.tag}}</span>
+                {% endfor %}
+                </span>
             </span>
           </div>
         </div>

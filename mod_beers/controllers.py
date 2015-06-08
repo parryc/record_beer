@@ -14,6 +14,7 @@ from ratebeer_fork import RateBeer
 from ratebeer_fork import rb_exceptions
 from flask_wtf.csrf import CsrfProtect
 from sqlalchemy import or_, and_
+from marshmallow import fields
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
 rb = RateBeer()
@@ -23,8 +24,13 @@ rb = RateBeer()
 ##################
 
 class BeerSchema(ma.Schema):
-  class Meta:
-    fields = ('brewery', 'name', 'rating', 'style', 'country', 'drink_country', 'drink_city', 'drink_datetime', 'abv')
+    class Meta:
+    # model = Beers
+    # json_module = simplejson
+        additional = ('brewery', 'name', 'rating', 'style', 'country',
+                      'drink_country', 'drink_city', 'drink_datetime', 
+                      'abv', 'brew_with', 'brew_year')
+    tags = fields.Nested('self', many=True, only='tag')
 
 
 ##########
@@ -107,6 +113,8 @@ def query():
 
     user  = request.json['user']
 
+    joined_results = []
+
     if ":" in raw_query:
         if prefix == 'rating' or prefix == 'abv':
             query_results = Beers.query.filter(Beers.user==user)\
@@ -115,7 +123,15 @@ def query():
             query_results = Beers.query.filter(Beers.user==user)\
                                        .filter(getattr(Beers,prefix).ilike(query))
     else:
+        # query_results = db.session.query(Beers,Tags)\
+        #                           .filter(and_(Beers.user==user,Beers.search_string.ilike(query)))\
+        #                           .join(Tags)\
+        #                           .all()
+        # for beer, tag in query_results:
+        #     beer['tags'] = tag['tag']
+        #     joined_results.append(beer)
         query_results = Beers.query.filter(and_(Beers.user==user,Beers.search_string.ilike(query)))
+        print query_results[0].tags
     results = BeerSchema(many=True).dump(query_results)
     return jsonify({'results':results.data})
 
@@ -166,7 +182,7 @@ def init():
             beer['brew_year'] = None
 
         tags = beer['tags'].strip()
-        print (tags == '')
+
         if tags == u'':
             tags = []
         else:
@@ -190,24 +206,4 @@ def init():
         )
         if not save_result['status']:
             print save_result['message']
-    #     country_alpha2 = iso_code(beer['country'])
-    #     beer_entry = Beers(
-    #         brewery=beer['brewery'],
-    #         name=beer['name'],
-    #         abv=float(beer['abv']),
-    #         rating=float(beer['rating']),
-    #         style=beer['style'],
-    #         country=beer['country'],
-    #         country_iso=country_alpha2,
-    #         drink_country=beer['drink_country'],
-    #         drink_city=beer['drink_city'],
-    #         drink_datetime=beer['drink_datetime'],
-    #         notes=beer['notes'],
-    #         beer_year=beer['beer_year'],
-    #         beer_with=beer['beer_with']
-    #     )
-    #     db.session.add(beer_entry)
-    #     me.beers.append(beer_entry)
-    # db.session.commit()
-      # print beer.brewery + ' ' + beer.name
     return render_template('beers/index.html',beers=beers)

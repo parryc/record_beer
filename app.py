@@ -5,7 +5,6 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.marshmallow import Marshmallow
 from flask_wtf.csrf import CsrfProtect
-import flask.ext.whooshalchemy as whooshalchemy
 import os
 
 app = Flask(__name__)

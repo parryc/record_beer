@@ -31,9 +31,9 @@ $(document).ready(function(){
        ,d_country = $(this).attr('data-country')
        ,d_month   = $(this).attr('data-month')
        ,d_year    = $(this).attr('data-year')
-       ,beer_with = $(this).attr('data-beerwith')
-       ,beer_year = $(this).attr('data-beeryear')
-       ,tags      = []
+       ,brew_with = $(this).attr('data-brewwith')
+       ,brew_year = $(this).attr('data-brewyear')
+       ,tags      = $(this).attr('data-tags')
 
     $('#start').hide();
 
@@ -53,30 +53,34 @@ $(document).ready(function(){
     detail.find('.drink-month').text(d_month);
     detail.find('.drink-year').text(d_year);
 
-    tag_node = detail.find('.tags');
-    if(tags.length > 0) {
-      for(tag in tags) {
-        tag_node.append("<span class='tag'>"+tag+"</span>");
-      }
+    tag_list_node = detail.find('.tags-list');
+    tag_node      = detail.find('.tags');
+    if(tags !== undefined && tags.length > 0) {
+      tags = tags.split(',');
+      tag_list_node.html("");
+      tags.forEach(function(tag){
+        tag_list_node.append("<span class='tag'>"+tag+"</span>");
+      });
       tag_node.show();
     } else {
       tag_node.hide();
     }
 
-    beeryear_node = detail.find('.beer-year');
-    if(beer_year) {
-      beeryear_node.text(beer_year);
-      beeryear_node.show();
+    brewyear_node = detail.find('.brew-year');
+    console.log('brewyear: '+brew_year);
+    if(brew_year) {
+      brewyear_node.text(brew_year);
+      brewyear_node.removeClass('hidden').show();
     } else {
-      beeryear_node.hide();
+      brewyear_node.hide();
     }
 
-    beerwith_node = detail.find('.beer-with');
-    if(beer_with) {
-     beerwith_node.text(beer_with);
-     beerwith_node.show();
+    brewwith_node = detail.find('.brew-with');
+    if(brew_with) {
+     brewwith_node.text(brew_with);
+     brewwith_node.removeClass('hidden').show();
     } else {
-     beerwith_node.hide();
+     brewwith_node.hide();
     }
 
 

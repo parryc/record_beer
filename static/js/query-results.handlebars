@@ -7,9 +7,16 @@
                       data-abv="{{abv}}" 
                       data-year="{{year drink_datetime}}"
                       data-month="{{month drink_datetime}}"
+                      data-brewwith="{{brew_with}}"
+                      data-brewyear="{{brew_year}}"
+                      data-tags="{{tags}}"
                       >
     <span class="brewery">{{brewery}}</span>
-    <span class="name">{{name}}</span><br/>
+    <span class="name">{{name}}</span>
+    {{#if brew_year}}
+      <span class="brew-year">{{brew_year}}</span>
+    {{/if}}
+    <br/>
     <span class="beer-info">
       <span class="rating {{calcRating rating}}"></span> / <span class="style">{{style style}}</span> / <span class="country">{{country}}</span>
     </span>
