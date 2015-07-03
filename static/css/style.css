@@ -104,6 +104,10 @@
   content: ')';
 }
 
+.detail.brew-with:before {
+  content: 'with ';
+}
+
 .detail.brew-with {
   font-style: italic;
   margin-top: -22px;

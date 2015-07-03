@@ -69,7 +69,7 @@ Handlebars.registerHelper('style', function(style){
     return 'Dunkel';
   if(style === 'German Hefeweizen')
     return 'Hefeweizen';
-  if(style === 'Belgian White (Witbier)')
+  if(style === 'Belgian White (Witbier)' || style === 'Witbier')
     return 'Belgian White';
   if(style === 'Golden Ale/Blond Ale')
     return 'Golden Ale';
@@ -81,6 +81,10 @@ Handlebars.registerHelper('style', function(style){
     return 'Oktoberfest';
   if(style == 'Dortmunder/Helles')
     return 'Dortmunder';
+  if(style == 'Lambic Style - Fruit')
+    return 'Lambic';
+  if(style == 'Premium Bitter/ESB')
+    return 'Premium Bitter'
   else
     return style;
 });

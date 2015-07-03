@@ -12,7 +12,6 @@ $(document).ready(function(){
   });
 
   var updateForm = function() {
-    console.log('beaches');
     var brewery = $(this).find('.brewery').text()
        ,name    = $(this).find('.name').text()
        ,abv     = $(this).find('.abv').text()
@@ -25,7 +24,7 @@ $(document).ready(function(){
     $('form #abv').val(abv);
     $('form #country').val(country);
     $('form #drink_country').val('USA');
-    $('form #drink_city').val('Berkeley');
+    $('form #drink_city').val('San Francisco');
     $('form #drink_datetime').val('2015-05-01');
   }
 
@@ -34,7 +33,9 @@ $(document).ready(function(){
     var query = $('.search #brewery').val() + ' ' + $('.search #name').val()
         ,location = 'search'
         ,method = $(this).attr('method')
-        ,data = {'query':query}
+        ,data = {
+          'query':query,
+          'user' :1}
         ,paused = false
         ;
 

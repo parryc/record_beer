@@ -27,7 +27,7 @@
                       data-year="{{beer.drink_datetime.strftime('%Y')}}"
                       data-month="{{beer.drink_datetime.strftime('%B')}}"
                       data-brewwith="{{beer.brew_with}}"
-                      data-brewyear="{{beer.brew_year}}"
+                      data-brewyear="{{beer.brew_year if beer.brew_year != None}}"
                       data-tags="{% for tag in beer.tags %}{{tag.tag}}{% if not loop.last %},{% endif %}{% endfor %}"
                               >
             <span class="brewery">{{beer.brewery}}</span>
@@ -51,7 +51,7 @@
             <span class="detail name">{{latest.name}}</span>
             <span class="detail brew-year {% if not latest.brew_year %}hidden{% endif %}">{{latest.brew_year}}</span>
           </h3>
-          <div class="detail brew-with {% if not latest.brew_with %}hidden{% endif %}">with {{latest.brew_with}}</div>
+          <div class="detail brew-with {% if not latest.brew_with %}hidden{% endif %}">{{latest.brew_with}}</div>
           <hr/>
           <div class="details">
             <label>Rating</label><span class="rating-text {{rating_text(latest.rating)}}"></span> (<span class="detail rating">{{latest.rating}}</span>)<br/>

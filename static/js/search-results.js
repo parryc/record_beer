@@ -6,7 +6,7 @@ templates['search-results'] = template({"1":function(depth0,helpers,partials,dat
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "</span><br/>\n      <span class=\"abv\">"
     + escapeExpression(((helper = (helper = helpers.abv || (depth0 != null ? depth0.abv : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"abv","hash":{},"data":data}) : helper)))
-    + "</span>% – <span class=\"style\">"
+    + "</span> – <span class=\"style\">"
     + escapeExpression(((helpers.style || (depth0 && depth0.style) || helperMissing).call(depth0, (depth0 != null ? depth0.style : depth0), {"name":"style","hash":{},"data":data})))
     + "</span><br/>\n      <span class=\"country\">"
     + escapeExpression(((helper = (helper = helpers.brewery_country || (depth0 != null ? depth0.brewery_country : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"brewery_country","hash":{},"data":data}) : helper)))

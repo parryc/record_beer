@@ -61,13 +61,12 @@ $(document).ready(function(){
       tags.forEach(function(tag){
         tag_list_node.append("<span class='tag'>"+tag+"</span>");
       });
-      tag_node.show();
+      tag_node.removeClass('hidden').show();
     } else {
       tag_node.hide();
     }
 
     brewyear_node = detail.find('.brew-year');
-    console.log('brewyear: '+brew_year);
     if(brew_year) {
       brewyear_node.text(brew_year);
       brewyear_node.removeClass('hidden').show();

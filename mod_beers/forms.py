@@ -1,6 +1,7 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, TextAreaField, DecimalField, SelectField
-from wtforms.validators import Required, NumberRange
+from wtforms import TextField, TextAreaField, DecimalField, SelectField, IntegerField
+from wtforms.validators import Required, NumberRange, Optional
+from mod_tags.models import * 
 
 class BeerForm(Form):
     brewery    = TextField('Brewery', [
@@ -28,3 +29,9 @@ class BeerForm(Form):
     drink_datetime = TextField('Drink Date')
 
     notes = TextAreaField('Notes')
+
+    brew_year = IntegerField('Brew Year (Vintage)', [NumberRange(1900,3000), Optional()])
+
+    brew_with = TextField('Brew With (Collaboration)')
+
+    tags = TextField('Tags (Comma delimited)')

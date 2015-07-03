@@ -54,24 +54,33 @@ def add():
     form = BeerForm()
     if form.validate_on_submit():
         me = Users.query.get(1)
-        country_name = form.country.data
-        country_iso = iso_code(country_name)
-        beer_entry = Beers(
-            brewery=form.brewery.data
-           ,name=form.name.data
-           ,abv=form.abv.data
-           ,style=form.style.data
-           ,country=country_name
-           ,country_iso=country_iso
-           ,rating=form.rating.data
-           ,drink_country=form.drink_country.data
-           ,drink_city=form.drink_city.data
-           ,drink_datetime=form.drink_datetime.data
-           ,notes=form.notes.data)
-        me.beers.append(beer_entry)
-        db.session.add(beer_entry)
-        db.session.commit()
-        return redirect(url_for('.add'))
+        tags = form.tags.data.strip()
+
+        if tags == u'':
+            tags = []
+        else:
+            tags = tags.split(',')
+
+        save_result = add_beer(
+            form.brewery.data
+           ,form.name.data
+           ,form.abv.data
+           ,form.style.data
+           ,form.country.data
+           ,form.rating.data
+           ,form.drink_country.data
+           ,form.drink_city.data
+           ,form.drink_datetime.data
+           ,form.notes.data
+           ,form.brew_year.data
+           ,form.brew_with.data
+           ,tags
+           ,me)
+        if save_result['status']:
+            flash('Added beer %s %s successfully!' % (form.brewery.data, form.name.data))
+            return redirect(url_for('.add'))
+        else:
+            flash('Could not add beer. %s' % save_result['message'])
     return render_template('beers/add.html',form=form)
 
 @mod_beers.route('/edit/<int:_id>', methods=['GET','POST'])
@@ -105,7 +114,7 @@ def query():
 
     if ":" in raw_query:
         parts = raw_query.split(':')
-        prefix = parts[0]
+        prefix = parts[0].lower()
         search = parts[1]
         query = u'%{}%'.format(search)
     else:
@@ -123,15 +132,8 @@ def query():
             query_results = Beers.query.filter(Beers.user==user)\
                                        .filter(getattr(Beers,prefix).ilike(query))
     else:
-        # query_results = db.session.query(Beers,Tags)\
-        #                           .filter(and_(Beers.user==user,Beers.search_string.ilike(query)))\
-        #                           .join(Tags)\
-        #                           .all()
-        # for beer, tag in query_results:
-        #     beer['tags'] = tag['tag']
-        #     joined_results.append(beer)
         query_results = Beers.query.filter(and_(Beers.user==user,Beers.search_string.ilike(query)))
-        print query_results[0].tags
+
     results = BeerSchema(many=True).dump(query_results)
     return jsonify({'results':results.data})
 
