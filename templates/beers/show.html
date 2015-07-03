@@ -2,5 +2,7 @@
 {% block content  %}
   {{beer.brewery}} {{beer.name}}<br/>
   {{beer.drink_city}}, {{beer.drink_country}}<br/>
-  {{beer.country}} {{beer.style}}
+  {{beer.country}} {{beer.style}}<br/>
+  <br/>
+  <a href="/beers/edit/{{beer.id}}">Edit</a>
 {% endblock %}

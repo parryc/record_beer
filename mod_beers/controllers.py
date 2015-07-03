@@ -85,24 +85,43 @@ def add():
 
 @mod_beers.route('/edit/<int:_id>', methods=['GET','POST'])
 def edit(_id):
+    def tags_to_csv(tags):
+        _arr = [ t.tag for t in tags ]
+        return ','.join(_arr)
+
     beer = get_beer(_id)
     form = BeerForm(request.form,beer)
+    if request.method != 'POST':
+        form.tags.data = tags_to_csv(beer.tags)
     if form.validate_on_submit():
-        beer.brewery = form.brewery.data
-        beer.name = form.name.data
-        beer.abv = form.abv.data
-        beer.style = form.style.data
-        country_name = form.country.data
-        beer.country = country_name
-        beer.country_iso = iso_code(country_name)
-        beer.rating = form.rating.data
-        beer.drink_country = form.drink_country.data
-        beer.drink_city = form.drink_city.data
-        beer.drink_datetime = form.drink_datetime.data
-        beer.notes = form.notes.data
-        db.session.commit()
-        flash(u'Save successful!')
-        return redirect(url_for('.edit',_id=str(_id)))
+        tags = form.tags.data.strip()
+
+        if tags == u'':
+            tags = []
+        else:
+            tags = tags.split(',')
+
+        save_result = edit_beer(
+            _id
+           ,form.brewery.data
+           ,form.name.data
+           ,form.abv.data
+           ,form.style.data
+           ,form.country.data
+           ,form.rating.data
+           ,form.drink_country.data
+           ,form.drink_city.data
+           ,form.drink_datetime.data
+           ,form.notes.data
+           ,form.brew_year.data
+           ,form.brew_with.data
+           ,tags)
+        if save_result['status']:
+            flash('Updated beer %s %s successfully!' % (form.brewery.data, form.name.data))
+            return redirect(url_for('.edit',_id=str(_id)))
+        else:
+            flash('Could not update beer. Error: %s' % save_result['message'])
+
     return render_template('beers/edit.html',form=form)
 
 

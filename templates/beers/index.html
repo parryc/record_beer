@@ -1,41 +1,10 @@
 {% extends '/base.html' %}
 {% block content  %}
-    <div class="row-fluid centered">
-      <img src="logo.png"/>
-      <br/><br/>
-      <h1 id="header">Beers I Have Known and Loved</h1>
-      <div id="might-be-mobile"></div>
-    </div>
-    <div id="search-box">
-      <br/>
-      <div id="beer-list-container">
-        <div class="row-fluid centered">
-            <input id="search" class="search" placeholder="Search" />
-        </div>
-        <br/>
-        <div id="sorters">
-          <li class="row-fluid beer">
-            <div class="span5">
-              <span class="sort rating" data-sort="rating">★</span>
-              <span class="sort brewery" data-sort="brewery">Brewery</span> - <span class="sort name" data-sort="name">Beer name</span>
-            </div>
-            <div class="span3">
-              <img class="sort country" src="images/Unknown.png" title="Sort by Country" data-sort="country"/> 
-              <span class="sort style" data-sort="style">Style</span>
-            </div>
-            <div class="span4">
-              <span class="sort date-small" data-sort="date">Date</span><span class="sort date" data-sort="date">Date</span>
-              <span class="sort location" data-sort="location-country">Drink Location</span>
-            </div>
-          </li>
-        </div>
-        <hr style="width:50%; margin-left: 15px auto;"/>
-        <ul id="full-beer-list" class="list">
-         {% for beer in beers %}
-         <li><a href="/beers/{{beer.id}}">{{beer.brewery}} {{beer.name}}</a> – {{beer.rating}}</li>
-         {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
+
+  <h1 id="header">Beers I Have Known and Loved</h1>
+  <ul id="full-beer-list" class="list">
+   {% for beer in beers %}
+   <li><a href="/beers/{{beer.id}}">{{beer.brewery}} {{beer.name}}</a> – {{beer.rating}}</li>
+   {% endfor %}
+  </ul>
 {% endblock %}

@@ -79,11 +79,11 @@ def add_beer(brewery, name, abv, style, country_name, rating, drink_country, dri
        ,tags           = [])
     
     user.beers.append(beer_entry)
-    save_text_result = commit_entry(beer_entry)
-    beer = save_text_result['entry']
+    save_beer_result = commit_entry(beer_entry)
+    beer = save_beer_result['entry']
 
     saved_tags = []
-    if save_text_result['status'] and len(tags) > 0:
+    if save_beer_result['status'] and len(tags) > 0:
         for tag in tags:
             save_tag_result = add_tag(tag, beer.id, user.id)
             if save_tag_result['status']:
@@ -92,7 +92,7 @@ def add_beer(brewery, name, abv, style, country_name, rating, drink_country, dri
         beer.tags = saved_tags
         return commit_entry(beer)
     else:
-        return save_text_result
+        return save_beer_result
 
 
 
@@ -100,20 +100,39 @@ def add_beer(brewery, name, abv, style, country_name, rating, drink_country, dri
 # UPDATE #
 ##########
 
-# def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_country, drink_city, drink_datetime, notes, beer_year, beer_with):
-#     beer.brewery = brewery
-#     beer.name = name
-#     beer.abv = abv
-#     beer.style = style
-#     beer.country = country_name
-#     beer.country_iso = iso_code(country_name)
-#     beer.rating = rating
-#     beer.drink_country = drink_country
-#     beer.drink_city = drink_city
-#     beer.drink_datetime = drink_datetime
-#     beer.notes = notes
-#     beer.beer_year = beer_year
-#     beer.beer_with = beer_with
+def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_country, drink_city, drink_datetime, notes, brew_year, brew_with, tags):
+    beer = get_beer(_id)
+    country_iso = iso_code(country_name)
+    beer.brewery        = brewery
+    beer.name           = name
+    beer.abv            = abv
+    beer.style          = style
+    beer.country        = country_name
+    beer.country_iso    = country_iso
+    beer.rating         = rating
+    beer.drink_country  = drink_country
+    beer.drink_city     = drink_city
+    beer.drink_datetime = drink_datetime
+    beer.notes          = notes
+    beer.brew_year      = brew_year
+    beer.brew_with      = brew_with
+    beer.tags           = []
+
+    save_beer_result = commit_entry(beer)
+    beer = save_beer_result['entry']
+
+    saved_tags = []
+    if save_beer_result['status'] and len(tags) > 0:
+        delete_tags_for_beer(_id)
+        for tag in tags:
+            save_tag_result = add_tag(tag.strip(), beer.id, beer.user)
+            if save_tag_result['status']:
+                saved_tags.append(save_tag_result['entry'])
+
+        beer.tags = saved_tags
+        return commit_entry(beer)
+    else:
+        return save_beer_result
 
 ###########
 # GETTERS #

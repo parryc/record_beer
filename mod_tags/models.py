@@ -53,7 +53,10 @@ def get_tags_by_user(user_id):
 
 def delete_tags_for_beer(beer_id):
   tags = get_tags_by_beer(beer_id)
-  for tag in tags:
-    delete_result = delete_entry(tag)
+  if tags:
+    for tag in tags:
+      delete_result = delete_entry(tag)
 
-  return delete_result
+    return delete_result
+  else:
+    return {'status':True,'message':'No tags to delete', 'entry':beer_id}
