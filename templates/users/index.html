@@ -1,9 +1,11 @@
-<html>
-
-
-WHatever
-{% for user in users %}
-{{user.name}} - {{user.beers|length}}
-{% endfor %}
-
-</html>
+{% extends '/base.html' %}
+{% block content  %}
+<div class="row">
+  <div class="twelve columns">
+    <h1>Users</h1>
+    {% for user in users %}
+      <a href="/users/{{user.id}}">{{user.name}}</a> (beers: {{user.beers|length}})<br/>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

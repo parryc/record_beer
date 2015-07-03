@@ -1,0 +1,14 @@
+{% extends '/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="twelve columns">
+    <h1>{{user.name}}</h1>
+    Beers: {{user.beers|length}}<br/>
+    Default Drink City: {{user.default_drink_location_city}}<br/>
+    Default Drink Country: {{user.default_drink_location_country}}<br/>
+    Default Drink Date: {{user.default_drink_date}}<br/>
+    <br/>
+    <a href="/users/edit/{{user.id}}">Edit</a>
+  </div>
+</div>
+{% endblock %}

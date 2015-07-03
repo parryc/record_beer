@@ -1,6 +1,7 @@
 beer-*.json
 search.db/
 static/gen/*
+*.tab
 
 # Webassets cache
 .webassets-cache/

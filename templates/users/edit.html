@@ -1,0 +1,14 @@
+{% extends '/base.html' %}
+{% block content  %}
+<div class="row">
+  <form class="edit" method="POST" action="" accept-charset="UTF-8" role="form">
+    {{ form.csrf_token }}  
+    {{ render_field(form.default_drink_location_city, show_label="T") }}<br/>
+    {{ render_field(form.default_drink_location_country, show_label="T") }}<br/>
+    {{ render_field(form.default_drink_date, show_label="T") }}<br/>
+    <button id="submit" type="submit" name="submit">
+      <i class="fa fa-save"></i> Save
+    </button>
+  </form>
+</div>
+{% endblock %}
