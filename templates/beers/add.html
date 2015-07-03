@@ -16,6 +16,9 @@
   <div class="eight columns">
     <form class="search" method="POST" action="add" accept-charset="UTF-8" role="form">
       {{ form.csrf_token }}  
+      <input type="hidden" class="default-city" value="{{user.default_drink_location_city}}"/>
+      <input type="hidden" class="default-country" value="{{user.default_drink_location_country}}"/>
+      <input type="hidden" class="default-date" value="{{user.default_drink_date}}"/>
       {{ render_field(form.brewery, show_label="T") }}
       {{ render_field(form.name, show_label="T") }}<br/>
       {{ render_field(form.rating, show_label="T") }}

@@ -52,8 +52,8 @@ def show(_id):
 @mod_beers.route('/add', methods=['GET','POST'])
 def add():
     form = BeerForm()
+    me = Users.query.get(1)
     if form.validate_on_submit():
-        me = Users.query.get(1)
         tags = form.tags.data.strip()
 
         if tags == u'':
@@ -81,7 +81,7 @@ def add():
             return redirect(url_for('.add'))
         else:
             flash('Could not add beer. %s' % save_result['message'])
-    return render_template('beers/add.html',form=form)
+    return render_template('beers/add.html',form=form,user=me)
 
 @mod_beers.route('/edit/<int:_id>', methods=['GET','POST'])
 def edit(_id):

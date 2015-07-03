@@ -23,9 +23,9 @@ $(document).ready(function(){
     $('form #style').val(style);
     $('form #abv').val(abv);
     $('form #country').val(country);
-    $('form #drink_country').val('USA');
-    $('form #drink_city').val('San Francisco');
-    $('form #drink_datetime').val('2015-05-01');
+    $('form #drink_country').val($('.default-country').val());
+    $('form #drink_city').val($('.default-city').val());
+    $('form #drink_datetime').val($('.default-date').val());
   }
 
   var search = function(evt) {
