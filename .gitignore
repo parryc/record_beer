@@ -2,6 +2,7 @@ beer-*.json
 search.db/
 static/gen/*
 *.tab
+config.py
 
 # Webassets cache
 .webassets-cache/
