@@ -52,6 +52,7 @@ $(document).ready(function(){
     detail.find('.drink-country').text(d_country);
     detail.find('.drink-month').text(d_month);
     detail.find('.drink-year').text(d_year);
+    detail.find('#brewery-link').attr('href','/breweries/'+brewery)
 
     tag_list_node = detail.find('.tags-list');
     tag_node      = detail.find('.tags');

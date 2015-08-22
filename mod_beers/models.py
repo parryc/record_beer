@@ -141,6 +141,10 @@ def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_countr
 def get_beer(_id):
     return Beers.query.get(_id)
 
+def get_beers_by_brewery(_brewery,order_by='rating'):
+    query = Beers.query.filter_by(brewery=_brewery).order_by(getattr(Beers,order_by).desc())
+    return query.all()
+
 
 ###########
 # HELPERS #

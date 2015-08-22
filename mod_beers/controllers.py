@@ -193,38 +193,38 @@ def search():
     else:
         return jsonify({'no_hits':True})
 
-@mod_beers.route('/init', methods=['GET'])
-def init():
-    # there's only my beer at the moment. 
-    me = Users.query.get(1)
-    beers = list(unicodecsv.DictReader(open('beer_utf8.csv', 'r')))
-    for beer in beers:
-        if not beer['brew_year']:
-            beer['brew_year'] = None
+# @mod_beers.route('/init', methods=['GET'])
+# def init():
+#     # there's only my beer at the moment. 
+#     me = Users.query.get(1)
+#     beers = list(unicodecsv.DictReader(open('beer_utf8.csv', 'r')))
+#     for beer in beers:
+#         if not beer['brew_year']:
+#             beer['brew_year'] = None
 
-        tags = beer['tags'].strip()
+#         tags = beer['tags'].strip()
 
-        if tags == u'':
-            tags = []
-        else:
-            tags = tags.split(';')
+#         if tags == u'':
+#             tags = []
+#         else:
+#             tags = tags.split(';')
 
-        save_result = add_beer(
-            beer['brewery'],
-            beer['name'],
-            float(beer['abv']),
-            beer['style'],
-            beer['country'],
-            float(beer['rating']),
-            beer['drink_country'],
-            beer['drink_city'],
-            beer['drink_datetime'],
-            beer['notes'].replace('"',''),
-            beer['brew_year'],
-            beer['brew_with'],
-            tags,
-            me
-        )
-        if not save_result['status']:
-            print save_result['message']
-    return render_template('beers/index.html',beers=beers)
+#         save_result = add_beer(
+#             beer['brewery'],
+#             beer['name'],
+#             float(beer['abv']),
+#             beer['style'],
+#             beer['country'],
+#             float(beer['rating']),
+#             beer['drink_country'],
+#             beer['drink_city'],
+#             beer['drink_datetime'],
+#             beer['notes'].replace('"',''),
+#             beer['brew_year'],
+#             beer['brew_with'],
+#             tags,
+#             me
+#         )
+#         if not save_result['status']:
+#             print save_result['message']
+#     return render_template('beers/index.html',beers=beers)

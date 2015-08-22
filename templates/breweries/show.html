@@ -1,0 +1,40 @@
+{% extends '/base.html' %}
+{% block page_js %}
+  {% assets "query" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="brewery-data">
+      <h1>{{brewery}}</h1>
+      <span class="brewery-label">Count:</span> {{beers|length}}<br/>
+      <span class="brewery-label">Average Rating:</span> {{average_rating}}<br/>
+      <span class="brewery-label">Average ABV:</span> {{average_abv}}%<br/>
+      <span class="brewery-label">Favorite Beer:</span> {{favorite_beer.name}} 
+      (<span class="rating {{rating_text(favorite_beer.rating)}}"></span> {{favorite_beer.rating}})<br/>
+      <span class="brewery-label">Favorite Style:</span> {{favorite_style}}<br/>
+      <span class="brewery-label">Most Common Style:</span> {{most_common_style}} ({{most_common_count}})<br/>
+    </div>
+    <table class="brewery-beers">
+      <thead>
+        <th>Beer</th>
+        <th>Style</th>
+        <th>Rating</th>
+      </thead>
+      <tbody>
+        {% for beer in beers %}
+          <tr>
+            <td>{{beer.name}}</td>
+            <td>{{beer.style}}</td>
+            <td>{{beer.rating}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

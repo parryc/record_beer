@@ -28,15 +28,15 @@
 {% endmacro %}
 
 {% macro rating_text(rating) %}
-  {% if rating < 1 %}
+  {%- if rating < 1 -%}
     bad
-  {% elif rating < 2 %}
+  {%- elif rating < 2 -%}
     meh
-  {% elif rating < 3 %}
+  {%- elif rating < 3 -%}
     ok
-  {% elif rating < 4 %}
+  {%- elif rating < 4 -%}
     good
-  {% else %}
+  {%- else -%}
     great
   {% endif %}
 {% endmacro %}

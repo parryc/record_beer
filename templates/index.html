@@ -47,7 +47,7 @@
         <div id="beer-detail">
           <div id="detail-back"><i class="fa fa-times-circle"></i></div>
           <h3>
-            <span class="detail brewery">{{latest.brewery}}</span><br/>
+            <a id="brewery-link" href="/breweries/{{latest.brewery}}"><span class="detail brewery">{{latest.brewery}}</span></a><br/>
             <span class="detail name">{{latest.name}}</span>
             <span class="detail brew-year {% if not latest.brew_year %}hidden{% endif %}">{{latest.brew_year}}</span>
           </h3>

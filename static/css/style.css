@@ -14,6 +14,11 @@
   font-size: 1.3em;
 }
 
+#beer-detail .brewery:hover {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
 .rating {
   line-height: 2em;
   text-align: center;
@@ -204,8 +209,32 @@
   content: '%';
 }
 
+/* Breweries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.brewery-label {
+  font-weight: bold;
+}
+
+.brewery-data {
+  padding: 15px;
+}
+
+.brewery-beers {
+  margin: 5px;
+}
+
 /* Skeleton Overrides
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: inherit;
+}
 
 /* subtlepatterns.com */
 body {
