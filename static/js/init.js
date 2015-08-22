@@ -61,7 +61,7 @@ Handlebars.registerHelper('style', function(style){
     return 'IPA';
   if(style === 'Sour/Wild Ale')
     return 'Sour';
-  if(style === 'Imperial/Double IPA')
+  if(style === 'Imperial/Double IPA' || style === 'Imperial IPA')
     return 'Double IPA';
   if(style === 'Strong Pale Lager/Imperial Pils' || style === 'Imperial Pils/Strong Pale Lager')
     return 'Imperial Pils';
