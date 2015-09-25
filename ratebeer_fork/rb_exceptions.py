@@ -23,7 +23,10 @@
 #
 # For more information, please refer to <http://unlicense.org/>
 
-from exceptions import Exception
+try:
+    from exceptions import Exception
+except ImportError:
+    pass  # Python 3 has exception in builtin
 
 
 class PageNotFound(Exception):

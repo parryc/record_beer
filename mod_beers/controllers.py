@@ -147,9 +147,13 @@ def query():
         if prefix == 'rating' or prefix == 'abv':
             query_results = Beers.query.filter(Beers.user==user)\
                                        .filter(getattr(Beers,prefix) >= search)
+        if prefix == 'tag':
+            query_results = [get_beer(tag.beer) for tag in Tags.query.filter(Tags.user==user)\
+                                       .filter(Tags.tag.ilike(query))]
         else:            
             query_results = Beers.query.filter(Beers.user==user)\
-                                       .filter(getattr(Beers,prefix).ilike(query))
+                                       .filter(getattr(Beers,prefix).ilike(query)) 
+
     else:
         query_results = Beers.query.filter(and_(Beers.user==user,Beers.search_string.ilike(query)))
 
@@ -174,7 +178,7 @@ def search():
         return len(set(search) ^ set(result))
     query = _dirtystrip(request.json['query'])
     results = rb.search(query)
-    results = sorted(results['beers'],key=lambda beer: _closeness(query,beer['name']))
+    results = sorted(results['beers'],key=lambda beer: _closeness(query,beer.name))
     top = []
     limit = 3
     if len(results) < 3:
@@ -183,7 +187,7 @@ def search():
         for idx in xrange(0,limit):
             result = results[idx]
             try:
-                hit = rb.beer(result['url'])
+                hit = rb.beer(result.url)
             except rb_exceptions.AliasedBeer:
                 limit += 1
                 print 'AliasedBeer'
