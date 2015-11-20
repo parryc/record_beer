@@ -135,9 +135,9 @@ def query():
         parts = raw_query.split(':')
         prefix = parts[0].lower()
         search = parts[1]
-        query = u'%{}%'.format(search)
+        query = u'%{}%'.format(search.strip())
     else:
-        query = u'%{}%'.format(raw_query)
+        query = u'%{}%'.format(raw_query.strip())
 
     user  = request.json['user']
 
@@ -147,7 +147,7 @@ def query():
         if prefix == 'rating' or prefix == 'abv':
             query_results = Beers.query.filter(Beers.user==user)\
                                        .filter(getattr(Beers,prefix) >= search)
-        if prefix == 'tag':
+        elif prefix == 'tag':
             query_results = [get_beer(tag.beer) for tag in Tags.query.filter(Tags.user==user)\
                                        .filter(Tags.tag.ilike(query))]
         else:            
@@ -192,7 +192,10 @@ def search():
                 limit += 1
                 print 'AliasedBeer'
                 continue
-            top.append(hit)
+            top.append({'name':hit['name'],
+                        'abv':hit['abv'],
+                        'style':hit['style'],
+                        'brewery_country':hit['brewery'].country})
         return jsonify({'results':top})
     else:
         return jsonify({'no_hits':True})

@@ -7,7 +7,7 @@ from mod_users.models import *
 from sqlalchemy import or_, and_
 from marshmallow import fields
 
-mod_breweries = Blueprint('breweries', __name__, url_prefix='/breweries')
+mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 
 
 ##########
@@ -15,13 +15,13 @@ mod_breweries = Blueprint('breweries', __name__, url_prefix='/breweries')
 ##########
 
 
-# @mod_breweries.route('/', methods=['GET'])
+# @mod_analysis.route('/', methods=['GET'])
 # def index():
 #     # there's only my beer at the moment. 
 #     beers = Beers.query.all()
 #     return render_template('beers/index.html',beers=beers)
 
-@mod_breweries.route('/<brewery>', methods=['GET'])
+@mod_analysis.route('/brewery/<brewery>', methods=['GET'])
 def show(brewery):
     beers = get_beers_by_brewery(brewery)
     favorite_beer = beers[0]
@@ -54,7 +54,7 @@ def show(brewery):
             favorite_style_rating = rating
             favorite_style = style
 
-    return render_template('breweries/show.html'
+    return render_template('analysis/brewery.html'
                            ,brewery=brewery
                            ,beers=beers
                            ,favorite_beer=favorite_beer

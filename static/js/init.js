@@ -45,6 +45,8 @@ Handlebars.registerHelper('isStrong', function(abv, options) {
 Handlebars.registerHelper('style', function(style){
   if(style === 'Fruit Beer/Radler')
     return 'Fruit Beer';
+  if(style === 'Radler/Shandy')
+    return 'Fruit Beer';
   if(style === 'Spice/Herb/Vegetable')
     return 'Spice';
   if(style === 'Abt/Quadrupel')
@@ -73,18 +75,20 @@ Handlebars.registerHelper('style', function(style){
     return 'Belgian White';
   if(style === 'Golden Ale/Blond Ale')
     return 'Golden Ale';
-  if(style == 'Lambic Style - Gueuze')
+  if(style === 'Lambic Style - Gueuze')
     return 'Gueuze';
-  if(style == 'Czech Pilsner (Světlý)')
+  if(style === 'Czech Pilsner (Světlý)')
     return 'Pilsener';
-  if(style == 'Oktoberfest/Märzen')
+  if(style === 'Oktoberfest/Märzen')
     return 'Oktoberfest';
-  if(style == 'Dortmunder/Helles')
+  if(style === 'Dortmunder/Helles')
     return 'Dortmunder';
-  if(style == 'Lambic Style - Fruit')
+  if(style === 'Lambic Style - Fruit')
     return 'Lambic';
-  if(style == 'Premium Bitter/ESB')
+  if(style === 'Premium Bitter/ESB')
     return 'Premium Bitter'
+  if(style === 'Amber Lager/Vienna')
+    return 'Vienna'
   else
     return style;
 });

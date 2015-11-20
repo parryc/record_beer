@@ -18,6 +18,8 @@ $(document).ready(function(){
     history.pushState('', document.title, window.location.pathname);
   }
 
+
+
   var detailify = function(evt) {
     var detail    = $('#beer-detail')
        ,name      = $(this).find('.name').text()
@@ -52,7 +54,7 @@ $(document).ready(function(){
     detail.find('.drink-country').text(d_country);
     detail.find('.drink-month').text(d_month);
     detail.find('.drink-year').text(d_year);
-    detail.find('#brewery-link').attr('href','/breweries/'+brewery)
+    detail.find('#brewery-link').attr('href','/details/brewery/'+brewery)
 
     tag_list_node = detail.find('.tags-list');
     tag_node      = detail.find('.tags');
