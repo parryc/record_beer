@@ -2,6 +2,7 @@ from app import db, app
 from mod_tags.models import *
 from datetime import datetime
 from helper_db import *
+from sqlalchemy import extract
 import pycountry
 
 class Beers(db.Model):
@@ -144,6 +145,11 @@ def get_beer(_id):
 def get_beers_by_brewery(_brewery,order_by='rating'):
     query = Beers.query.filter_by(brewery=_brewery).order_by(getattr(Beers,order_by).desc())
     return query.all()
+
+def get_beers_by_year(_year,order_by='drink_datetime'):
+    return Beers.query.filter(extract('year',Beers.drink_datetime) == _year)\
+                      .order_by(getattr(Beers,order_by).desc())\
+                      .all()
 
 
 ###########

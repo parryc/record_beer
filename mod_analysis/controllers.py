@@ -6,6 +6,8 @@ from mod_beers.models import *
 from mod_users.models import *
 from sqlalchemy import or_, and_
 from marshmallow import fields
+import calendar
+from itertools import groupby
 
 mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 
@@ -22,7 +24,7 @@ mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 #     return render_template('beers/index.html',beers=beers)
 
 @mod_analysis.route('/brewery/<brewery>', methods=['GET'])
-def show(brewery):
+def show_brewery(brewery):
     beers = get_beers_by_brewery(brewery)
     favorite_beer = beers[0]
     ratings = [beer.rating for beer in beers]
@@ -65,3 +67,127 @@ def show(brewery):
                            ,average_rating=average_rating
                            ,average_abv=average_abv
                         )
+
+@mod_analysis.route('/year/<int:year>', methods=['GET'])
+def show_year(year):
+  beers = get_beers_by_year(year)
+  count = len(beers)
+
+  #########
+  # TL;DR #
+  #########
+
+  avg_abv = round(sum([beer.abv for beer in beers])/float(count),2)
+  avg_rating = round(sum([beer.rating for beer in beers])/float(count),2)
+  top_three = sorted(beers, key=lambda x: x.rating, reverse=True)[:3]
+  bottom_three = sorted(beers, key=lambda x: x.rating)[:3]
+
+  tldr_data = {
+    'avg_abv':avg_abv,
+    'avg_rating':avg_rating,
+    'top_three':top_three,
+    'bottom_three':bottom_three
+  }
+
+  ##########
+  # MONTHS #
+  ##########
+
+  month_totals = []
+  month_ratings = []
+  month_abvs = []
+  for key, group in groupby(beers,key=lambda x: x.drink_datetime):
+    month_beers = [g for g in group]
+    month_totals.append(len(month_beers))
+    month_ratings.append(calc_avg(month_beers,'rating'))
+    month_abvs.append(calc_avg(month_beers,'abv'))
+
+  month_data = {
+    'average':round(sum(month_totals)/float(len(month_totals)),2),
+    'most':(month(month_totals.index(max(month_totals))),max(month_totals)),
+    'least':(month(month_totals.index(min(month_totals))),min(month_totals)),
+    'best':(month(month_ratings.index(max(month_ratings))),max(month_ratings)),
+    'worst':(month(month_ratings.index(min(month_ratings))),min(month_ratings)),
+    'booziest':(month(month_abvs.index(max(month_abvs))),max(month_abvs)),
+    'soberest':(month(month_abvs.index(min(month_abvs))),min(month_abvs))
+  }
+
+  ##########
+  # PLACES #
+  ##########
+
+  city_data = calculate_data(beers,'drink_city')
+  country_data = calculate_data(beers,'drink_country')
+  brewery_country_data = calculate_data(beers,'country')
+
+  ##########
+  # STYLES #
+  ##########
+
+  style_data = calculate_data(beers, 'style')
+
+  ########
+  # ABVS #
+  ########
+
+  abv_top_three = sorted(beers, key=lambda x: x.abv, reverse=True)[:3]
+  abv_bottom_three = sorted(beers, key=lambda x: x.abv)[:3]
+  abv_data = {'top':abv_top_three, 'bottom':abv_bottom_three}
+
+  #############
+  # BREWERIES #
+  #############
+
+  brewery_data = calculate_data(beers,'brewery')
+
+  return render_template('analysis/year.html'
+                          ,year=year
+                          ,beers=beers
+                          ,tldr_data=tldr_data
+                          ,month_data=month_data
+                          ,city_data=city_data
+                          ,country_data=country_data
+                          ,brewery_country_data=brewery_country_data
+                          ,style_data=style_data
+                          ,abv_data=abv_data
+                          ,brewery_data=brewery_data
+                          )
+
+
+###########
+# HELPERS #
+###########
+
+def calc_avg(beers,attr):
+  count = len(beers)
+  return round(sum([getattr(beer,attr) for beer in beers])/float(count),2)
+
+def month(idx):
+  return calendar.month_name[idx+1]
+
+def calculate_data(beers, attribute):
+  keys = []
+  totals = []
+  ratings = []
+  abvs = []
+  count = 0
+  beers.sort(key=lambda x: getattr(x,attribute))
+  for key, group in groupby(beers,key=lambda x: getattr(x,attribute)):
+    beers = [g for g in group]
+    count += 1
+    if len(beers) < 5:
+      continue
+    keys.append(key)
+    totals.append(len(beers))
+    ratings.append(calc_avg(beers,'rating'))
+    abvs.append(calc_avg(beers,'abv'))
+
+  return {
+    'count':count, 
+    'most':(keys[totals.index(max(totals))],max(totals)),
+    'least':(keys[totals.index(min(totals))],min(totals)),
+    'best':(keys[ratings.index(max(ratings))],max(ratings)),
+    'worst':(keys[ratings.index(min(ratings))],min(ratings)),
+    'booziest':(keys[abvs.index(max(abvs))],max(abvs)),
+    'soberest':(keys[abvs.index(min(abvs))],min(abvs))
+  }

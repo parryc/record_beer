@@ -1,0 +1,131 @@
+{% extends '/base.html' %}
+{% block page_js %}
+  {% assets "query" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+{% endblock %}
+{% block content %}
+
+<div class="row" style="font-size:1.3em;">
+  <h1>Beers I Have Known and Loved {{year}}</h1>
+
+  <h2>§Introduction</h2>
+  <p>
+  So you're actually reading this. You aren't sick of me talking about beer all day everyday forever. ... Cool. Some people do music, some people do events, I'm gonna talk about all the beer I tried this year.
+  </p>
+
+  <h2>❧Things You Should Know</h2>
+  <p>
+  I've ignored counts of less than 5 in the superlatives. That is, best/worst of X only includes Xes that I have more than 5 entries for in the year.
+
+  If there's a percentage in the parentheses, it's an ABV. If there's no percentage, it's a rating.
+
+  I use a 5 point rating scale:
+  <ul>
+    <li>Bad (0-1)</li>
+    <li>Meh (1-2)</li>
+    <li>Ok (2-3)</li>
+    <li>Good (3-4)</li>
+    <li>Great (4-5)</li>
+  </ul>
+
+  <h2>§TL;DR</h2>
+  <p>
+    <strong>Total:</strong> {{beers|length}} beers<br/>
+    <strong>Average Rating:</strong> {{tldr_data.avg_rating}}<br/>
+    <strong>Average ABV:</strong> {{tldr_data.avg_abv}}%
+  </p>
+
+  <h2>§Beers</h2>
+  <h3>❧Best</h3>
+  <p>
+    <ol>
+    {% for beer in tldr_data.top_three %}
+      <li>{{beer.brewery}} {{beer.name}} ({{beer.rating}}, {{beer.abv}}%, {{beer.style}}, {{beer.country}})</li>
+    {% endfor %}
+    </ol>
+  </p>
+  <h3>❧Worst</h3>
+  <p>
+    <ol>
+    {% for beer in tldr_data.bottom_three %}
+      <li>{{beer.brewery}} {{beer.name}} ({{beer.rating}}, {{beer.abv}}%, {{beer.style}}, {{beer.country}})</li>
+    {% endfor %}
+    </ol>
+  </p>
+
+  <h2>§Months</h2>
+  <p>
+    <strong>Average:</strong> {{month_data.average}} per month<br/>
+    <strong>Most:</strong> {{month_data.most[0]}} ({{month_data.most[1]}})<br/>
+    <strong>Least:</strong> {{month_data.least[0]}} ({{month_data.least[1]}})<br/>
+    <strong>Best:</strong> {{month_data.best[0]}} ({{month_data.best[1]}})<br/>
+    <strong>Worst:</strong> {{month_data.worst[0]}} ({{month_data.worst[1]}})<br/>
+    <strong>Booziest:</strong> {{month_data.booziest[0]}} ({{month_data.booziest[1]}}%)<br/>
+    <strong>Soberest:</strong> {{month_data.soberest[0]}} ({{month_data.soberest[1]}}%)
+  </p>
+  <h2>§Places</h2>
+  <h3>❧Cities Visited</h3>
+  <p>
+    <em>{{city_data.count}} different cities</em><br/>
+    <strong>Best:</strong> {{city_data.best[0]}} ({{city_data.best[1]}})<br/>
+    <strong>Worst:</strong> {{city_data.worst[0]}} ({{city_data.worst[1]}})<br/>
+    <strong>Booziest:</strong> {{city_data.booziest[0]}} ({{city_data.booziest[1]}}%)<br/>
+    <strong>Soberest:</strong> {{city_data.soberest[0]}} ({{city_data.soberest[1]}}%)
+  </p>
+  <h3>❧Countries Visited</h3>
+  <p>
+    <em>{{country_data.count}} different countries</em><br/>
+    <strong>Best:</strong> {{country_data.best[0]}} ({{country_data.best[1]}})<br/>
+    <strong>Worst:</strong> {{country_data.worst[0]}} ({{country_data.worst[1]}})<br/>
+    <strong>Booziest:</strong> {{country_data.booziest[0]}} ({{country_data.booziest[1]}}%)<br/>
+    <strong>Soberest:</strong> {{country_data.soberest[0]}} ({{country_data.soberest[1]}}%)
+  </p>
+  <h2>❧Brewery Countries</h2>
+  <p>
+    <em>{{brewery_country_data.count}} different brewery countries</em><br/>
+    <strong>Best:</strong> {{brewery_country_data.best[0]}} ({{brewery_country_data.best[1]}})<br/>
+    <strong>Worst:</strong> {{brewery_country_data.worst[0]}} ({{brewery_country_data.worst[1]}})<br/>
+    <strong>Booziest:</strong> {{brewery_country_data.booziest[0]}} ({{brewery_country_data.booziest[1]}}%)<br/>
+    <strong>Soberst:</strong> {{brewery_country_data.soberest[0]}} ({{brewery_country_data.soberest[1]}}%)
+  </p>
+  <h2>§Styles</h2>
+  <p>
+    <em>{{style_data.count}} different styles</em><br/>
+    <strong>Most:</strong> {{style_data.most[0]}} ({{style_data.most[1]}})<br/>
+    <strong>Least:</strong> {{style_data.least[0]}} ({{style_data.least[1]}})<br/>
+    <strong>Best:</strong> {{style_data.best[0]}} ({{style_data.best[1]}})<br/>
+    <strong>Worst:</strong> {{style_data.worst[0]}} ({{style_data.worst[1]}})<br/>
+    <strong>Booziest:</strong> {{style_data.booziest[0]}} ({{style_data.booziest[1]}}%)<br/>
+    <strong>Soberst:</strong> {{style_data.soberest[0]}} ({{style_data.soberest[1]}}%)
+  </p>
+  <h2>§ABV</h2>
+  <h3>❧Strongest</h3>
+  <p>
+    <ol>
+    {% for beer in abv_data.top %}
+      <li>{{beer.brewery}} {{beer.name}} ({{beer.rating}}, {{beer.abv}}%, {{beer.style}}, {{beer.country}})</li>
+    {% endfor %}
+    </ol>
+  </p>
+  <h3>❧Weakest</h3>
+  <p>
+    <ol>
+    {% for beer in abv_data.bottom %}
+      <li>{{beer.brewery}} {{beer.name}} ({{beer.rating}}, {{beer.abv}}%, {{beer.style}}, {{beer.country}})</li>
+    {% endfor %}
+    </ol>
+  </p>
+  <h2>§Breweries</h2>
+  <p>
+    <em>{{brewery_data.count}} different breweries</em><br/>
+    <strong>Most:</strong> {{brewery_data.most[0]}} ({{brewery_data.most[1]}})<br/>
+    <strong>Least:</strong> {{brewery_data.least[0]}} ({{brewery_data.least[1]}})<br/>
+    <strong>Best:</strong> {{brewery_data.best[0]}} ({{brewery_data.best[1]}})<br/>
+    <strong>Worst:</strong> {{brewery_data.worst[0]}} ({{brewery_data.worst[1]}})<br/>
+    <strong>Booziest:</strong> {{brewery_data.booziest[0]}} ({{brewery_data.booziest[1]}}%)<br/>
+    <strong>Soberst:</strong> {{brewery_data.soberest[0]}} ({{brewery_data.soberest[1]}}%)
+  </p>
+</div>
+
+{% endblock %}
