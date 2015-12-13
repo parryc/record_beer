@@ -137,8 +137,10 @@ def show_year(year):
   #############
   # BREWERIES #
   #############
-
-  brewery_data = calculate_data(beers,'brewery')
+  if year == 2011:
+    brewery_data = calculate_data(beers,'brewery',override=True)
+  else:
+    brewery_data = calculate_data(beers,'brewery',override=False)
 
   return render_template('analysis/year.html'
                           ,year=year
@@ -165,7 +167,7 @@ def calc_avg(beers,attr):
 def month(idx):
   return calendar.month_name[idx+1]
 
-def calculate_data(beers, attribute):
+def calculate_data(beers, attribute, override=False):
   keys = []
   totals = []
   ratings = []
@@ -175,7 +177,7 @@ def calculate_data(beers, attribute):
   for key, group in groupby(beers,key=lambda x: getattr(x,attribute)):
     beers = [g for g in group]
     count += 1
-    if len(beers) < 5:
+    if len(beers) < 5 and not override:
       continue
     keys.append(key)
     totals.append(len(beers))

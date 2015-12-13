@@ -5,7 +5,6 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.marshmallow import Marshmallow
 from flask_wtf.csrf import CsrfProtect
-import os
 
 app = Flask(__name__)
 app.config.from_object('config.DevelopmentConfig')
@@ -19,7 +18,7 @@ csrf.init_app(app)
 
 @app.route('/')
 def index():
-  from mod_beers.models import *
+  from mod_beers.models import Beers
   beer_count = Beers.query.count()
   breweries_count = db.session.query(Beers.brewery).distinct()
   styles_count = db.session.query(Beers.style).distinct()
