@@ -1,0 +1,32 @@
+{% extends '/base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="style-data">
+      <h1>{{style}}</h1>
+      <span class="style-label">Count:</span> {{beers|length}}<br/>
+      <span class="style-label">Average Rating:</span> {{average_rating}}<br/>
+      <span class="style-label">Average ABV:</span> {{average_abv}}%<br/>
+      <span class="style-label">Favorite Beer:</span> {{favorite_beer.brewery}} {{favorite_beer.name}} 
+      (<span class="rating {{rating_text(favorite_beer.rating)}}"></span> {{favorite_beer.rating}})<br/>
+      <span class="style-label">Most Common Brewery:</span> {{most_common_brewery}} ({{most_common_count}})<br/>
+    </div>
+    <table class="style-beers">
+      <thead>
+        <th>Beer</th>
+        <th>Rating</th>
+      </thead>
+      <tbody>
+        {% for beer in beers %}
+          <tr>
+            <td>{{beer.brewery}} {{beer.name}}</td>
+            <td>{{beer.rating}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

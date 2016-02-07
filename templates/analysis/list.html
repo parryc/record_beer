@@ -1,0 +1,16 @@
+{% extends '/base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="list-data">
+      <h1>{{t}}</h1>
+    </div>
+
+    {% for el in list %}
+      <span class="list-link"><em><a href="/details/{{type}}/{{el.name}}">{{el.name}}</a></em> <span class="rating {{rating_text(el.average)}}"></span> ({{el.count}})</span><br/>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

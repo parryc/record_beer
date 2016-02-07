@@ -151,6 +151,11 @@ def get_beers_by_year(_year,order_by='drink_datetime'):
                       .order_by(getattr(Beers,order_by).asc())\
                       .all()
 
+def get_beers_by_style(_style,order_by='rating'):
+    return Beers.query.filter_by(style=_style)\
+                .order_by(getattr(Beers,order_by).desc())\
+                .all()
+
 
 ###########
 # HELPERS #

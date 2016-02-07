@@ -55,7 +55,7 @@
           <hr/>
           <div class="details">
             <label>Rating</label><span class="rating-text {{rating_text(latest.rating)}}"></span> (<span class="detail rating">{{latest.rating}}</span>)<br/>
-            <label>Style</label><span class="detail style">{{latest.style}}</span><br/>
+            <label>Style</label><a id="style-link" href="/details/style/{{latest.style}}"><span class="detail style">{{latest.style}}</span></a><br/>
             <label>ABV</label><span class="detail abv">{{latest.abv}}</span><br/>
             <label>Country</label><span class="detail country">{{latest.country}}</span><br/>
             <label>Drink Location</label><span class="detail drink-city">{{latest.drink_city}}</span>, <span class="detail drink-country">{{latest.drink_country}}</span><br/>

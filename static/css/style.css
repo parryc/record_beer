@@ -218,19 +218,26 @@
   content: '%';
 }
 
-/* Breweries
+/* Breweries, Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.brewery-label {
+.brewery-label, .style-label {
   font-weight: bold;
 }
 
-.brewery-data {
+.brewery-data, .style-data {
   padding: 15px;
 }
 
-.brewery-beers {
+.brewery-beers, .style-beers {
   margin: 5px;
+}
+
+/* Lists
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.list-link {
+  font-size: 1.3em;
 }
 
 /* Skeleton Overrides

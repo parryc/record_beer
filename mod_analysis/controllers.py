@@ -25,12 +25,12 @@ mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 
 @mod_analysis.route('/brewery/<brewery>', methods=['GET'])
 def show_brewery(brewery):
-    beers = get_beers_by_brewery(brewery)
-    favorite_beer = beers[0]
-    ratings = [beer.rating for beer in beers]
+    beers          = get_beers_by_brewery(brewery)
+    favorite_beer  = beers[0]
+    ratings        = [beer.rating for beer in beers]
     average_rating = round(sum(ratings)/float(len(ratings)),2)
-    abvs = [beer.abv for beer in beers]
-    average_abv = round(sum(abvs)/float(len(abvs)),2)
+    abvs           = [beer.abv for beer in beers]
+    average_abv    = round(sum(abvs)/float(len(abvs)),2)
 
     styles = {}
     for beer in beers:
@@ -68,6 +68,63 @@ def show_brewery(brewery):
                            ,average_abv=average_abv
                            ,t='Brewery: ' + brewery
                         )
+
+@mod_analysis.route('/style', methods=['GET'])
+def show_style_index():
+  beers  = Beers.query.all()
+  styles = []
+
+  for key, group in groupby(sorted(beers,key=lambda x: x.style),key=lambda x: x.style):
+    beer_list   = [g for g in group]
+    sum_ratings = sum([b.rating for b in beer_list])
+    average     = round(sum_ratings/float(len(beer_list)),2)
+    styles.append({'name':key,
+                   'count':len(beer_list),
+                   'average':average})
+
+  return render_template('analysis/list.html',
+                         list=styles,
+                         type='style',
+                         t='Styles')
+
+
+@mod_analysis.route('/style/<style>', methods=['GET'])
+def show_style(style):
+    beers          = get_beers_by_style(style,order_by='rating')
+    favorite_beer  = beers[0]
+    ratings        = [beer.rating for beer in beers]
+    average_rating = round(sum(ratings)/float(len(ratings)),2)
+    abvs           = [beer.abv for beer in beers]
+    average_abv    = round(sum(abvs)/float(len(abvs)),2)
+
+    breweries = {}
+    for beer in beers:
+        if beer.brewery not in breweries:
+            breweries[beer.brewery] = (beer.rating, 1)
+        else:
+            _curr = breweries[beer.brewery]
+            breweries[beer.brewery] = (_curr[0]+beer.rating,int(_curr[1])+1)
+
+    most_common_brewery     = ''
+    most_common_count       = 0
+    for brewery in breweries:
+        _data = breweries[brewery]
+        rating = _data[0]/float(_data[1])
+        if _data[1] > most_common_count:
+            most_common_brewery = brewery
+            most_common_count = _data[1]
+
+    return render_template('analysis/style.html'
+                           ,style=style
+                           ,beers=beers
+                           ,favorite_beer=favorite_beer
+                           ,most_common_brewery=most_common_brewery
+                           ,most_common_count=most_common_count
+                           ,average_rating=average_rating
+                           ,average_abv=average_abv
+                           ,t='Style: ' + style
+                        )
+
 
 @mod_analysis.route('/year/<int:year>', methods=['GET'])
 def show_year(year):
@@ -156,7 +213,7 @@ def show_year(year):
                           ,style_data=style_data
                           ,abv_data=abv_data
                           ,brewery_data=brewery_data
-                          ,t='Year: ' + year 
+                          ,t='Year: ' + str(year) 
                           )
 
 
