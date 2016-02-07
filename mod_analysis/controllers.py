@@ -40,11 +40,11 @@ def show_brewery(brewery):
             _curr = styles[beer.style]
             styles[beer.style] = (_curr[0]+beer.rating,int(_curr[1])+1)
 
-    favorite_style = ''
+    favorite_style        = ''
     favorite_style_rating = 0
-    most_common_style = ''
-    most_common_count = 0
-    most_common_rating = 0
+    most_common_style     = ''
+    most_common_count     = 0
+    most_common_rating    = 0
     for style in styles:
         _data = styles[style]
         rating = _data[0]/float(_data[1])
@@ -66,6 +66,7 @@ def show_brewery(brewery):
                            ,most_common_count=most_common_count
                            ,average_rating=average_rating
                            ,average_abv=average_abv
+                           ,t='Brewery: ' + brewery
                         )
 
 @mod_analysis.route('/year/<int:year>', methods=['GET'])
@@ -94,9 +95,9 @@ def show_year(year):
   ##########
 
   # Not all months are necessarily filled
-  month_totals = [0] * 12
+  month_totals  = [0] * 12
   month_ratings = [0] * 12
-  month_abvs = [0] * 12
+  month_abvs    = [0] * 12
   for key, group in groupby(beers,key=lambda x: x.drink_datetime):
     month_idx               = key.month - 1
     month_beers             = [g for g in group]
@@ -155,6 +156,7 @@ def show_year(year):
                           ,style_data=style_data
                           ,abv_data=abv_data
                           ,brewery_data=brewery_data
+                          ,t='Year: ' + year 
                           )
 
 

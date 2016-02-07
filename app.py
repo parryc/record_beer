@@ -27,7 +27,8 @@ def index():
   latest = latest_list[0]
   return render_template('index.html',beer_count=beer_count,breweries_count=breweries_count
                                      ,styles_count=styles_count,countries_count=countries_count
-                                     ,latest=latest,latest_list=latest_list)
+                                     ,latest=latest,latest_list=latest_list
+                                     ,t='record.beer')
 
 @app.errorhandler(404)
 def not_found(error):

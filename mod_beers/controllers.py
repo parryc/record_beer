@@ -42,12 +42,12 @@ class BeerSchema(ma.Schema):
 def index():
     # there's only my beer at the moment. 
     beers = Beers.query.all()
-    return render_template('beers/index.html',beers=beers)
+    return render_template('beers/index.html',beers=beers, t='record.beer')
 
 @mod_beers.route('/<int:_id>', methods=['GET'])
 def show(_id):
     beer = get_beer(_id)
-    return render_template('beers/show.html',beer=beer)
+    return render_template('beers/show.html',beer=beer, t=beer.name)
 
 @mod_beers.route('/add', methods=['GET','POST'])
 def add():
@@ -81,7 +81,7 @@ def add():
             return redirect(url_for('.add'))
         else:
             flash('Could not add beer. %s' % save_result['message'])
-    return render_template('beers/add.html',form=form,user=me)
+    return render_template('beers/add.html',form=form,user=me,t='Add Beers')
 
 @mod_beers.route('/edit/<int:_id>', methods=['GET','POST'])
 def edit(_id):
@@ -122,7 +122,7 @@ def edit(_id):
         else:
             flash('Could not update beer. Error: %s' % save_result['message'])
 
-    return render_template('beers/edit.html',form=form)
+    return render_template('beers/edit.html',form=form, t='Edit Beers')
 
 
 @mod_beers.route('/query', methods=['POST'])
