@@ -93,21 +93,23 @@ def show_year(year):
   # MONTHS #
   ##########
 
-  month_totals = []
-  month_ratings = []
-  month_abvs = []
+  # Not all months are necessarily filled
+  month_totals = [0] * 12
+  month_ratings = [0] * 12
+  month_abvs = [0] * 12
   for key, group in groupby(beers,key=lambda x: x.drink_datetime):
-    month_beers = [g for g in group]
-    month_totals.append(len(month_beers))
-    month_ratings.append(calc_avg(month_beers,'rating'))
-    month_abvs.append(calc_avg(month_beers,'abv'))
+    month_idx               = key.month - 1
+    month_beers             = [g for g in group]
+    month_totals[month_idx] = len(month_beers)
+    month_ratings[month_idx]= calc_avg(month_beers,'rating')
+    month_abvs[month_idx]   = (calc_avg(month_beers,'abv'))
 
   month_data = {
     'average':round(sum(month_totals)/float(len(month_totals)),2),
-    'most':(month(month_totals.index(max(month_totals))),max(month_totals)),
-    'least':(month(month_totals.index(min(month_totals))),min(month_totals)),
-    'best':(month(month_ratings.index(max(month_ratings))),max(month_ratings)),
-    'worst':(month(month_ratings.index(min(month_ratings))),min(month_ratings)),
+    'most':    (month(month_totals.index(max(month_totals))),max(month_totals)),
+    'least':   (month(month_totals.index(min(month_totals))),min(month_totals)),
+    'best':    (month(month_ratings.index(max(month_ratings))),max(month_ratings)),
+    'worst':   (month(month_ratings.index(min(month_ratings))),min(month_ratings)),
     'booziest':(month(month_abvs.index(max(month_abvs))),max(month_abvs)),
     'soberest':(month(month_abvs.index(min(month_abvs))),min(month_abvs))
   }
@@ -186,10 +188,10 @@ def calculate_data(beers, attribute, override=False):
 
   return {
     'count':count, 
-    'most':(keys[totals.index(max(totals))],max(totals)),
-    'least':(keys[totals.index(min(totals))],min(totals)),
-    'best':(keys[ratings.index(max(ratings))],max(ratings)),
-    'worst':(keys[ratings.index(min(ratings))],min(ratings)),
+    'most':    (keys[totals.index(max(totals))],max(totals)),
+    'least':   (keys[totals.index(min(totals))],min(totals)),
+    'best':    (keys[ratings.index(max(ratings))],max(ratings)),
+    'worst':   (keys[ratings.index(min(ratings))],min(ratings)),
     'booziest':(keys[abvs.index(max(abvs))],max(abvs)),
     'soberest':(keys[abvs.index(min(abvs))],min(abvs))
   }

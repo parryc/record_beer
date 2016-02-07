@@ -148,7 +148,7 @@ def get_beers_by_brewery(_brewery,order_by='rating'):
 
 def get_beers_by_year(_year,order_by='drink_datetime'):
     return Beers.query.filter(extract('year',Beers.drink_datetime) == _year)\
-                      .order_by(getattr(Beers,order_by).desc())\
+                      .order_by(getattr(Beers,order_by).asc())\
                       .all()
 
 
