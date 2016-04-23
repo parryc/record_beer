@@ -121,6 +121,7 @@ def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_countr
     beer.brew_year      = brew_year
     beer.brew_with      = brew_with
     beer.tags           = []
+    beer.last_updated   = datetime.utcnow()
 
     save_beer_result = commit_entry(beer)
     beer = save_beer_result['entry']
