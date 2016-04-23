@@ -166,9 +166,12 @@ def search():
         """
             Returns a RateBeer appropriate search string. Normalizes to get accents as
             individual characters and then strips them. ord < 256 allows characters like
-            ø and ð to remain.            
+            ø and ð to remain.
+
+            Also strip /s. RateBeer can't handle them. Man, their search seriously sucks.    
         """
         line = unicodedata.normalize('NFKD',line)
+        line = line.replace('/',' ')
         return ''.join([x for x in line if ord(x) < 256])
     def _closeness(search, result):
         """
