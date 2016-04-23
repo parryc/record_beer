@@ -103,7 +103,10 @@ def add_beer(brewery, name, abv, style, country_name, rating, drink_country, dri
 
 def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_country, drink_city, drink_datetime, notes, brew_year, brew_with, tags):
     beer = get_beer(_id)
-    country_iso = iso_code(country_name)
+    # Clear tags for the beer, before adding new ones.
+    delete_tags_for_beer(_id)
+
+    country_iso         = iso_code(country_name)
     beer.brewery        = brewery
     beer.name           = name
     beer.abv            = abv
@@ -123,8 +126,8 @@ def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_countr
     beer = save_beer_result['entry']
 
     saved_tags = []
+
     if save_beer_result['status'] and len(tags) > 0:
-        delete_tags_for_beer(_id)
         for tag in tags:
             save_tag_result = add_tag(tag.strip(), beer.id, beer.user)
             if save_tag_result['status']:

@@ -41,7 +41,7 @@ def get_tag(_id):
   return Tags.query.get(_id)
 
 def get_tags_by_beer(beer_id):
-  return Tags.query.filter_by(beer=beer_id).all()
+  return Tags.query.filter(Tags.beer == beer_id).all()
 
 def get_tags_by_user(user_id):
   return db.session.query(Tags.tag).distinct()

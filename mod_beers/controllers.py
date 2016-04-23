@@ -13,7 +13,7 @@ import unicodecsv
 from ratebeer_fork import RateBeer
 from ratebeer_fork import rb_exceptions
 from flask_wtf.csrf import CsrfProtect
-from sqlalchemy import or_, and_
+from sqlalchemy import or_, and_, desc
 from marshmallow import fields
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
@@ -41,7 +41,7 @@ class BeerSchema(ma.Schema):
 @mod_beers.route('/', methods=['GET'])
 def index():
     # there's only my beer at the moment. 
-    beers = Beers.query.all()
+    beers = Beers.query.order_by(Beers.drink_datetime.desc()).all()
     return render_template('beers/index.html',beers=beers, t='record.beer')
 
 @mod_beers.route('/<int:_id>', methods=['GET'])
