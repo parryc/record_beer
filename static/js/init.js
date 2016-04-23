@@ -89,6 +89,8 @@ Handlebars.registerHelper('style', function(style){
     return 'Premium Bitter'
   if(style === 'Amber Lager/Vienna')
     return 'Vienna'
+  if(style === 'Zwickel/Keller/Landbier')
+    return 'Zwickel'
   else
     return style;
 });
