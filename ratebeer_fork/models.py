@@ -105,8 +105,9 @@ class Beer(object):
     def _populate(self):
         soup = soup_helper._get_soup(self.url)
         # check for 404s
+        container = soup.find('div', id='container')
         try:
-            soup_rows = soup.find('div', id='container').find('table').find_all('tr')
+            container.find('div')
         except AttributeError:
             raise rb_exceptions.PageNotFound(self.url)
         # ratebeer pages don't actually 404, they just send you to this weird
@@ -114,11 +115,11 @@ class Beer(object):
         # seems like it's all getting done server side -- so we have to look
         # for the contents h1 to see if we're looking at the beer reference or
         # not
-        if "beer reference" in soup_rows[0].find_all('td')[1].h1.contents:
+        if "beer reference" in container.find('div').find('h1').text.strip():
             raise rb_exceptions.PageNotFound(self.url)
 
-        if "Also known as " in soup_rows[1].find_all('td')[1].div.div.contents:
-            raise rb_exceptions.AliasedBeer(self.url, soup_rows[1].find_all('td')[1].div.div.a['href'])
+        if "Also known as " in container.find('div',class_="columns-container").text:
+            raise rb_exceptions.AliasedBeer(self.url, container.find('div',class_="columns-container").find('a',href=re.compile('^/beer')).get('href'))
 
         # General information from the top of the page
         self.name = soup.find(itemprop='name').text.strip()
@@ -175,17 +176,17 @@ class Beer(object):
             self.abv = float(soup.find(title="Alcohol By Volume").next_sibling.next_sibling.text[:-1])
         except ValueError: # Empty ABV: '-'
             self.abv = None
+        if soup.find(title="Currently out of production"):
+            self.retired = True
+        else:
+            self.retired = False
         # Description
-        description = soup.find('div',
-            style=(
-                'border: 1px solid #e0e0e0; background: #fff; '
-                'padding: 14px; color: #777;'
-            )
-        )
-        if 'no commercial description' not in description.text.lower():
-            # strip ads
+        description = soup.find('span',itemprop="description")
+        if hasattr(description,'text'):
+            # strip ads and replace non-ASCII apostrophe with ASCII apostrophe
             [s.extract() for s in description('small')]
             self.description = ' '.join([s for s in description.strings]).strip()
+            self.description = re.sub(r'\x92','\'',self.description)
         self.tags = [t.text[1:] for t in soup.find_all('span', class_="tagLink")]
 
         self._has_fetched = True
@@ -225,7 +226,7 @@ class Beer(object):
         while True:
             complete_url = u'{0}{1}/{2}/'.format(self.url, url_flag, page_number)
             soup = soup_helper._get_soup(complete_url)
-            content = soup.find('table', style='padding: 10px;').tr.td
+            content = soup.find('div', class_='reviews-container')
             reviews = content.find_all('div', style='padding: 0px 0px 0px 0px;')
             if len(reviews) < 1:
                 raise StopIteration
@@ -381,15 +382,12 @@ class Brewery(object):
             # Add attributes from row
             abv = row.findAll('td')[1].text
             weighted_avg = row.findAll('td')[4].text.strip()
-            overall_rating = row.findAll('td')[5].text.strip()
-            style_rating = row.findAll('td')[6].text.strip()
-            num_ratings = row.findAll('td')[7].text.strip()
+            style_rating = row.findAll('td')[5].text.strip()
+            num_ratings = row.findAll('td')[6].text.strip()
             if abv:
                 beer.abv = float(abv)
             if weighted_avg:
                 beer.weighted_avg = float(weighted_avg)
-            if overall_rating:
-                beer.overall_rating = int(overall_rating)
             if style_rating:
                 beer.style_rating = int(style_rating)
             if num_ratings:

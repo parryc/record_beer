@@ -68,6 +68,7 @@ class RateBeer(object):
              'name': 'Summit Extra Pale Ale',
              'num_ratings': 701,
              'overall_rating': 67,
+             'retired': False,
              'seasonal': None,
              'style': 'American Pale Ale',
              'style_rating': 58,
@@ -128,7 +129,7 @@ class RateBeer(object):
                 url = re.sub(r"\s+", "", url, flags=re.UNICODE)
                 brewer = models.Brewery(url)
                 brewer.name = row.a.string
-                brewer.location = row('td')[1].string.strip()
+                brewer.location = row('td')[1].text.strip()
                 output['breweries'].append(brewer)
         return output
 
