@@ -221,15 +221,15 @@
 /* Breweries, Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.brewery-label, .style-label {
+.brewery-label, .style-label, .analysis-label {
   font-weight: bold;
 }
 
-.brewery-data, .style-data {
+.brewery-data, .style-data, .analysis-data {
   padding: 15px;
 }
 
-.brewery-beers, .style-beers {
+.brewery-beers, .style-beers, .analysis-beers {
   margin: 5px;
 }
 

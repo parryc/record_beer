@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, jsonify, redirect, url_fo
 from app import db, ma, csrf
 from mod_beers.models import *
 from mod_users.models import *
+from mod_tags.models import *
 from sqlalchemy import or_, and_
 from marshmallow import fields
 import calendar
@@ -67,6 +68,72 @@ def show_brewery(brewery):
                            ,average_rating=average_rating
                            ,average_abv=average_abv
                            ,t='Brewery: ' + brewery
+                        )
+
+@mod_analysis.route('/tag', methods=['GET'])
+def show_tag_index():
+  beers = Beers.query.all()
+  tags  = {}
+
+  for beer in beers:
+    if not beer.tags:
+      continue
+
+    for tag in beer.tags:
+      if not tag.tag in tags:
+        tags[tag.tag] = {'name':tag.tag, 'beer_list':[beer]}
+      else:
+        tags[tag.tag]['beer_list'].append(beer)
+
+    for tag in tags:
+      beer_list            = tags[tag]['beer_list']
+      tags[tag]['count']   = len(beer_list)
+      sum_ratings          = sum([b.rating for b in beer_list])
+      average              = round(sum_ratings/float(len(beer_list)),2)
+      print(tag, beer_list)
+      tags[tag]['average'] = average
+    tag_list = sorted([item[1] for item in tags.items()], key=lambda x:x['count'], reverse=True)
+  return render_template('analysis/list.html',
+                         list=tag_list,
+                         type='tag',
+                         t='Tags')
+
+@mod_analysis.route('/tag/<tag>', methods=['GET'])
+def show_tag(tag):
+    beers          = sorted([get_beer(beer) for beer in get_beer_ids_by_tag(tag)],
+                            key=lambda x:x.rating, reverse=True)
+    favorite_beer  = beers[0]
+    ratings        = [beer.rating for beer in beers]
+    average_rating = round(sum(ratings)/float(len(ratings)),2)
+    abvs           = [beer.abv for beer in beers]
+    average_abv    = round(sum(abvs)/float(len(abvs)),2)
+
+    breweries = {}
+    for beer in beers:
+        if beer.brewery not in breweries:
+            breweries[beer.brewery] = (beer.rating, 1)
+        else:
+            _curr = breweries[beer.brewery]
+            breweries[beer.brewery] = (_curr[0]+beer.rating,int(_curr[1])+1)
+
+    most_common_brewery     = ''
+    most_common_count       = 0
+    for brewery in breweries:
+        _data = breweries[brewery]
+        rating = _data[0]/float(_data[1])
+        if _data[1] > most_common_count:
+            most_common_brewery = brewery
+            most_common_count = _data[1]
+
+    return render_template('analysis/tag.html'
+                           ,tag=tag
+                           ,beers=beers
+                           ,favorite_beer=favorite_beer
+                           ,most_common_brewery=most_common_brewery
+                           ,most_common_count=most_common_count
+                           ,average_rating=average_rating
+                           ,average_abv=average_abv
+                           ,t='Tag: ' + tag
                         )
 
 @mod_analysis.route('/style', methods=['GET'])

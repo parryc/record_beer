@@ -46,6 +46,10 @@ def get_tags_by_beer(beer_id):
 def get_tags_by_user(user_id):
   return db.session.query(Tags.tag).distinct()
 
+def get_beer_ids_by_tag(tag):
+  tagged_beers = Tags.query.filter(Tags.tag == tag).all()
+  return [tag.beer for tag in tagged_beers]
+
 
 ##########
 # DELETE #
