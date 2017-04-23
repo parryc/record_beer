@@ -90,7 +90,6 @@ def show_tag_index():
       tags[tag]['count']   = len(beer_list)
       sum_ratings          = sum([b.rating for b in beer_list])
       average              = round(sum_ratings/float(len(beer_list)),2)
-      print(tag, beer_list)
       tags[tag]['average'] = average
     tag_list = sorted([item[1] for item in tags.items()], key=lambda x:x['count'], reverse=True)
   return render_template('analysis/list.html',
