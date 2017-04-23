@@ -7,7 +7,7 @@ def commit_entry(entry):
   try:
     db.session.commit()
     return {'status':True,'message':'Success','entry':entry}
-  except Exception, e:
+  except Exception as e:
     error = str(e).split('.')[0]
     return {'status':False,'message':'Error: %s' % error, 'entry':None}
 
@@ -16,7 +16,7 @@ def delete_entry(entry):
     db.session.delete(entry)
     db.session.commit()
     return {'status':True,'message':'Success', 'entry':entry.id}
-  except Exception, e:
+  except Exception as e:
     error = str(e).split('.')[0]
     return {'status':False,'message':'Error: %s' % error, 'entry':entry.id}
 

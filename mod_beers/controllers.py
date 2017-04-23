@@ -12,7 +12,6 @@ import pycountry
 import unicodecsv
 from ratebeer_fork import RateBeer
 from ratebeer_fork import rb_exceptions
-from flask_wtf.csrf import CsrfProtect
 from sqlalchemy import or_, and_, desc
 from marshmallow import fields
 
@@ -193,7 +192,7 @@ def search():
                 hit = rb.beer(result.url)
             except rb_exceptions.AliasedBeer:
                 limit += 1
-                print 'AliasedBeer'
+                print('AliasedBeer')
                 continue
             top.append({'name':hit['name'],
                         'abv':hit['abv'],

@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 from flask import Flask, render_template, request
-from flask.ext.assets import Environment, Bundle
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.marshmallow import Marshmallow
-from flask_wtf.csrf import CsrfProtect
+from flask_assets import Environment, Bundle
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 app.config.from_object('config.DevelopmentConfig')
 db = SQLAlchemy(app)
 assets = Environment(app)
 ma = Marshmallow(app)
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 #add csrf protection across the board
 csrf.init_app(app)
 
