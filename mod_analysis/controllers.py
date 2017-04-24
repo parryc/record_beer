@@ -85,13 +85,13 @@ def show_tag_index():
       else:
         tags[tag.tag]['beer_list'].append(beer)
 
-    for tag in tags:
-      beer_list            = tags[tag]['beer_list']
-      tags[tag]['count']   = len(beer_list)
-      sum_ratings          = sum([b.rating for b in beer_list])
-      average              = round(sum_ratings/float(len(beer_list)),2)
-      tags[tag]['average'] = average
-    tag_list = sorted([item[1] for item in tags.items()], key=lambda x:x['count'], reverse=True)
+  for tag in tags:
+    beer_list            = tags[tag]['beer_list']
+    tags[tag]['count']   = len(beer_list)
+    sum_ratings          = sum([b.rating for b in beer_list])
+    average              = round(sum_ratings/float(len(beer_list)),2)
+    tags[tag]['average'] = average
+  tag_list = sorted([item[1] for item in tags.items()], key=lambda x:x['count'], reverse=True)
   return render_template('analysis/list.html',
                          list=tag_list,
                          type='tag',
@@ -134,6 +134,69 @@ def show_tag(tag):
                            ,average_abv=average_abv
                            ,t='Tag: ' + tag
                         )
+
+@mod_analysis.route('/abv', methods=['GET'])
+def show_abv_index():
+  beers = Beers.query.all()
+  abvs  = {}
+
+  for beer in beers:
+    if not round(beer.abv) in abvs:
+      abvs[round(beer.abv)] = {'name':'{}% abv'.format(round(beer.abv)), 'beer_list':[beer]}
+    else:
+      abvs[round(beer.abv)]['beer_list'].append(beer)
+
+  for abv in abvs:
+    beer_list            = abvs[abv]['beer_list']
+    abvs[abv]['count']   = len(beer_list)
+    sum_ratings          = sum([b.rating for b in beer_list])
+    average              = round(sum_ratings/float(len(beer_list)),2)
+    abvs[abv]['average'] = average
+  abv_list = sorted([item[1] for item in abvs.items()], key=lambda x:x['count'], reverse=True)
+  return render_template('analysis/list.html',
+                         list=abv_list,
+                         type='abv',
+                         t='ABVs')
+
+@mod_analysis.route('/abv/<abv>', methods=['GET'])
+def show_abv(abv):
+  abv            = abv.replace('% abv', '')
+  # Use the actual sqlalchemy query and_(whatever).
+  beers          = sorted([beer for beer in Beers.query.all() if round(beer.abv) == float(abv)],
+                          key=lambda x:x.rating, reverse=True)
+  favorite_beer  = beers[0]
+  ratings        = [beer.rating for beer in beers]
+  average_rating = round(sum(ratings)/float(len(ratings)),2)
+  abvs           = [beer.abv for beer in beers]
+  average_abv    = round(sum(abvs)/float(len(abvs)),2)
+
+  breweries = {}
+  for beer in beers:
+      if beer.brewery not in breweries:
+          breweries[beer.brewery] = (beer.rating, 1)
+      else:
+          _curr = breweries[beer.brewery]
+          breweries[beer.brewery] = (_curr[0]+beer.rating,int(_curr[1])+1)
+
+  most_common_brewery     = ''
+  most_common_count       = 0
+  for brewery in breweries:
+      _data = breweries[brewery]
+      rating = _data[0]/float(_data[1])
+      if _data[1] > most_common_count:
+          most_common_brewery = brewery
+          most_common_count = _data[1]
+
+  return render_template('analysis/analysis.html'
+                         ,abv=abv
+                         ,beers=beers
+                         ,favorite_beer=favorite_beer
+                         ,most_common_brewery=most_common_brewery
+                         ,most_common_count=most_common_count
+                         ,average_rating=average_rating
+                         ,average_abv=average_abv
+                         ,t='ABV: ' + abv
+                      )
 
 @mod_analysis.route('/style', methods=['GET'])
 def show_style_index():
