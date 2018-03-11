@@ -89,7 +89,7 @@ def edit(_id):
         return ','.join(_arr)
 
     beer = get_beer(_id)
-    form = BeerForm(request.form,beer)
+    form = BeerForm(obj=beer)
     if request.method != 'POST':
         form.tags.data = tags_to_csv(beer.tags)
     if form.validate_on_submit():

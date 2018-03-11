@@ -184,4 +184,4 @@ def iso_code(country_name):
     elif country_name == 'Laos':
         return 'la'
     else:
-        return pycountry.countries.get(name=country_name).alpha2.lower()
+        return pycountry.countries.get(name=country_name).alpha_2.lower()

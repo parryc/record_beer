@@ -22,6 +22,30 @@ mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 def index():
     return render_template('analysis/index.html')
 
+@mod_analysis.route('/brewery', methods=['GET'])
+def show_brewery_index():
+  beers  = Beers.query.all()
+  breweries = []
+
+  for key, group in groupby(sorted(beers,key=lambda x: x.brewery),key=lambda x: x.brewery):
+    beer_list   = [g for g in group]
+    sum_ratings = sum([b.rating for b in beer_list])
+    average     = round(sum_ratings/float(len(beer_list)),2)
+    breweries.append({'name':key,
+                   'count':len(beer_list),
+                   'average':average})
+
+  sort = request.args.get('sort')
+  if sort in ['name', 'count', 'average']:
+    breweries = sorted(breweries, key=lambda x: x[sort], reverse=True)
+  else:
+    breweries = sorted(breweries, key=lambda x: x['name'])
+
+  return render_template('analysis/list.html',
+                         list=breweries,
+                         type='brewery',
+                         t='Breweries')
+
 @mod_analysis.route('/brewery/<brewery>', methods=['GET'])
 def show_brewery(brewery):
     beers          = get_beers_by_brewery(brewery)
