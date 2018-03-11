@@ -18,11 +18,9 @@ mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 ##########
 
 
-# @mod_analysis.route('/', methods=['GET'])
-# def index():
-#     # there's only my beer at the moment. 
-#     beers = Beers.query.all()
-#     return render_template('beers/index.html',beers=beers)
+@mod_analysis.route('/', methods=['GET'])
+def index():
+    return render_template('analysis/index.html')
 
 @mod_analysis.route('/brewery/<brewery>', methods=['GET'])
 def show_brewery(brewery):

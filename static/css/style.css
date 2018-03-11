@@ -248,6 +248,15 @@ body {
   background: url('../fabric_of_squares_gray_@2X.png');
 }
 
+a:hover {
+  color: inherit;
+}
+
+a {
+  color: rgb(255, 110, 110);
+  text-decoration: none
+}
+
 tr:nth-child(even) {
   background-color: rgba(255, 110, 110, .1)
 }
