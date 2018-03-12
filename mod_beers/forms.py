@@ -1,9 +1,9 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import TextField, TextAreaField, DecimalField, SelectField, IntegerField
 from wtforms.validators import Required, NumberRange, Optional
 from mod_tags.models import * 
 
-class BeerForm(Form):
+class BeerForm(FlaskForm):
     brewery    = TextField('Brewery', [
                 Required(message='Must provide a brewery.')])
     name = TextField('Beer name')

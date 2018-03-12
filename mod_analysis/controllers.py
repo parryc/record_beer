@@ -431,6 +431,16 @@ def calculate_data(beers, attribute, override=False):
     ratings.append(calc_avg(beers,'rating'))
     abvs.append(calc_avg(beers,'abv'))
 
+  if not totals:
+    return {
+      'count':count, 
+      'most':    (None,0),
+      'least':   (None,0),
+      'best':    (None,0),
+      'worst':   (None,0),
+      'booziest':(None,0),
+      'soberest':(None,0)
+    }    
   return {
     'count':count, 
     'most':    (keys[totals.index(max(totals))],max(totals)),
