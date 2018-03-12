@@ -12,6 +12,21 @@ from itertools import groupby
 
 mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 
+title_map = {
+  'brewery':'Breweries',
+  'name':'Beer Names',
+  'abv':'ABVs',
+  'rating':'Ratings',
+  'style':'Styles',
+  'country':'Brewery Countries',
+  'drink_country':'Drink Location – Countries',
+  'drink_city':'Drink Location – Cities',
+  'year':'Years',
+  'drink_datetime':'Drink – Datetime',
+  'brew_year':'Vintage',
+  'brew_with':'Collaborations',
+  'tag':'Tags'
+}
 
 ##########
 # Routes #
@@ -22,29 +37,33 @@ mod_analysis = Blueprint('details', __name__, url_prefix='/details')
 def index():
     return render_template('analysis/index.html')
 
-@mod_analysis.route('/brewery', methods=['GET'])
-def show_brewery_index():
-  beers  = Beers.query.all()
-  breweries = []
+@mod_analysis.route('/<attribute>', methods=['GET'])
+def show_index(attribute):
+  beers = Beers.query.all()
+  aggregate_list = []
 
-  for key, group in groupby(sorted(beers,key=lambda x: x.brewery),key=lambda x: x.brewery):
+  if attribute == 'year':
+    grouping = groupby(sorted(beers,key=lambda x: x.drink_datetime.year),key=lambda x: x.drink_datetime.year)
+  else:
+    grouping = groupby(sorted(beers,key=lambda x: getattr(x, attribute)),key=lambda x: getattr(x, attribute))
+  for key, group in grouping:
     beer_list   = [g for g in group]
     sum_ratings = sum([b.rating for b in beer_list])
     average     = round(sum_ratings/float(len(beer_list)),2)
-    breweries.append({'name':key,
+    aggregate_list.append({'name':key,
                    'count':len(beer_list),
                    'average':average})
 
   sort = request.args.get('sort')
   if sort in ['name', 'count', 'average']:
-    breweries = sorted(breweries, key=lambda x: x[sort], reverse=True)
+    aggregate_list = sorted(aggregate_list, key=lambda x: x[sort], reverse=True)
   else:
-    breweries = sorted(breweries, key=lambda x: x['name'])
+    aggregate_list = sorted(aggregate_list, key=lambda x: x['name'])
 
   return render_template('analysis/list.html',
-                         list=breweries,
-                         type='brewery',
-                         t='Breweries')
+                         list=aggregate_list,
+                         type=attribute,
+                         t=title_map[attribute])
 
 @mod_analysis.route('/brewery/<brewery>', methods=['GET'])
 def show_brewery(brewery):
@@ -220,25 +239,6 @@ def show_abv(abv):
                          ,t='ABV: ' + abv
                       )
 
-@mod_analysis.route('/style', methods=['GET'])
-def show_style_index():
-  beers  = Beers.query.all()
-  styles = []
-
-  for key, group in groupby(sorted(beers,key=lambda x: x.style),key=lambda x: x.style):
-    beer_list   = [g for g in group]
-    sum_ratings = sum([b.rating for b in beer_list])
-    average     = round(sum_ratings/float(len(beer_list)),2)
-    styles.append({'name':key,
-                   'count':len(beer_list),
-                   'average':average})
-
-  return render_template('analysis/list.html',
-                         list=styles,
-                         type='style',
-                         t='Styles')
-
-
 @mod_analysis.route('/style/<style>', methods=['GET'])
 def show_style(style):
     beers          = get_beers_by_style(style,order_by='rating')
@@ -275,7 +275,6 @@ def show_style(style):
                            ,average_abv=average_abv
                            ,t='Style: ' + style
                         )
-
 
 @mod_analysis.route('/year/<int:year>', methods=['GET'])
 def show_year(year):
@@ -367,6 +366,42 @@ def show_year(year):
                           ,t='Year: ' + str(year) 
                           )
 
+
+@mod_analysis.route('/rating/<rating>', methods=['GET'])
+def show_rating(rating):
+  # Use the actual sqlalchemy query and_(whatever).
+  beers          = get_beers_by_rating(rating)
+  favorite_beer  = beers[0]
+  average_rating = rating
+  abvs           = [beer.abv for beer in beers]
+  average_abv    = round(sum(abvs)/float(len(abvs)),2)
+
+  breweries = {}
+  for beer in beers:
+      if beer.brewery not in breweries:
+          breweries[beer.brewery] = (beer.rating, 1)
+      else:
+          _curr = breweries[beer.brewery]
+          breweries[beer.brewery] = (_curr[0]+beer.rating,int(_curr[1])+1)
+
+  most_common_brewery     = ''
+  most_common_count       = 0
+  for brewery in breweries:
+      _data = breweries[brewery]
+      rating = _data[0]/float(_data[1])
+      if _data[1] > most_common_count:
+          most_common_brewery = brewery
+          most_common_count = _data[1]
+
+  return render_template('analysis/analysis.html'
+                         ,beers=beers
+                         ,favorite_beer=favorite_beer
+                         ,most_common_brewery=most_common_brewery
+                         ,most_common_count=most_common_count
+                         ,average_rating=average_rating
+                         ,average_abv=average_abv
+                         ,t='Rating: ' + str(rating)
+                      )
 
 ###########
 # HELPERS #
