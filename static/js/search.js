@@ -52,6 +52,9 @@ $(document).ready(function(){
         if(results.no_hits) { 
           $('#search-results').text('Nothing to see here.'); 
         }
+        if(results.rate_limited) {
+          $('#search-results').text('Looks like you are rate limited.');
+        }
         console.log(results)
         $('#search-results').html(searchResults(results));
         $('.result').on("click",updateForm);

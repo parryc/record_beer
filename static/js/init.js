@@ -91,6 +91,8 @@ Handlebars.registerHelper('style', function(style){
     return 'Vienna'
   if(style === 'Zwickel/Keller/Landbier')
     return 'Zwickel'
+  if(style === 'Sahti/Gotlandsdricke/Koduõlu')
+    return 'Sahti'
   else
     return style;
 });

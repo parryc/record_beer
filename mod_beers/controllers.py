@@ -168,7 +168,10 @@ def search():
         """
         return len(set(search) ^ set(result))
     query = request.json['query']
-    results = rb.search(query)
+    try:
+      results = rb.search(query)
+    except rb_exceptions.PageNotFound:
+      return jsonify({'rate_limited':True})
     results = sorted(results['beers'],key=lambda beer: _closeness(query,beer.name))
     top = []
     limit = 3
