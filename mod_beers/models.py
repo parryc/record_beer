@@ -122,6 +122,7 @@ def edit_beer(_id, brewery, name, abv, style, country_name, rating, drink_countr
     beer.brew_with      = brew_with
     beer.tags           = []
     beer.last_updated   = datetime.utcnow()
+    beer.search_string = ' '.join([brewery,name,style,country_name,brew_with])
 
     save_beer_result = commit_entry(beer)
     beer = save_beer_result['entry']
