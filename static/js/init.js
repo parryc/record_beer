@@ -77,7 +77,7 @@ Handlebars.registerHelper('style', function(style){
     return 'Golden Ale';
   if(style === 'Lambic Style - Gueuze')
     return 'Gueuze';
-  if(style === 'Czech Pilsner (Světlý)')
+  if(style === 'Czech Pilsner (Světlý)' || style == 'Czech Pilsner (Světloé)')
     return 'Pilsener';
   if(style === 'Oktoberfest/Märzen')
     return 'Oktoberfest';
