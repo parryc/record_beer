@@ -77,5 +77,6 @@ $(document).ready(function(){
 
 
   $('#brewery, #name').on("input",$.debounce(search, 750));
+  $('#defaults').click(updateForm);
 
 });

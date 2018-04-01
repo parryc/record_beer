@@ -115,6 +115,11 @@ $(document).ready(function(){
       'user':1
     }
 
+    /* make sure we're not accidentally searching for everything */
+    if(query.length <= 2) {
+      return;
+    }
+
     $('#query-results').text('Searching...');
 
     $.ajax({

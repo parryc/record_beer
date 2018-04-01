@@ -132,13 +132,13 @@ class Beer(object):
         else:
             self.brewed_at = None
         try:
-            self.overall_rating = int(soup.find('span', text='overall').next_sibling.next_sibling.text)
+            self.overall_rating = int(soup.find(class_='ratingValue').text)
         except ValueError: # 'n/a'
             self.overall_rating = None
         except AttributeError:
             self.overall_rating = None
         try:
-            self.style_rating = int(soup.find('span', text='style').previous_sibling.previous_sibling)
+            self.style_rating = int(soup.find(class_="style-text").previous_sibling.previous_sibling)
         except ValueError: # 'n/a'
             self.style_rating = None
         except AttributeError:
@@ -155,7 +155,7 @@ class Beer(object):
         except AttributeError: # No mean rating
             self.mean_rating = None
         try:
-            self.weighted_avg = float(soup.find(attrs={"name": "real average"}).find('span', itemprop="ratingValue").text)
+            self.weighted_avg = float(soup.find(text='WEIGHTED AVG: ').next_sibling.text.split('/')[0])
         except ValueError: # Empty weighted average rating: '/5'
             self.weighted_avg = None
         except AttributeError: # No weighted average rating
@@ -187,7 +187,7 @@ class Beer(object):
             [s.extract() for s in description('small')]
             self.description = ' '.join([s for s in description.strings]).strip()
             self.description = re.sub(r'\x92','\'',self.description)
-        self.tags = [t.text[1:] for t in soup.find_all('span', class_="tagLink")]
+        self.tags = [t.text[1:] for t in soup.find_all(class_='tags')]
 
         self._has_fetched = True
 
@@ -256,17 +256,24 @@ class Review(object):
     """
 
     def __init__(self, review_soup):
-        # get ratings
         # gets every second entry in a list
-        raw_ratings = zip(*[iter(review_soup.find('strong').find_all(["big", "small"]))] * 2)
-        # strip html and everything else
-        for (label, rating) in raw_ratings:
-            rating_int = int(rating.text[:rating.text.find("/")])
-            setattr(
-                self,
-                label.text.lower().strip(),
-                rating_int
-            )
+        review_title_attr = review_soup.find_all('div')[1].get('title')
+
+        # some ratings may now just contain the x/5.0 rating, with no sub-ratings
+        if '<small>' in review_title_attr: 
+            raw_ratings = re.search(r'<small>(.+?)</small>', review_title_attr).group(1).split('<br />')
+            # strip html and everything else
+            for rating_text in raw_ratings:
+                parts = rating_text.split(' ')
+                # only set a rating if all of the information exists
+                if rating_text:
+                    label = parts[0]
+                    rating_int = int(parts[1][:parts[1].find("/")])
+                    setattr(
+                        self,
+                        label.lower().strip(),
+                        rating_int
+                    )
         self.rating = float(review_soup.find_all('div')[1].text)
 
         # get user information
@@ -384,7 +391,7 @@ class Brewery(object):
             weighted_avg = row.findAll('td')[4].text.strip()
             style_rating = row.findAll('td')[5].text.strip()
             num_ratings = row.findAll('td')[6].text.strip()
-            if abv:
+            if abv and abv != '-':
                 beer.abv = float(abv)
             if weighted_avg:
                 beer.weighted_avg = float(weighted_avg)

@@ -26,6 +26,7 @@
 import re
 import requests
 import string
+import json
 from bs4 import BeautifulSoup
 
 try:
@@ -92,45 +93,36 @@ class RateBeer(object):
             beer.
         """
 
-        try:
-            query = unicode(query, 'UTF8').encode('iso-8859-1')
-        except (TypeError, NameError):  # Python 3 does not have unicode()
-            query = query.encode('iso-8859-1')
+        # try:
+        #     query = unicode(query, 'UTF8').encode('iso-8859-1')
+        # except (TypeError, NameError):  # Python 3 does not have unicode()
+        #     query = query.encode('iso-8859-1')
+
+        data = {
+                 "query":"query beerSearch($query: String, $order: SearchOrder, $first: Int, $after: ID) { searchResultsArr: beerSearch(query: $query, order: $order, first: $first, after: $after) { totalCount last items { beer { id name imageUrl overallScore ratingCount __typename } review { id score __typename } __typename   }   __typename } }", 
+                 "variables": {"query":query, "order":"MATCH", "first":20},
+                 "operationName":"beerSearch"
+                }
+
+        # options = requests.options("https://beta.ratebeer.com/v1/api/graphql/")
 
         request = requests.post(
-            soup_helper._BASE_URL + "/findbeer.asp",
-            data={"BeerName": query}
+            "https://beta.ratebeer.com/v1/api/graphql/"
+           ,data=json.dumps(data)
+           ,headers={"content-type": "application/json"}
         )
-        soup = BeautifulSoup(request.text, "lxml")
         output = {"breweries": [], "beers": []}
 
-        # Locate rows that contain the brewery and beer info
-        beer_table = soup.find('h2', string='beers')
-        if beer_table:
-            for row in beer_table.next_sibling('tr'):
-                # Only include ratable beers
-                if row.find(title='Rate This Beer'):
-                    url = row('td')[0].a.get('href')
-                    url = re.sub(r"\s+", "", url, flags=re.UNICODE)
-                    beer = models.Beer(url)
-                    beer.name = row('td')[0].a.string.strip()
-                    overall_rating = row('td')[3].string
-                    num_ratings = row('td')[4].string
-                    if overall_rating:
-                        beer.overall_rating = int(overall_rating.strip())
-                    if num_ratings:
-                        beer.num_ratings = int(num_ratings.strip())
-                    output['beers'].append(beer)
-
-        brewer_table = soup.find('h2', string='brewers')
-        if brewer_table:
-            for row in brewer_table.next_sibling('tr'):
-                url = row.a.get('href')
-                url = re.sub(r"\s+", "", url, flags=re.UNICODE)
-                brewer = models.Brewery(url)
-                brewer.name = row.a.string
-                brewer.location = row('td')[1].text.strip()
-                output['breweries'].append(brewer)
+        for result in json.loads(request.text)['data']['searchResultsArr']['items']:
+            if 'beer' in result:
+                beer_data = result['beer']
+                # double check this...
+                url = '/beer/{0}/{1}/'.format(beer_data['name'].replace(' ', '-').lower(), beer_data['id'])
+                beer = models.Beer(url)
+                beer.name = beer_data['name']
+                beer.overall_rating = beer_data['overallScore']
+                beer.num_ratings = beer_data['ratingCount']
+            output['beers'].append(beer)
         return output
 
     def get_beer(self, url, fetch=None):
@@ -157,58 +149,47 @@ class RateBeer(object):
         """Returns the beer styles from the beer styles page.
 
         Returns:
-            A dictionary, with beer styles for keys and urls for values.
+            A dictionary, with beer styles strings for keys and integer ids
+            for values.
         """
         styles = {}
-
-        soup = soup_helper._get_soup("/beerstyles/")
-        columns = soup.find_all('table')[2].find_all('td')
-        for column in columns:
-            lines = [li for li in column.find_all('li')]
-            for line in lines:
-                styles[line.text] = line.a.get('href')
+        soup = soup_helper._get_soup("/top/")
+        for item in [i for i in soup.find('select', id="StyleMenu").find_all('option') if i.get('name')]:
+            styles[item.text.strip()] = int(item.get('value'))
         return styles
 
-    def beer_style(self, url, sort_type="overall"):
+    def beer_style(self, ident, sort_type=None, sort_order=None):
         """Get all the beers from a specific beer style page.
 
         Args:
-            url (string): The specific url of the beer style. Looks like:
-                "/beerstyles/abbey-dubbel/71/"
-            sort_type (string): The sorting of the results. "overall" returns
-                the highest- rated beers, while "trending" returns the newest
-                and trending ones.
+            ident (integer): The ID of the beer style from beer_style_list().
+                For example, for 'Abbey Dubbel' it would be 71.
+            sort_type (string): The sorting of the results. The valid choices
+                are "score" (default), "count", and "abv".
+            sort_order (string): "ascending" (low-to-high) or
+                "descending" (high-to-low, default)
 
         Returns:
             A list of generator of beers.
         """
+        if sort_type is None:
+            sort_type = 'score'
+        if sort_order is None:
+            sort_order = 'descending'
         sort_type = sort_type.lower()
-        url_codes = {"overall": 0, "trending": 1}
-        sort_flag = url_codes.get(sort_type)
-        if sort_flag is None:
-            raise ValueError("Invalid ``sort_type``.")
-        style_id = re.search(r"/(?P<id>\d*)/", url).group('id')
+        sort_order = sort_order.lower()
+        so = {'score': 0, 'count': 1, 'abv': 2}.get(sort_type)
+        o = {'descending': 0, 'ascending': 1}.get(sort_order)
 
-        req = requests.post(
-            soup_helper._BASE_URL +
-            (
-                "/ajax/top-beer-by-style.asp?style={0}&sort={1}"
-                "&order=0&min=10&max=9999&retired=0&new=0&mine=0&"
-            )
-            .format(style_id, sort_flag),
-            allow_redirects=True
-        )
-        soup = BeautifulSoup(req.text, "lxml")
+        soup = soup_helper._get_soup('/ajax/top-beer.asp?s={}&so={}&o={}'.format(ident, so, o))
         rows = iter(soup.table.find_all('tr'))
-        next(rows)
-
+        next(rows)  # Get rid of the header
         for row in rows:
             data = row.find_all('td')
             link = data[1].a
             dataout = models.Beer(link.get('href'))
             dataout.name = link.text
             yield dataout
-        raise StopIteration
 
     def brewers_by_alpha(self, letter):
         """Returns a list of breweries that start with the provided letter.
