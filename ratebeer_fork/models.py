@@ -30,8 +30,8 @@ try:
     import rb_exceptions
     import soup as soup_helper
 except ImportError:  # No implicit package imports in py3.
-    from ratebeer import rb_exceptions
-    from ratebeer import soup as soup_helper
+    from ratebeer_fork import rb_exceptions
+    from ratebeer_fork import soup as soup_helper
 
 
 class Beer(object):

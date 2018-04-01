@@ -33,8 +33,8 @@ try:
     import models
     import soup as soup_helper
 except ImportError as e:  # No implicit package imports in py3.
-    from ratebeer import models
-    from ratebeer import soup as soup_helper
+    from ratebeer_fork import models
+    from ratebeer_fork import soup as soup_helper
 
 class RateBeer(object):
     """

@@ -161,25 +161,13 @@ def query():
 
 @mod_beers.route('/search', methods=['POST'])
 def search():
-    def _dirtystrip(line):
-        """
-            Returns a RateBeer appropriate search string. Normalizes to get accents as
-            individual characters and then strips them. ord < 256 allows characters like
-            ø and ð to remain.
-
-            Also strip / and !. RateBeer can't handle them. Man, their search seriously sucks.    
-        """
-        line = unicodedata.normalize('NFKD',line)
-        line = line.replace('/',' ')
-        line = line.replace('!',' ')
-        return ''.join([x for x in line if ord(x) < 256])
     def _closeness(search, result):
         """
             Quick function to try to get a representation of "closeness" to the search result,
             since ratebeer's results suck.
         """
         return len(set(search) ^ set(result))
-    query = _dirtystrip(request.json['query'])
+    query = request.json['query']
     results = rb.search(query)
     results = sorted(results['beers'],key=lambda beer: _closeness(query,beer.name))
     top = []
@@ -187,7 +175,7 @@ def search():
     if len(results) < 3:
         limit = len(results)
     if len(results) > 0:
-        for idx in xrange(0,limit):
+        for idx in range(0,limit):
             result = results[idx]
             try:
                 hit = rb.beer(result.url)
