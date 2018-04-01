@@ -403,6 +403,64 @@ def show_rating(rating):
                          ,t='Rating: ' + str(rating)
                       )
 
+@mod_analysis.route('/<attribute>/<value>', methods=['GET'])
+def show_generic(attribute, value):
+    beers          = get_beers_by_attribute(attribute, value, order_by='rating')
+    favorite_beer  = beers[0]
+    ratings        = [beer.rating for beer in beers]
+    average_rating = round(sum(ratings)/float(len(ratings)),2)
+    abvs           = [beer.abv for beer in beers]
+    average_abv    = round(sum(abvs)/float(len(abvs)),2)
+    title          = title_map[attribute]
+
+    breweries = {}
+    for beer in beers:
+        if beer.brewery not in breweries:
+            breweries[beer.brewery] = (beer.rating, 1)
+        else:
+            _curr = breweries[beer.brewery]
+            breweries[beer.brewery] = (_curr[0]+beer.rating,int(_curr[1])+1)
+
+    styles = {}
+    for beer in beers:
+        if beer.style not in styles:
+            styles[beer.style] = (beer.rating, 1)
+        else:
+            _curr = styles[beer.style]
+            styles[beer.style] = (_curr[0]+beer.rating,int(_curr[1])+1)
+
+    most_common_brewery     = ''
+    most_common_count       = 0
+    for brewery in breweries:
+        _data = breweries[brewery]
+        rating = _data[0]/float(_data[1])
+        if _data[1] > most_common_count:
+            most_common_brewery = brewery
+            most_common_count = _data[1]
+
+    most_common_style       = ''
+    most_common_style_count = 0
+    for style in styles:
+        _data = styles[style]
+        rating = _data[0]/float(_data[1])
+        if _data[1] > most_common_style_count:
+            most_common_style = style
+            most_common_style_count = _data[1]
+
+    return render_template('analysis/generic.html'
+                           ,attribute=attribute
+                           ,beers=beers
+                           ,favorite_beer=favorite_beer
+                           ,most_common_brewery=most_common_brewery
+                           ,most_common_count=most_common_count
+                           ,most_common_style=most_common_style
+                           ,most_common_style_count=most_common_style_count
+                           ,average_rating=average_rating
+                           ,average_abv=average_abv
+                           ,t='{0}: {1}'.format(title, value)
+                        )
+
+
 ###########
 # HELPERS #
 ###########

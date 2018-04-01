@@ -165,6 +165,10 @@ def get_beers_by_rating(_rating,order_by='brewery'):
                 .order_by(getattr(Beers,order_by).asc())\
                 .all()
 
+def get_beers_by_attribute(_attribute,_value,order_by='rating'):
+    return Beers.query.filter(getattr(Beers, _attribute) == _value)\
+                .order_by(getattr(Beers,order_by).desc())\
+                .all()
 
 ###########
 # HELPERS #
