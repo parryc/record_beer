@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash, Markup
 from app import db, ma, csrf
 from mod_beers.models import *
 from mod_beers.forms import *
@@ -76,7 +76,8 @@ def add():
            ,tags
            ,me)
         if save_result['status']:
-            flash('Added beer %s %s successfully!' % (form.brewery.data, form.name.data))
+            message = 'Added beer %s %s successfully! <a href="/beers/%s">(view)</a>' % (form.brewery.data, form.name.data, save_result['entry'].id)
+            flash(Markup(message))
             return redirect(url_for('.add'))
         else:
             flash('Could not add beer. %s' % save_result['message'])
