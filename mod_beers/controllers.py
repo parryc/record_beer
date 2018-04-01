@@ -40,7 +40,7 @@ class BeerSchema(ma.Schema):
 @mod_beers.route('/', methods=['GET'])
 def index():
     # there's only my beer at the moment. 
-    beers = Beers.query.order_by(Beers.drink_datetime.desc()).all()
+    beers = Beers.query.order_by(Beers.creation_datetime.desc()).all()
     return render_template('beers/index.html',beers=beers, t='record.beer')
 
 @mod_beers.route('/<int:_id>', methods=['GET'])
