@@ -55,11 +55,12 @@ def show_index(attribute):
                    'average':average})
 
   sort = request.args.get('sort')
-  if sort in ['name', 'count', 'average']:
-    aggregate_list = sorted(aggregate_list, key=lambda x: x[sort], reverse=True)
-  else:
-    aggregate_list = sorted(aggregate_list, key=lambda x: x['name'])
-
+  reverse = True
+  if sort not in ['name', 'count', 'average']:
+    sort = 'name'
+    reverse = False
+  aggregate_list = sorted(aggregate_list, key=lambda x: x[sort], reverse=reverse)
+ 
   return render_template('analysis/list.html',
                          list=aggregate_list,
                          type=attribute,
@@ -132,7 +133,13 @@ def show_tag_index():
     sum_ratings          = sum([b.rating for b in beer_list])
     average              = round(sum_ratings/float(len(beer_list)),2)
     tags[tag]['average'] = average
-  tag_list = sorted([item[1] for item in tags.items()], key=lambda x:x['count'], reverse=True)
+
+  sort = request.args.get('sort')
+  reverse = True
+  if sort not in ['name', 'count', 'average']:
+    sort = 'name'
+    reverse = False
+  tag_list = sorted([item[1] for item in tags.items()], key=lambda x:x[sort], reverse=reverse)
   return render_template('analysis/list.html',
                          list=tag_list,
                          type='tag',
@@ -183,7 +190,7 @@ def show_abv_index():
 
   for beer in beers:
     if not round(beer.abv) in abvs:
-      abvs[round(beer.abv)] = {'name':'{}% abv'.format(round(beer.abv)), 'beer_list':[beer]}
+      abvs[round(beer.abv)] = {'name':'{}% abv'.format(round(beer.abv)), 'beer_list':[beer], 'sort_name': round(beer.abv)}
     else:
       abvs[round(beer.abv)]['beer_list'].append(beer)
 
@@ -193,7 +200,13 @@ def show_abv_index():
     sum_ratings          = sum([b.rating for b in beer_list])
     average              = round(sum_ratings/float(len(beer_list)),2)
     abvs[abv]['average'] = average
-  abv_list = sorted([item[1] for item in abvs.items()], key=lambda x:x['count'], reverse=True)
+
+  sort = request.args.get('sort')
+  reverse = True
+  if sort not in ['name', 'count', 'average']:
+    sort = 'sort_name' #numberic version without percentage sign
+    reverse = False
+  abv_list = sorted([item[1] for item in abvs.items()], key=lambda x:x[sort], reverse=reverse)
   return render_template('analysis/list.html',
                          list=abv_list,
                          type='abv',
