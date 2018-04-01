@@ -26,7 +26,8 @@ class BeerForm(FlaskForm):
 
     drink_city = TextField('Drink City')
 
-    drink_datetime = TextField('Drink Date')
+    drink_datetime = TextField('Drink Date',
+            [Required(message='Must provide a drink date - if you don\'t know, just guess!')])
 
     notes = TextAreaField('Notes')
 
