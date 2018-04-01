@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, redirect,\
+                  url_for, flash, abort
 from app import db, ma, csrf
 from mod_beers.models import *
 from mod_users.models import *
@@ -69,6 +70,9 @@ def show_index(attribute):
 @mod_analysis.route('/brewery/<brewery>', methods=['GET'])
 def show_brewery(brewery):
     beers          = get_beers_by_brewery(brewery)
+    if not beers:
+      abort(404)
+
     favorite_beer  = beers[0]
     ratings        = [beer.rating for beer in beers]
     average_rating = round(sum(ratings)/float(len(ratings)),2)
