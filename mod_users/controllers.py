@@ -26,7 +26,7 @@ def show(_id):
 @mod_users.route('/edit/<int:_id>', methods=['GET','POST'])
 def edit(_id):
     user = get_user(_id)
-    form = UserForm(request.form,user)
+    form = UserForm(obj=user)
     if form.validate_on_submit():
       save_result = edit_user(_id,
                               form.default_drink_location_city.data,
