@@ -113,12 +113,17 @@ class RateBeer(object):
         )
         output = {"breweries": [], "beers": []}
 
-        for result in json.loads(request.text)['data']['searchResultsArr']['items']:
+        try:
+            search_results = json.loads(request.text)
+        except:
+            raise rb_exceptions.JSONParseException(query)
+
+        for result in search_results['data']['searchResultsArr']['items']:
             if 'beer' in result:
                 beer_data = result['beer']
                 # double check this...
                 url = '/beer/{0}/{1}/'.format(beer_data['name'].replace(' ', '-').lower(), beer_data['id'])
-                beer = models.Beer(url)
+                beer = models.Beer(url, id=beer_data['id'])
                 beer.name = beer_data['name']
                 beer.overall_rating = beer_data['overallScore']
                 beer.num_ratings = beer_data['ratingCount']

@@ -188,7 +188,7 @@ def search():
                 print('AliasedBeer')
                 continue
             top.append({'name':hit['name'],
-                        'abv':hit['abv'],
+                        'abv':round(hit['abv'],2),
                         'style':hit['style'],
                         'brewery_country':hit['brewery'].country})
         return jsonify({'results':top})
