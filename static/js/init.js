@@ -43,56 +43,67 @@ Handlebars.registerHelper('isStrong', function(abv, options) {
 
 
 Handlebars.registerHelper('style', function(style){
-  if(style === 'Fruit Beer/Radler')
+  if(style === 'Flavored - Fruit' || style === "Radler / Shandy")
     return 'Fruit Beer';
-  if(style === 'Radler/Shandy')
-    return 'Fruit Beer';
-  if(style === 'Spice/Herb/Vegetable')
+  if(style === 'Flavored - Pumpkin / Vegetables')
     return 'Spice';
-  if(style === 'Abt/Quadrupel')
+  if(style === 'Quadrupel / Abt')
     return 'Quadrupel';
-  if(style === 'Sour Red/Brown')
+  if(style === 'Sour - Flanders Red / Bruin')
     return 'Flanders Sour';
-  if(style === 'Session IPA')
+  if(style === 'ISA - Session IPA')
     return 'IPA';
-  if(style === 'Imperial/Strong Porter')
+  if(style === 'Porter - Imperial' || style === 'Porter - Imperial Flavored')
     return 'Imperial Porter';
-  if(style === 'Grodziskie/Gose/Lichtenhainer')
+  if(style === 'Gose - Flavored')
     return 'Gose';
-  if(style === 'India Pale Ale (IPA)')
+  if(style.includes('IPA') && !style.includes('IIPA'))
     return 'IPA';
-  if(style === 'Sour/Wild Ale')
-    return 'Sour';
-  if(style === 'Imperial/Double IPA' || style === 'Imperial IPA')
+  if(style.includes('IIPA'))
     return 'Double IPA';
-  if(style === 'Strong Pale Lager/Imperial Pils' || style === 'Imperial Pils/Strong Pale Lager')
+  if(style === 'Sour / Wild Beer')
+    return 'Sour';
+  if(style === 'Pilsener - Imperial')
     return 'Imperial Pils';
-  if(style === 'Dunkel/Tmavý')
+  if(style === 'Dark Lager - Dunkel / Tmavý')
     return 'Dunkel';
-  if(style === 'German Hefeweizen')
+  if(style === 'Weissbier - Hefeweizen')
     return 'Hefeweizen';
-  if(style === 'Belgian White (Witbier)' || style === 'Witbier')
+  if(style === 'Witbier / Belgian White Ale')
     return 'Belgian White';
-  if(style === 'Golden Ale/Blond Ale')
+  if(style === 'Blonde Ale / Golden Ale')
     return 'Golden Ale';
-  if(style === 'Lambic Style - Gueuze')
+  if(style === 'Lambic - Gueuze')
     return 'Gueuze';
-  if(style === 'Czech Pilsner (Světlý)' || style == 'Czech Pilsner (Světloé)')
+  if(style === 'Pilsener - Czech / Svetlý')
     return 'Pilsener';
-  if(style === 'Oktoberfest/Märzen')
+  if(style === 'Märzen / Oktoberfest Bier')
     return 'Oktoberfest';
-  if(style === 'Dortmunder/Helles')
+  if(style === 'Helles / Dortmunder Export')
     return 'Dortmunder';
-  if(style === 'Lambic Style - Fruit')
+  if(style === 'Lambic - Fruit')
     return 'Lambic';
-  if(style === 'Premium Bitter/ESB')
+  if(style === 'Bitter - Premium / Strong / ESB')
     return 'Premium Bitter'
-  if(style === 'Amber Lager/Vienna')
+  if(style === 'Amber Lager - Intl / Vienna')
     return 'Vienna'
-  if(style === 'Zwickel/Keller/Landbier')
+  if(style === 'Zwickelbier/Kellerbier/Landbier')
     return 'Zwickel'
-  if(style === 'Sahti/Gotlandsdricke/Koduõlu')
+  if(style === 'Gotlandsdricke/ Koduõlu/ Sahti')
     return 'Sahti'
-  else
-    return style;
+  if(style.includes('Stout') && !style.includes('Imperial'))
+    return 'Stout'
+  if(style.includes('Stout') && style.includes('Imperial'))
+    return 'Imperial Stout'
+  if(style === 'Kölsch / Kölsch-Style' || style === "Kรถlsch / Kรถlsch-Style")
+    return 'Kölsch'
+  if(style.includes('Pale Ale') && style.includes('APA'))
+    return 'American Pale Ale'
+  if(style.includes('Pale Ale') && style.includes('English'))
+    return 'English Pale Ale'
+  if(style.includes('Pale Ale'))
+    return 'Pale Ale'
+  if(style === "Scotch Ale / Wee Heavy")
+    return "Scotch Ale"
+  return style;
 });
