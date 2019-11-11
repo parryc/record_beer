@@ -32,6 +32,7 @@ from bs4 import BeautifulSoup
 from ratebeer_fork import models
 from ratebeer_fork import soup as soup_helper
 
+
 class RateBeer(object):
     """
     RateBeer.com data scraper. Makes getting information from RateBeer.com as easy as:
@@ -95,17 +96,17 @@ class RateBeer(object):
         #     query = query.encode('iso-8859-1')
 
         data = {
-                 "query":"query beerSearch($query: String, $order: SearchOrder, $first: Int, $after: ID) { searchResultsArr: beerSearch(query: $query, order: $order, first: $first, after: $after) { totalCount last items { beer { id name imageUrl overallScore ratingCount __typename } review { id score __typename } __typename   }   __typename } }", 
-                 "variables": {"query":query, "order":"MATCH", "first":20},
-                 "operationName":"beerSearch"
-                }
+            "query": "query beerSearch($query: String, $order: SearchOrder, $first: Int, $after: ID) { searchResultsArr: beerSearch(query: $query, order: $order, first: $first, after: $after) { totalCount last items { beer { id name imageUrl overallScore ratingCount __typename } review { id score __typename } __typename   }   __typename } }",
+            "variables": {"query": query, "order": "MATCH", "first": 20},
+            "operationName": "beerSearch",
+        }
 
         # options = requests.options("https://beta.ratebeer.com/v1/api/graphql/")
 
         request = requests.post(
-            "https://beta.ratebeer.com/v1/api/graphql/"
-           ,data=json.dumps(data)
-           ,headers={"content-type": "application/json"}
+            "https://beta.ratebeer.com/v1/api/graphql/",
+            data=json.dumps(data),
+            headers={"content-type": "application/json"},
         )
         output = {"breweries": [], "beers": []}
 
@@ -114,16 +115,18 @@ class RateBeer(object):
         except:
             raise rb_exceptions.JSONParseException(query)
 
-        for result in search_results['data']['searchResultsArr']['items']:
-            if 'beer' in result:
-                beer_data = result['beer']
+        for result in search_results["data"]["searchResultsArr"]["items"]:
+            if "beer" in result:
+                beer_data = result["beer"]
                 # double check this...
-                url = '/beer/{0}/{1}/'.format(beer_data['name'].replace(' ', '-').lower(), beer_data['id'])
-                beer = models.RateBeerBeer(url, id=beer_data['id'])
-                beer.name = beer_data['name']
-                beer.overall_rating = beer_data['overallScore']
-                beer.num_ratings = beer_data['ratingCount']
-            output['beers'].append(beer)
+                url = "/beer/{0}/{1}/".format(
+                    beer_data["name"].replace(" ", "-").lower(), beer_data["id"]
+                )
+                beer = models.RateBeerBeer(url, id=beer_data["id"])
+                beer.name = beer_data["name"]
+                beer.overall_rating = beer_data["overallScore"]
+                beer.num_ratings = beer_data["ratingCount"]
+            output["beers"].append(beer)
         return output
 
     def get_beer(self, url, fetch=None):
@@ -155,8 +158,12 @@ class RateBeer(object):
         """
         styles = {}
         soup = soup_helper._get_soup("/top/")
-        for item in [i for i in soup.find('select', id="StyleMenu").find_all('option') if i.get('name')]:
-            styles[item.text.strip()] = int(item.get('value'))
+        for item in [
+            i
+            for i in soup.find("select", id="StyleMenu").find_all("option")
+            if i.get("name")
+        ]:
+            styles[item.text.strip()] = int(item.get("value"))
         return styles
 
     def beer_style(self, ident, sort_type=None, sort_order=None):
@@ -174,21 +181,23 @@ class RateBeer(object):
             A list of generator of beers.
         """
         if sort_type is None:
-            sort_type = 'score'
+            sort_type = "score"
         if sort_order is None:
-            sort_order = 'descending'
+            sort_order = "descending"
         sort_type = sort_type.lower()
         sort_order = sort_order.lower()
-        so = {'score': 0, 'count': 1, 'abv': 2}.get(sort_type)
-        o = {'descending': 0, 'ascending': 1}.get(sort_order)
+        so = {"score": 0, "count": 1, "abv": 2}.get(sort_type)
+        o = {"descending": 0, "ascending": 1}.get(sort_order)
 
-        soup = soup_helper._get_soup('/ajax/top-beer.asp?s={}&so={}&o={}'.format(ident, so, o))
-        rows = iter(soup.table.find_all('tr'))
+        soup = soup_helper._get_soup(
+            "/ajax/top-beer.asp?s={}&so={}&o={}".format(ident, so, o)
+        )
+        rows = iter(soup.table.find_all("tr"))
         next(rows)  # Get rid of the header
         for row in rows:
-            data = row.find_all('td')
+            data = row.find_all("td")
             link = data[1].a
-            dataout = models.RateBeerBeer(link.get('href'))
+            dataout = models.RateBeerBeer(link.get("href"))
             dataout.name = link.text
             yield dataout
 
@@ -204,7 +213,7 @@ class RateBeer(object):
             with the ``brewery`` method.
         """
 
-        if letter not in string.ascii_uppercase and letter != '0-9':
+        if letter not in string.ascii_uppercase and letter != "0-9":
             raise ValueError("Please only provide a single letter.")
 
         request = requests.post(
@@ -213,8 +222,8 @@ class RateBeer(object):
         soup = BeautifulSoup(request.text, "lxml")
         breweries = []
 
-        for entry in soup.select('a[href*=/brewers/]'):
-            url = entry.get('href')
+        for entry in soup.select("a[href*=/brewers/]"):
+            url = entry.get("href")
             brewer = models.Brewery(url)
 
             breweries.append(brewer)

@@ -66,6 +66,7 @@ class RateBeerBeer(object):
         Any attributes not available will be returned as None
 
     """
+
     def __init__(self, url, fetch=None, id=None):
         """Initialize with URL and do not fetch"""
         self.url = url
@@ -83,7 +84,7 @@ class RateBeerBeer(object):
         elif not self._has_fetched:
             self._populate()
             return getattr(self, item)
-        raise AttributeError('{0} has no attribute {1}'.format(type(self), item))
+        raise AttributeError("{0} has no attribute {1}".format(type(self), item))
 
     def __setattr__(self, name, value):
         """Set the `name` attribute to `value."""
@@ -115,32 +116,37 @@ class RateBeerBeer(object):
 
     def _populate(self):
         if not self.id:
-            self.id = self.url.split('/')[-2]
+            self.id = self.url.split("/")[-2]
 
         data = [
-                 {"operationName":"beer",
-                  "variables":{"beerId":self.id},
-                  "query":"query beer($beerId: ID!) { \n info: beer(id: $beerId) { \n id \n name \n description \n style { \n id \n name \n glasses { \n id \n name \n __typename \n } \n __typename \n } \n styleScore \n overallScore \n averageRating \n abv \n ibu \n calories \n brewer { \n id \n name \n __typename \n } \n ratingCount \n isRetired \n isUnrateable \n seasonal \n labels \n availability { \n bottle \n tap \n distribution \n __typename \n } \n __typename \n } \n} \n"},
-                 # {"operationName":"beerReviews",
-                 #  "variables":
-                 #   {"beerId":self.id,
-                 #    "order":"RECENT",
-                 #    "first":10
-                 #   },
-                 #  "query":"query beerReviews($beerId: ID!, $authorId: ID, $order: ReviewOrder, $after: ID) { \n beerReviewsArr: beerReviews(beerId: $beerId, authorId: $authorId, order: $order, after: $after) { \n items { \n id \n comment \n score \n scores { \n appearance \n aroma \n flavor \n mouthfeel \n overall \n __typename \n } \n author { \n id \n username \n reviewCount \n __typename \n } \n checkin { \n id \n place { \n name \n city \n state { \n name \n __typename \n } \n country { \n name \n __typename \n } \n __typename \n } \n __typename \n } \n createdAt \n updatedAt \n __typename \n } \n totalCount \n last \n __typename \n } \n} \n"},
-                 {"operationName":"beerByAlias",
-                  "variables":{"aliasId":self.id},
-                  "query":"query beerByAlias($aliasId: ID!) {\n beerByAlias(aliasId: $aliasId) {\n id\n name \n overallScore \n __typename \n } \n } \n"},
-                 {"operationName":"tagDisplay",
-                  "variables":{"beerId":self.id},
-                  "query":"query tagDisplay($beerId: ID!, $first: Int) { \n tagDisplayArr: beerTags(beerId: $beerId, first: $first) { \n items { \n id \n urlName: plain \n __typename \n } \n __typename \n } \n} \n"
-                 }
-                ]
-        
+            {
+                "operationName": "beer",
+                "variables": {"beerId": self.id},
+                "query": "query beer($beerId: ID!) { \n info: beer(id: $beerId) { \n id \n name \n description \n style { \n id \n name \n glasses { \n id \n name \n __typename \n } \n __typename \n } \n styleScore \n overallScore \n averageRating \n abv \n ibu \n calories \n brewer { \n id \n name \n __typename \n } \n ratingCount \n isRetired \n isUnrateable \n seasonal \n labels \n availability { \n bottle \n tap \n distribution \n __typename \n } \n __typename \n } \n} \n",
+            },
+            # {"operationName":"beerReviews",
+            #  "variables":
+            #   {"beerId":self.id,
+            #    "order":"RECENT",
+            #    "first":10
+            #   },
+            #  "query":"query beerReviews($beerId: ID!, $authorId: ID, $order: ReviewOrder, $after: ID) { \n beerReviewsArr: beerReviews(beerId: $beerId, authorId: $authorId, order: $order, after: $after) { \n items { \n id \n comment \n score \n scores { \n appearance \n aroma \n flavor \n mouthfeel \n overall \n __typename \n } \n author { \n id \n username \n reviewCount \n __typename \n } \n checkin { \n id \n place { \n name \n city \n state { \n name \n __typename \n } \n country { \n name \n __typename \n } \n __typename \n } \n __typename \n } \n createdAt \n updatedAt \n __typename \n } \n totalCount \n last \n __typename \n } \n} \n"},
+            {
+                "operationName": "beerByAlias",
+                "variables": {"aliasId": self.id},
+                "query": "query beerByAlias($aliasId: ID!) {\n beerByAlias(aliasId: $aliasId) {\n id\n name \n overallScore \n __typename \n } \n } \n",
+            },
+            {
+                "operationName": "tagDisplay",
+                "variables": {"beerId": self.id},
+                "query": "query tagDisplay($beerId: ID!, $first: Int) { \n tagDisplayArr: beerTags(beerId: $beerId, first: $first) { \n items { \n id \n urlName: plain \n __typename \n } \n __typename \n } \n} \n",
+            },
+        ]
+
         request = requests.post(
-            "https://beta.ratebeer.com/v1/api/graphql/"
-           ,data=json.dumps(data)
-           ,headers={"content-type": "application/json"}
+            "https://beta.ratebeer.com/v1/api/graphql/",
+            data=json.dumps(data),
+            headers={"content-type": "application/json"},
         )
 
         try:
@@ -148,41 +154,50 @@ class RateBeerBeer(object):
         except:
             raise rb_exceptions.JSONParseException(self.id)
 
-        beer_data = results[0]['data']['info']
+        beer_data = results[0]["data"]["info"]
 
         if beer_data == None:
             raise rb_exceptions.PageNotFound(self.id)
 
-        alias_data = results[1]['data']['beerByAlias']
+        alias_data = results[1]["data"]["beerByAlias"]
 
         if alias_data != None:
-            raise rb_exceptions.AliasedBeer(self.id, alias_data['id'])
+            raise rb_exceptions.AliasedBeer(self.id, alias_data["id"])
 
-        tag_data = results[2]['data']['tagDisplayArr']['items']
+        tag_data = results[2]["data"]["tagDisplayArr"]["items"]
 
-        self.name = beer_data['name']
-        self.brewery = Brewery('/brewers/{0}/{1}/'.format(re.sub('[/ ]','-',beer_data['brewer']['name'].lower()),beer_data['brewer']['id']))
-        self.brewery.name = beer_data['brewer']['name']
-        self.brewed_at = None #no longer supported
-        self.overall_rating = self._format(beer_data['overallScore'])
-        self.style_rating = self._format(beer_data['styleScore'])
-        self.style = beer_data['style']['name']
-        self.style_url = "/beerstyles/{0}/{1}/".format(re.sub('/','-',self.style.lower()), beer_data['style']['id'])
-        self.img_url = "https://res.cloudinary.com/ratebeer/image/upload/w_152,h_309,c_pad,d_beer_img_default.png,f_auto/beer_{0}".format(self.id)
-        self.num_ratings = self._format(beer_data['ratingCount'])
-        self.mean_rating = self._format(beer_data['averageRating'])
-        self.weighted_avg = None # does not appear to exist anymore
-        if(beer_data['seasonal'] != 'UNKNOWN'):
-            self.seasonal = beer_data['seasonal']
+        self.name = beer_data["name"]
+        self.brewery = Brewery(
+            "/brewers/{0}/{1}/".format(
+                re.sub("[/ ]", "-", beer_data["brewer"]["name"].lower()),
+                beer_data["brewer"]["id"],
+            )
+        )
+        self.brewery.name = beer_data["brewer"]["name"]
+        self.brewed_at = None  # no longer supported
+        self.overall_rating = self._format(beer_data["overallScore"])
+        self.style_rating = self._format(beer_data["styleScore"])
+        self.style = beer_data["style"]["name"]
+        self.style_url = "/beerstyles/{0}/{1}/".format(
+            re.sub("/", "-", self.style.lower()), beer_data["style"]["id"]
+        )
+        self.img_url = "https://res.cloudinary.com/ratebeer/image/upload/w_152,h_309,c_pad,d_beer_img_default.png,f_auto/beer_{0}".format(
+            self.id
+        )
+        self.num_ratings = self._format(beer_data["ratingCount"])
+        self.mean_rating = self._format(beer_data["averageRating"])
+        self.weighted_avg = None  # does not appear to exist anymore
+        if beer_data["seasonal"] != "UNKNOWN":
+            self.seasonal = beer_data["seasonal"]
         else:
             self.seasonal = None
-        self.ibu = self._format(beer_data['ibu'])
-        self.calories = self._format(beer_data['calories'])
-        self.abv = self._format(beer_data['abv'])
-        self.retired = beer_data['isRetired']
-        self.description = re.sub(r'\x92', '\'', beer_data['description'])
+        self.ibu = self._format(beer_data["ibu"])
+        self.calories = self._format(beer_data["calories"])
+        self.abv = self._format(beer_data["abv"])
+        self.retired = beer_data["isRetired"]
+        self.description = re.sub(r"\x92", "'", beer_data["description"])
         if tag_data:
-            self.tags = [t['urlName'] for t in tag_data]
+            self.tags = [t["urlName"] for t in tag_data]
         else:
             self.tags = None
 
@@ -210,21 +225,17 @@ class RateBeerBeer(object):
             self._populate()
 
         review_order = review_order.lower()
-        url_codes = {
-            "most recent": 1,
-            "top raters": 2,
-            "highest score": 3
-        }
+        url_codes = {"most recent": 1, "top raters": 2, "highest score": 3}
         url_flag = url_codes.get(review_order)
         if not url_flag:
             raise ValueError("Invalid ``review_order``.")
 
         page_number = 1
         while True:
-            complete_url = u'{0}{1}/{2}/'.format(self.url, url_flag, page_number)
+            complete_url = u"{0}{1}/{2}/".format(self.url, url_flag, page_number)
             soup = soup_helper._get_soup(complete_url)
-            content = soup.find('div', class_='reviews-container')
-            reviews = content.find_all('div', style='padding: 0px 0px 0px 0px;')
+            content = soup.find("div", class_="reviews-container")
+            reviews = content.find_all("div", style="padding: 0px 0px 0px 0px;")
             if len(reviews) < 1:
                 raise StopIteration
 
@@ -254,34 +265,34 @@ class Review(object):
 
     def __init__(self, review_soup):
         # gets every second entry in a list
-        review_title_attr = review_soup.find_all('div')[1].get('title')
+        review_title_attr = review_soup.find_all("div")[1].get("title")
 
         # some ratings may now just contain the x/5.0 rating, with no sub-ratings
-        if '<small>' in review_title_attr: 
-            raw_ratings = re.search(r'<small>(.+?)</small>', review_title_attr).group(1).split('<br />')
+        if "<small>" in review_title_attr:
+            raw_ratings = (
+                re.search(r"<small>(.+?)</small>", review_title_attr)
+                .group(1)
+                .split("<br />")
+            )
             # strip html and everything else
             for rating_text in raw_ratings:
-                parts = rating_text.split(' ')
+                parts = rating_text.split(" ")
                 # only set a rating if all of the information exists
                 if rating_text:
                     label = parts[0]
-                    rating_int = int(parts[1][:parts[1].find("/")])
-                    setattr(
-                        self,
-                        label.lower().strip(),
-                        rating_int
-                    )
-        self.rating = float(review_soup.find_all('div')[1].text)
+                    rating_int = int(parts[1][: parts[1].find("/")])
+                    setattr(self, label.lower().strip(), rating_int)
+        self.rating = float(review_soup.find_all("div")[1].text)
 
         # get user information
         userinfo = review_soup.next_sibling
         self.text = userinfo.next_sibling.next_sibling.text.strip()
-        self.user_name = re.findall(r'(.*?)\xa0\(\d*?\)', userinfo.a.text)[0]
-        self.user_location = re.findall(r'-\s(.*?)\s-', userinfo.a.next_sibling)[0]
+        self.user_name = re.findall(r"(.*?)\xa0\(\d*?\)", userinfo.a.text)[0]
+        self.user_location = re.findall(r"-\s(.*?)\s-", userinfo.a.next_sibling)[0]
 
         # get date it was posted
-        date = re.findall(r'-(?:\s.*?\s-)+\s(.*)', userinfo.a.next_sibling)[0]
-        self.date = datetime.strptime(date.strip(), '%b %d, %Y').date()
+        date = re.findall(r"-(?:\s.*?\s-)+\s(.*)", userinfo.a.next_sibling)[0]
+        self.date = datetime.strptime(date.strip(), "%b %d, %Y").date()
 
     def __str__(self):
         """Provide a nicely formatted representation"""
@@ -305,7 +316,7 @@ class Brewery(object):
         elif not self._has_fetched:
             self._populate()
             return getattr(self, item)
-        raise AttributeError('{0} has no attribute {1}'.format(type(self), item))
+        raise AttributeError("{0} has no attribute {1}".format(type(self), item))
 
     def __setattr__(self, name, value):
         """Set the `name` attribute to `value."""
@@ -339,28 +350,32 @@ class Brewery(object):
             A dictionary of attributes about that brewery."""
 
         soup = soup_helper._get_soup(self.url)
-        s_contents = soup.find_all('div', {'itemtype':'http://schema.org/LocalBusiness'})
+        s_contents = soup.find_all(
+            "div", {"itemtype": "http://schema.org/LocalBusiness"}
+        )
         if not s_contents:
             raise rb_exceptions.PageNotFound(self.url)
 
         self.name = soup.h1.text
-        self.type = s_contents[0].find_all('div')[1].text.strip()
-        website = s_contents[0].find_all('div',{'class':'media-links'})[0].find_all('a')[0]
+        self.type = s_contents[0].find_all("div")[1].text.strip()
+        website = (
+            s_contents[0].find_all("div", {"class": "media-links"})[0].find_all("a")[0]
+        )
         if website:
-            self.web = website['href']
-        self.telephone = Brewery._find_span(s_contents[0], 'telephone')
-        self.street = Brewery._find_span(s_contents[0], 'streetAddress')
-        self.city = Brewery._find_span(s_contents[0], 'addressLocality')
-        self.state = Brewery._find_span(s_contents[0], 'addressRegion')
-        self.country = Brewery._find_span(s_contents[0], 'addressCountry')
-        self.postal_code = Brewery._find_span(s_contents[0], 'postalCode')
+            self.web = website["href"]
+        self.telephone = Brewery._find_span(s_contents[0], "telephone")
+        self.street = Brewery._find_span(s_contents[0], "streetAddress")
+        self.city = Brewery._find_span(s_contents[0], "addressLocality")
+        self.state = Brewery._find_span(s_contents[0], "addressRegion")
+        self.country = Brewery._find_span(s_contents[0], "addressCountry")
+        self.postal_code = Brewery._find_span(s_contents[0], "postalCode")
         self._has_fetched = True
 
         return self
 
     @staticmethod
     def _find_span(search_soup, item_prop):
-        output = search_soup.find('span', attrs={'itemprop': item_prop})
+        output = search_soup.find("span", attrs={"itemprop": item_prop})
         output = output.text.strip() if output else None
         return output
 
@@ -369,26 +384,26 @@ class Brewery(object):
         if not self._has_fetched:
             self._populate()
 
-        _id = self.url.split('/')[-2]
-        complete_url = u'/Ratings/Beer/ShowBrewerBeers.asp?BrewerID={0}'.format(_id)
+        _id = self.url.split("/")[-2]
+        complete_url = u"/Ratings/Beer/ShowBrewerBeers.asp?BrewerID={0}".format(_id)
         soup = soup_helper._get_soup(complete_url)
-        soup_beer_rows = soup.find('table', id='brewer-beer-table').findAll('tr')
+        soup_beer_rows = soup.find("table", id="brewer-beer-table").findAll("tr")
 
         for row in soup_beer_rows[1:]:
-            url = row.a.get('href')
+            url = row.a.get("href")
             # Only return rows that are ratable
-            if not row.find('a',title="Rate this beer"):
+            if not row.find("a", title="Rate this beer"):
                 continue
             # Remove any whitespace characters. Rare, but possible.
             url = re.sub(r"\s+", "", url, flags=re.UNICODE)
             beer = RateBeerBeer(url)
             beer.name = row.a.text.strip()
             # Add attributes from row
-            abv = row.findAll('td')[1].text
-            weighted_avg = row.findAll('td')[4].text.strip()
-            style_rating = row.findAll('td')[5].text.strip()
-            num_ratings = row.findAll('td')[6].text.strip()
-            if abv and abv != '-':
+            abv = row.findAll("td")[1].text
+            weighted_avg = row.findAll("td")[4].text.strip()
+            style_rating = row.findAll("td")[5].text.strip()
+            num_ratings = row.findAll("td")[6].text.strip()
+            if abv and abv != "-":
                 beer.abv = float(abv)
             if weighted_avg:
                 beer.weighted_avg = float(weighted_avg)
