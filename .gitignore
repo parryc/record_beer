@@ -3,6 +3,8 @@ search.db/
 static/gen/*
 *.tab
 config.py
+venv/*
+.idea/*
 
 # Webassets cache
 .webassets-cache/

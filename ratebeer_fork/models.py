@@ -36,7 +36,7 @@ except ImportError:  # No implicit package imports in py3.
     from ratebeer_fork import soup as soup_helper
 
 
-class Beer(object):
+class RateBeerBeer(object):
     """The Beer object. Contains information about an individual beer.
 
     Args:
@@ -381,7 +381,7 @@ class Brewery(object):
                 continue
             # Remove any whitespace characters. Rare, but possible.
             url = re.sub(r"\s+", "", url, flags=re.UNICODE)
-            beer = Beer(url)
+            beer = RateBeerBeer(url)
             beer.name = row.a.text.strip()
             # Add attributes from row
             abv = row.findAll('td')[1].text

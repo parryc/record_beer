@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-# Import flask dependencies
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app import db
-from mod_users.models import *
-from mod_users.forms import *
+from database import db
+from mod_users.models import Users, get_user, edit_user
+from mod_users.forms import UserForm
 
 mod_users = Blueprint('users', __name__, url_prefix='/users')
 

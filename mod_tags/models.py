@@ -1,6 +1,6 @@
-from app import db
+from database import db
 from datetime import datetime
-from helper_db import *
+from helper_db import commit_entry, delete_entry
 
 class Tags(db.Model):
   __tablename__ = 'tags'

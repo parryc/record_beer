@@ -29,12 +29,8 @@ import string
 import json
 from bs4 import BeautifulSoup
 
-try:
-    import models
-    import soup as soup_helper
-except ImportError as e:  # No implicit package imports in py3.
-    from ratebeer_fork import models
-    from ratebeer_fork import soup as soup_helper
+from ratebeer_fork import models
+from ratebeer_fork import soup as soup_helper
 
 class RateBeer(object):
     """
@@ -123,7 +119,7 @@ class RateBeer(object):
                 beer_data = result['beer']
                 # double check this...
                 url = '/beer/{0}/{1}/'.format(beer_data['name'].replace(' ', '-').lower(), beer_data['id'])
-                beer = models.Beer(url, id=beer_data['id'])
+                beer = models.RateBeerBeer(url, id=beer_data['id'])
                 beer.name = beer_data['name']
                 beer.overall_rating = beer_data['overallScore']
                 beer.num_ratings = beer_data['ratingCount']
@@ -134,7 +130,7 @@ class RateBeer(object):
         """Returns a Beer object for the requested URL"""
         if fetch is None:
             fetch = False
-        return models.Beer(url, fetch)
+        return models.RateBeerBeer(url, fetch)
 
     def beer(self, url):
         """Returns a dict with beer information for the requested URL"""
@@ -192,7 +188,7 @@ class RateBeer(object):
         for row in rows:
             data = row.find_all('td')
             link = data[1].a
-            dataout = models.Beer(link.get('href'))
+            dataout = models.RateBeerBeer(link.get('href'))
             dataout.name = link.text
             yield dataout
 

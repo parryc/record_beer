@@ -1,13 +1,19 @@
-#!/usr/bin/env python
-# coding: utf-8
-from flask import Flask, render_template, request
+from flask import render_template
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_wtf.csrf import CSRFProtect
+import sys
 
-app = Flask(__name__)
-app.config.from_object('config.DevelopmentConfig')
+# Gandi hack, to get imports to work correctly
+if sys.platform == "darwin":
+    from .database import db
+    from .factory import create_app
+else:
+    from database import db
+    from factory import create_app
+
+app = create_app(__name__)
 db = SQLAlchemy(app)
 assets = Environment(app)
 ma = Marshmallow(app)
@@ -65,8 +71,8 @@ assets.register(bundles)
 from mod_beers.controllers import mod_beers
 app.register_blueprint(mod_beers)
 from mod_users.controllers import mod_users
-app.register_blueprint(mod_users) 
+app.register_blueprint(mod_users)
 from mod_analysis.controllers import mod_analysis
-app.register_blueprint(mod_analysis) 
+app.register_blueprint(mod_analysis)
 # from mod_tags.controllers import mod_tags
 # app.register_blueprint(mod_tags)

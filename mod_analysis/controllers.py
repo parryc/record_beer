@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
 from flask import Blueprint, render_template, request, jsonify, redirect,\
                   url_for, flash, abort
-from app import db, ma, csrf
-from mod_beers.models import *
-from mod_users.models import *
+from mod_beers.models import get_beers_by_attribute, get_beers_by_brewery, get_beers_by_rating, get_beers_by_style, get_beers_by_year, Beers, get_beer
+
 from mod_tags.models import *
-from sqlalchemy import or_, and_
-from marshmallow import fields
 import calendar
 from itertools import groupby
 

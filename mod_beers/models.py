@@ -1,7 +1,7 @@
-from app import db, app
-from mod_tags.models import *
+from database import db
+from mod_tags.models import add_tag, delete_tags_for_beer
 from datetime import datetime
-from helper_db import *
+from helper_db import commit_entry, delete_entry
 from sqlalchemy import extract
 import pycountry
 

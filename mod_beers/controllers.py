@@ -1,19 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash, Markup
-from app import db, ma, csrf
-from mod_beers.models import *
-from mod_beers.forms import *
-from mod_users.models import *
-import json
-import datetime
-import unicodedata
-import pycountry
-import unicodecsv
+from mod_beers.models import Beers, get_beer, edit_beer, add_beer
+from mod_beers.forms import BeerForm
+from mod_users.models import Users
+from mod_tags.models import Tags
 from ratebeer_fork import RateBeer
 from ratebeer_fork import rb_exceptions
 from sqlalchemy import or_, and_, desc
-from marshmallow import fields
+from marshmallow import fields, Schema
 
 mod_beers = Blueprint('beers', __name__, url_prefix='/beers')
 rb = RateBeer()
@@ -22,14 +15,14 @@ rb = RateBeer()
 # Object schemas #
 ##################
 
-class BeerSchema(ma.Schema):
+class BeerSchema(Schema):
     class Meta:
     # model = Beers
     # json_module = simplejson
         additional = ('brewery', 'name', 'rating', 'style', 'country',
-                      'drink_country', 'drink_city', 'drink_datetime', 
+                      'drink_country', 'drink_city', 'drink_datetime',
                       'abv', 'brew_with', 'brew_year')
-    tags = fields.Nested('self', many=True, only='tag')
+    tags = fields.Nested('self', many=True, only=['tag'])
 
 
 ##########

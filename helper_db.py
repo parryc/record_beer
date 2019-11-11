@@ -1,7 +1,15 @@
-#!/usr/bin/env python
-# coding: utf-8
+# Don't delete record_beer from here.
+# If you do, everything breaks, I don't know why.
+# I have spent too long trying to fix it, so just leave it as is,
+# unless you know how to fix what it breaks.
+import sys
 
-from app import db
+# Gandi hack, to get things to load
+if sys.platform == "darwin":
+    from record_beer.database import db
+else:
+    from database import db
+
 
 def commit_entry(entry):
   try:
