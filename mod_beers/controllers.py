@@ -25,6 +25,10 @@ rb = RateBeer()
 ##################
 
 
+class TagSchema(Schema):
+    tag = fields.Str()
+
+
 class BeerSchema(Schema):
     class Meta:
         # model = Beers
@@ -43,7 +47,7 @@ class BeerSchema(Schema):
             "brew_year",
         )
 
-    tags = fields.Nested("self", many=True, only=["tag"])
+    tags = fields.List(fields.Nested(TagSchema(only=("tag",), many=True)))
 
 
 ##########
@@ -190,7 +194,13 @@ def query():
         )
 
     results = BeerSchema(many=True).dump(query_results)
-    return jsonify({"results": results.data})
+    # can't figure out how to get the new Marshmallow to return the data in
+    # a flattened format for tags
+    output = []
+    for result in results:
+        result["tags"] = [t["tag"] for t in result["tags"]]
+        output.append(result)
+    return jsonify({"results": output})
 
 
 @mod_beers.route("/search", methods=["POST"])
@@ -226,7 +236,7 @@ def search():
                     "name": hit["name"],
                     "abv": round(hit["abv"], 2),
                     "style": hit["style"],
-                    "brewery_country": hit["brewery"].country,
+                    "brewery_country": hit["brewery_country"],
                 }
             )
         return jsonify({"results": top})
