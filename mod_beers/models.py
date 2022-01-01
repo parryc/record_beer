@@ -266,5 +266,7 @@ def iso_code(country_name):
         return "sk"
     elif country_name == "Laos":
         return "la"
+    elif country_name == "Kosovo":
+        return "xk"
     else:
         return pycountry.countries.get(name=country_name).alpha_2.lower()

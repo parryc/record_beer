@@ -179,7 +179,15 @@
 
 .great {
   color: rgba(255, 110, 110, 1);
-  font-style: 'bold';
+  font-weight: bold;
+}
+
+.really-good:before {
+  content: 'really good';
+}
+
+.really-good {
+  color: rgb(230, 99, 99);
 }
 
 .good:before {
@@ -190,27 +198,27 @@
   color: rgb(204,88,88);
 }
 
-.ok:before {
-  content: 'ok';
+.fine:before {
+  content: 'fine';
 }
 
-.ok {
+.fine {
   color: rgb(153,66,66);
 }
 
-.meh:before {
-  content: 'meh';
-}
-
-.meh {
-  color: rgb(102,44,44);  
-}
-
 .bad:before {
-  content: 'bad';
+  content: 'not that good';
 }
 
 .bad {
+  color: rgb(102,44,44);  
+}
+
+.undrinkable:before {
+  content: 'undrinkable';
+}
+
+.undrinkable {
   color: rgb(51,22,22);
 }
 

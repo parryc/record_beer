@@ -14,14 +14,16 @@ Handlebars.registerHelper('calcRating', function(rating) {
   // if(parts[0] === "4")
   //   return "★★★★★";
   if(parts[0] === "0")
-    return "bad";
+    return "undrinkable";
   if(parts[0] === "1")
-    return "meh";
+    return "bad";
   if(parts[0] === "2")
-    return "ok";
+    return "fine";
   if(parts[0] === "3")
     return "good";
   if(parts[0] === "4")
+    return "really-good";
+  if(parts[0] === "5")
     return "great";
 });
 
