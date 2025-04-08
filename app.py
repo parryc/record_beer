@@ -3,18 +3,10 @@ from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_wtf.csrf import CSRFProtect
-import sys
-
-# Gandi hack, to get imports to work correctly
-if sys.platform == "darwin":
-    from .database import db
-    from .factory import create_app
-else:
-    from database import db
-    from factory import create_app
+from database import db
+from factory import create_app
 
 app = create_app(__name__)
-db = SQLAlchemy(app)
 assets = Environment(app)
 ma = Marshmallow(app)
 csrf = CSRFProtect()

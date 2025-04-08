@@ -6,7 +6,6 @@ from flask import (
     redirect,
     url_for,
     flash,
-    Markup,
 )
 from mod_beers.models import Beers, get_beer, edit_beer, add_beer
 from mod_beers.forms import BeerForm
@@ -14,8 +13,9 @@ from mod_users.models import Users
 from mod_tags.models import Tags
 from ratebeer_fork import RateBeer
 from ratebeer_fork import rb_exceptions
-from sqlalchemy import or_, and_, desc
+from sqlalchemy import and_
 from marshmallow import fields, Schema
+from markupsafe import Markup
 
 mod_beers = Blueprint("beers", __name__, url_prefix="/beers")
 rb = RateBeer()
@@ -207,8 +207,8 @@ def query():
 def search():
     def _closeness(search, result):
         """
-            Quick function to try to get a representation of "closeness" to the search result,
-            since ratebeer's results suck.
+        Quick function to try to get a representation of "closeness" to the search result,
+        since ratebeer's results suck.
         """
         return len(set(search) ^ set(result))
 
