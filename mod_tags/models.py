@@ -19,6 +19,10 @@ class Tags(db.Model):
     def __repr__(self):
         return "<%r %r  - %r>" % (self.user, self.beer, self.tag)
 
+    # Make the Tags object an interable for Marshmallow 3
+    def __iter__(self):
+        return iter([{"tag": self.tag}])
+
 
 ##########
 # CREATE #

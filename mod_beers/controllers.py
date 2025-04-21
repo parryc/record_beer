@@ -198,7 +198,7 @@ def query():
     # a flattened format for tags
     output = []
     for result in results:
-        result["tags"] = [t["tag"] for t in result["tags"]]
+        result["tags"] = [t[0]["tag"] for t in result["tags"]]
         output.append(result)
     return jsonify({"results": output})
 
